@@ -4,6 +4,8 @@
 
 namespace Tingee\Sdk\Types\Dtos;
 
+use Tingee\Sdk\Types\BankNameEnum;
+
 class OpenApiOuputDto implements \JsonSerializable
 {
     public string $code = '';

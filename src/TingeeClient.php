@@ -14,7 +14,7 @@ class TingeeClient
 
     private string $secretKey;
 
-    public function __construct(string $secretKey, string $clientId, string $environment = 'uat', int $timeout = 30)
+    public function __construct(string $secretKey, string $clientId, string $environment = 'uat', int $timeout = 90)
     {
         $this->secretKey = $secretKey;
         $baseUrl = $environment === 'prod'

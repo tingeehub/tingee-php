@@ -653,9 +653,9 @@ class TingeeV1Methods
             [
             'uuid' => $uuid
         ],
-            String::class
+            ''
         );
-        /** @var TingeeApiResponse<String> $response */
+        /** @var TingeeApiResponse<string> $response */
         return $response;
     }
 
@@ -731,9 +731,9 @@ class TingeeV1Methods
             '/v1/deep-link/generate',
             $body,
             [],
-            String::class
+            ''
         );
-        /** @var TingeeApiResponse<String> $response */
+        /** @var TingeeApiResponse<string> $response */
         return $response;
     }
 
@@ -807,9 +807,9 @@ class TingeeV1Methods
             '/v1/merchant/create-or-update-config',
             $body,
             [],
-            Number::class
+            ''
         );
-        /** @var TingeeApiResponse<Number> $response */
+        /** @var TingeeApiResponse<int|float> $response */
         return $response;
     }
 
@@ -826,9 +826,9 @@ class TingeeV1Methods
             '/v1/merchant/delete-config',
             $body,
             [],
-            Number::class
+            ''
         );
-        /** @var TingeeApiResponse<Number> $response */
+        /** @var TingeeApiResponse<int|float> $response */
         return $response;
     }
 
@@ -882,9 +882,9 @@ class TingeeV1Methods
             '/v1/merchant/create',
             $body,
             [],
-            Number::class
+            ''
         );
-        /** @var TingeeApiResponse<Number> $response */
+        /** @var TingeeApiResponse<int|float> $response */
         return $response;
     }
 
@@ -941,9 +941,9 @@ class TingeeV1Methods
             '/v1/direct-debit/register',
             $body,
             [],
-            String::class
+            ''
         );
-        /** @var TingeeApiResponse<String> $response */
+        /** @var TingeeApiResponse<string> $response */
         return $response;
     }
 
@@ -1017,9 +1017,9 @@ class TingeeV1Methods
             '/v1/direct-debit/edit-confirm-payment-method',
             $body,
             [],
-            String::class
+            ''
         );
-        /** @var TingeeApiResponse<String> $response */
+        /** @var TingeeApiResponse<string> $response */
         return $response;
     }
 

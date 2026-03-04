@@ -28,7 +28,7 @@ $client = new TingeeClient(
     secretKey:   $_ENV['TINGEE_SECRET_KEY'],
     clientId:    $_ENV['TINGEE_CLIENT_ID'],
     environment: 'uat',   // 'uat' | 'prod', mặc định 'uat'
-    timeout:     30,      // giây, mặc định 30
+    timeout:     90,      // giây, mặc định 90
     // baseUrl: 'https://uat-open-api.tingee.vn', // tùy chọn, ghi đè environment
 );
 
