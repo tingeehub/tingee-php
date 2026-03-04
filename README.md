@@ -3,7 +3,7 @@
 > SDK chính thức tích hợp **Tingee Open API** cho PHP 8.0+
 
 [![Packagist](https://img.shields.io/packagist/v/tingee/sdk-php)](https://packagist.org/packages/tingee/sdk-php)
-[![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4)](https://www.php.net)
+[![PHP](https://img.shields.io/badge/PHP-8.0%2B-777BB4)](https://www.php.net)
 [![License: ISC](https://img.shields.io/badge/License-ISC-yellow)](LICENSE)
 
 ---

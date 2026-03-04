@@ -36,7 +36,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - `BankNameEnum`, `BankAccountTypeEnum`, bank metadata (BIN, full name, display name)
 - `TingeeApiResponse` with `isSuccess()` / `getCode()` / `getData()` helpers
 - Environment: `'uat'` | `'prod'` (maps to UAT / Production base URL)
-- PHP 8.1+, Composer; requires `guzzlehttp/guzzle`
+- PHP 8.0+, Composer; requires `guzzlehttp/guzzle`
 
 #### Design decisions
 - HTTP client returns raw `TingeeApiResponse` — callers check `$result->isSuccess()` themselves; no auto-throw on business errors
