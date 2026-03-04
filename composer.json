@@ -1,0 +1,35 @@
+{
+  "name": "tingee/sdk-php",
+  "description": "Tingee Open API SDK for PHP",
+  "type": "library",
+  "license": "ISC",
+  "homepage": "https://developers.tingee.vn",
+  "authors": [
+    {
+      "name": "Tingee",
+      "email": "developer@heno.vn",
+      "homepage": "https://tingee.vn",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "developer@heno.vn",
+    "chat": "https://t.me/tingeesupport",
+    "docs": "https://developers.tingee.vn",
+    "source": "https://tingee.vn"
+  },
+  "require": {
+    "php": ">=8.0",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "guzzlehttp/guzzle": "^7.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tingee\\Sdk\\": "src/"
+    },
+    "classmap": [
+      "src/Types/Dtos/Generated.php"
+    ]
+  }
+}
