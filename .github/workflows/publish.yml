@@ -1,0 +1,19 @@
+name: Publish to Packagist
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Trigger Packagist sync
+        run: |
+          curl -sf -X POST \
+            "https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_TOKEN }}" \
+            -d "repository[url]=https://github.com/${{ github.repository }}"
+          echo "Packagist sync triggered for ${{ github.ref_name }}"
