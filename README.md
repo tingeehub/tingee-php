@@ -27,15 +27,14 @@ use Tingee\Sdk\TingeeClient;
 $client = new TingeeClient(
     secretKey:   $_ENV['TINGEE_SECRET_KEY'],
     clientId:    $_ENV['TINGEE_CLIENT_ID'],
-    environment: 'uat',   // 'uat' | 'prod', mặc định 'uat'
+    environment: 'prod',  // 'prod' | 'uat', mặc định 'prod'
     timeout:     90,      // giây, mặc định 90
     // baseUrl: 'https://uat-open-api.tingee.vn', // tùy chọn, ghi đè environment
 );
 
-$body = new OpenApiGetShopPagedInputDto();
-$body->maxResultCount = 10;
-$body->skipCount = 0;
-$result = $client->v1->merchantGetPaging($body);
+$result = $client->merchant->getPaging(
+    filter: null, sorting: null, skipCount: 0, maxResultCount: 10
+);
 
 if ($result->isSuccess()) {
     print_r($result->getData());
@@ -52,9 +51,9 @@ if ($result->isSuccess()) {
 |---|---|---|---|
 | `secretKey` | `string` | — | **Bắt buộc.** Secret key từ Tingee Dashboard |
 | `clientId` | `string` | — | **Bắt buộc.** Client ID từ Tingee Dashboard |
-| `environment` | `string` | `'uat'` | `'uat'` \| `'prod'` |
-| `timeout` | `int` | `30` | Timeout (giây) |
-| `baseUrl` | `string` | — | Ghi đè URL (bỏ qua `environment`) |
+| `environment` | `string` | `'prod'` | `'prod'` \| `'uat'` |
+| `timeout` | `int` | `90` | Timeout (giây) |
+| `baseUrl` | `string\|null` | — | Ghi đè URL (bỏ qua `environment`) |
 
 ### Laravel
 
@@ -63,7 +62,7 @@ if ($result->isSuccess()) {
 $this->app->singleton(TingeeClient::class, fn () => new TingeeClient(
     secretKey:   config('services.tingee.secret_key'),
     clientId:    config('services.tingee.client_id'),
-    environment: config('services.tingee.environment', 'uat'),
+    environment: config('services.tingee.environment', 'prod'),
 ));
 ```
 
@@ -71,24 +70,28 @@ $this->app->singleton(TingeeClient::class, fn () => new TingeeClient(
 
 ## Gọi API
 
-Tất cả phương thức nằm trong `$client->v1->*`:
+Các phương thức được nhóm theo tính năng (`$client-><group>-><method>()`):
 
 ```php
-// Lấy danh sách shop (có phân trang)
-$req = new OpenApiGetShopPagedInputDto();
-$req->maxResultCount = 10;
-$req->skipCount = 0;
-$result = $client->v1->shopGetPaging($req);
+// Merchant — lấy danh sách
+$result = $client->merchant->getPaging(
+    filter: null, sorting: null, skipCount: 0, maxResultCount: 10
+);
 if ($result->isSuccess()) {
-    foreach ($result->getData()->items as $shop) echo $shop->name . PHP_EOL;
+    foreach ($result->getData()->items as $merchant) echo $merchant->name . PHP_EOL;
 }
 
+// Shop — lấy danh sách
+$result = $client->shop->getPaging(
+    filter: null, sorting: null, skipCount: 0, maxResultCount: 10
+);
+
 // Direct Debit
-$req = new DirectDebitGetSubscriptionStatusInputDto();
-$req->requestId      = 'uuid-here';
-$req->subscriptionId = 'uuid-here';
-$req->tokenRef       = 'token-ref';
-$sub = $client->v1->directDebitGetSubscriptionStatus($req);
+$sub = $client->directDebit->getSubscriptionStatus(
+    requestId: 'uuid-here',
+    subscriptionId: 'uuid-here',
+    tokenRef: 'token-ref'
+);
 ```
 
 > **Lưu ý:** SDK trả về `TingeeApiResponse` với `code` và `message`. Dùng `isSuccess()` hoặc kiểm tra `getCode() === '00'` để xác định thành công — SDK **không tự throw** khi `code !== '00'`.

@@ -104,6 +104,13 @@ class TingeeHttpClient
         }
 
         if (is_array($data) && class_exists($returnType)) {
+            // If data is a list (array of items), map each element to the class.
+            // Use isset($data[0]) as PHP 8.0-compatible list check — API responses
+            // are either [{...},{...}] (indexed) or {...} (associative/object).
+            if (isset($data[0])) {
+                return array_map(fn($item) => is_array($item) ? $this->mapToObject($item, $returnType, $itemType) : $item, $data);
+            }
+            // Otherwise treat as single object
             return $this->mapToObject($data, $returnType, $itemType);
         }
 
@@ -158,8 +165,8 @@ class TingeeHttpClient
                 }
             }
 
-            // Hydrate array of objects
-            if ($elementClass !== null && is_array($value) && array_is_list($value)) {
+            // Hydrate array of objects (isset($value[0]) is PHP 8.0-compatible list check)
+            if ($elementClass !== null && is_array($value) && isset($value[0])) {
                 $obj->{$key} = array_map(
                     fn($item) => is_array($item) ? $this->mapToObject($item, $elementClass) : $item,
                     $value

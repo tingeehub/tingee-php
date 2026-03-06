@@ -44,7 +44,7 @@ use Tingee\Sdk\Types\Dtos\DeviceInfoDto;
 use Tingee\Sdk\Types\Dtos\ShopInfoDto;
 use Tingee\Sdk\Types\Dtos\DeviceDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGetPagingDeviceInputDto;
-use Tingee\Sdk\Types\Dtos\String;
+use Tingee\Sdk\Types\Dtos\OpenApiGenerateAndShowDynamicQrCodeDto;
 use Tingee\Sdk\Types\Dtos\OpenApiVerifyReferralCodeResponseDto;
 use Tingee\Sdk\Types\Dtos\OpenApiCreateOrUpdateShopOutputDto;
 use Tingee\Sdk\Types\Dtos\SendNotifyTelegramDto;
@@ -86,7 +86,6 @@ use Tingee\Sdk\Types\Dtos\OpenApiAccountNumberDDLPagedInputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiTransactionPagedInputDto;
 use Tingee\Sdk\Types\Dtos\MerchantBankConfigPagedOutputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiMerchantBankConfigPagedInputDto;
-use Tingee\Sdk\Types\Dtos\Number;
 use Tingee\Sdk\Types\Dtos\BIDVConfigDto;
 use Tingee\Sdk\Types\Dtos\CTGConfigDto;
 use Tingee\Sdk\Types\Dtos\ACBConfigBusinessDto;
@@ -128,17 +127,13 @@ use Tingee\Sdk\Types\Dtos\CustomerInfoDto;
 use Tingee\Sdk\Types\Dtos\OpenApiPaymentTransactionStatusResponseDto;
 use Tingee\Sdk\Types\Dtos\OpenApiPaymentTransactionsPagedOutputDto;
 
-class TingeeV1Methods
+class TingeeBankGroup
 {
     private TingeeHttpClient $httpClient;
-
-    public function __construct(TingeeHttpClient $httpClient)
-    {
-        $this->httpClient = $httpClient;
-    }
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
 
     /**
-     * POST /v1/generate-viet-qr
+     * POST /v1/bank/generate-viet-qr
      *
      * @return TingeeApiResponse<GenerateVietQROuputDto>
      * @throws TingeeHttpException
@@ -147,7 +142,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/generate-viet-qr',
+            '/v1/bank/generate-viet-qr',
             $body,
             [],
             GenerateVietQROuputDto::class
@@ -157,7 +152,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/generate-dynamic-qr
+     * POST /v1/bank/generate-dynamic-qr
      *
      * @return TingeeApiResponse<GenerateDynamicQROuputDto>
      * @throws TingeeHttpException
@@ -166,7 +161,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/generate-dynamic-qr',
+            '/v1/bank/generate-dynamic-qr',
             $body,
             [],
             GenerateDynamicQROuputDto::class
@@ -176,7 +171,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/delete-dynamic-qr
+     * POST /v1/bank/delete-dynamic-qr
      *
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
@@ -185,7 +180,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/delete-dynamic-qr',
+            '/v1/bank/delete-dynamic-qr',
             $body,
             [],
             EmptyDto::class
@@ -195,7 +190,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/get-status-dynamic-qr
+     * POST /v1/bank/get-status-dynamic-qr
      *
      * @return TingeeApiResponse<OpenApiGetStatusDynamicQROutputDto>
      * @throws TingeeHttpException
@@ -204,7 +199,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/get-status-dynamic-qr',
+            '/v1/bank/get-status-dynamic-qr',
             $body,
             [],
             OpenApiGetStatusDynamicQROutputDto::class
@@ -214,26 +209,26 @@ class TingeeV1Methods
     }
 
     /**
-     * GET /v1/get-banks
+     * GET /v1/bank/get-banks
      *
-     * @return TingeeApiResponse<Bank[]>
+     * @return TingeeApiResponse<Bank>
      * @throws TingeeHttpException
      */
     public function getBanks(): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'GET',
-            '/v1/get-banks',
+            '/v1/bank/get-banks',
             null,
             [],
-            'Tingee\Sdk\Types\Dtos\Bank[]'
+            Bank::class
         );
-        /** @var TingeeApiResponse<Bank[]> $response */
+        /** @var TingeeApiResponse<Bank> $response */
         return $response;
     }
 
     /**
-     * POST /v1/get-va-paging
+     * POST /v1/bank/get-va-paging
      *
      * @return TingeeApiResponse<PagedResultDto<OpenApiGetVAPagedOuputDto>>
      * @throws TingeeHttpException
@@ -242,7 +237,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/get-va-paging',
+            '/v1/bank/get-va-paging',
             $body,
             [],
             PagedResultDto::class, OpenApiGetVAPagedOuputDto::class
@@ -252,7 +247,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/get-account-number-info-by-qr-code
+     * POST /v1/bank/get-account-number-info-by-qr-code
      *
      * @return TingeeApiResponse<PagedResultDto<OpenApiGenerateVietQROuputDto>>
      * @throws TingeeHttpException
@@ -261,7 +256,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/get-account-number-info-by-qr-code',
+            '/v1/bank/get-account-number-info-by-qr-code',
             null,
             [
             'qrCode' => $qrCode
@@ -273,7 +268,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/create-va
+     * POST /v1/bank/create-va
      *
      * @return TingeeApiResponse<BankCreateVAOuputDto>
      * @throws TingeeHttpException
@@ -282,7 +277,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/create-va',
+            '/v1/bank/create-va',
             $body,
             [],
             BankCreateVAOuputDto::class
@@ -292,7 +287,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/create-va-advanced
+     * POST /v1/bank/create-va-advanced
      *
      * @return TingeeApiResponse<BankCreateVAOuputDto>
      * @throws TingeeHttpException
@@ -301,7 +296,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/create-va-advanced',
+            '/v1/bank/create-va-advanced',
             $body,
             [],
             BankCreateVAOuputDto::class
@@ -311,7 +306,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/confirm-va
+     * POST /v1/bank/confirm-va
      *
      * @return TingeeApiResponse<OpenApiConfirmVAOuputDto>
      * @throws TingeeHttpException
@@ -320,7 +315,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/confirm-va',
+            '/v1/bank/confirm-va',
             $body,
             [],
             OpenApiConfirmVAOuputDto::class
@@ -330,16 +325,16 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/delete-va
+     * POST /v1/bank/delete-va
      *
      * @return TingeeApiResponse<BankDeleteVAOutputDto>
      * @throws TingeeHttpException
      */
-    public function deleteVa(string $bankBin, ?string $bankName = null, string $vaAccountNumber, ?float $merchantId = null): TingeeApiResponse
+    public function deleteVa(?string $bankBin = null, ?string $bankName = null, string $vaAccountNumber, ?int $merchantId = null): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/delete-va',
+            '/v1/bank/delete-va',
             null,
             [
             'bankBin' => $bankBin,
@@ -354,7 +349,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/confirm-delete-va
+     * POST /v1/bank/confirm-delete-va
      *
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
@@ -363,7 +358,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/confirm-delete-va',
+            '/v1/bank/confirm-delete-va',
             $body,
             [],
             EmptyDto::class
@@ -373,7 +368,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/register-notify
+     * POST /v1/bank/register-notify
      *
      * @return TingeeApiResponse<BankDeleteVAOutputDto>
      * @throws TingeeHttpException
@@ -382,7 +377,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/register-notify',
+            '/v1/bank/register-notify',
             $body,
             [],
             BankDeleteVAOutputDto::class
@@ -392,7 +387,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/confirm-register-notify
+     * POST /v1/bank/confirm-register-notify
      *
      * @return TingeeApiResponse<BankDeleteVAOutputDto>
      * @throws TingeeHttpException
@@ -401,7 +396,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/confirm-register-notify',
+            '/v1/bank/confirm-register-notify',
             $body,
             [],
             BankDeleteVAOutputDto::class
@@ -411,7 +406,7 @@ class TingeeV1Methods
     }
 
     /**
-     * POST /v1/refund
+     * POST /v1/bank/refund
      *
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
@@ -420,7 +415,7 @@ class TingeeV1Methods
     {
         $response = $this->httpClient->request(
             'POST',
-            '/v1/refund',
+            '/v1/bank/refund',
             $body,
             [],
             EmptyDto::class
@@ -428,6 +423,12 @@ class TingeeV1Methods
         /** @var TingeeApiResponse<EmptyDto> $response */
         return $response;
     }
+}
+
+class TingeeDeviceGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
 
     /**
      * POST /v1/device/read-security-code
@@ -435,7 +436,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
      */
-    public function deviceReadSecurityCode(OpenApiReadSecurityCodeDto $body): TingeeApiResponse
+    public function readSecurityCode(OpenApiReadSecurityCodeDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -454,7 +455,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
      */
-    public function deviceReadPartnerSecurityCode(OpenApiReadPartnerSecurityCodeDto $body): TingeeApiResponse
+    public function readPartnerSecurityCode(OpenApiReadPartnerSecurityCodeDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -473,7 +474,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<array>
      * @throws TingeeHttpException
      */
-    public function deviceAddDeviceToShop(OpenApiAddDeviceToShop $body): TingeeApiResponse
+    public function addDeviceToShop(OpenApiAddDeviceToShop $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -492,7 +493,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
      */
-    public function deviceUpdateShopDeviceLinkStatus(OpenApiUpdateShopDeviceLinkDto $body): TingeeApiResponse
+    public function updateShopDeviceLinkStatus(OpenApiUpdateShopDeviceLinkDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -511,7 +512,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
      */
-    public function deviceReadAmount(BIDVOpenApiReadAmountDto $body): TingeeApiResponse
+    public function readAmount(BIDVOpenApiReadAmountDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -530,7 +531,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
      */
-    public function deviceReadAmountLinkToMerchant(OpenApiReadAmountDto $body): TingeeApiResponse
+    public function readAmountLinkToMerchant(OpenApiReadAmountDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -549,7 +550,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
      */
-    public function deviceShowQrCode(OpenApiShowQRCodeDto $body): TingeeApiResponse
+    public function showQrCode(OpenApiShowQRCodeDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -568,7 +569,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
      */
-    public function deviceShowDynamicQrCode(OpenApiShowQRCodeDto $body): TingeeApiResponse
+    public function showDynamicQrCode(OpenApiShowQRCodeDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -587,7 +588,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
      */
-    public function deviceShowStaticQrCode(OpenApiShowQRCodeDto $body): TingeeApiResponse
+    public function showStaticQrCode(OpenApiShowQRCodeDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -606,7 +607,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<array>
      * @throws TingeeHttpException
      */
-    public function deviceGetDevicesLinkToShopOrVa(OpenApiGetDevicesLinkToShopOrVA $body): TingeeApiResponse
+    public function getDevicesLinkToShopOrVa(OpenApiGetDevicesLinkToShopOrVA $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -625,7 +626,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<PagedResultDto<DeviceDto>>
      * @throws TingeeHttpException
      */
-    public function deviceGetPaging(OpenApiGetPagingDeviceInputDto $body): TingeeApiResponse
+    public function getPaging(OpenApiGetPagingDeviceInputDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -644,7 +645,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<String>
      * @throws TingeeHttpException
      */
-    public function deviceReset(string $uuid): TingeeApiResponse
+    public function reset(string $uuid): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'DELETE',
@@ -655,9 +656,33 @@ class TingeeV1Methods
         ],
             ''
         );
-        /** @var TingeeApiResponse<string> $response */
+        /** @var TingeeApiResponse<String> $response */
         return $response;
     }
+
+    /**
+     * POST /v1/device/generate-and-show-dynamic-qr-code
+     *
+     * @return TingeeApiResponse<mixed>
+     * @throws TingeeHttpException
+     */
+    public function generateAndShowDynamicQrCode(OpenApiGenerateAndShowDynamicQrCodeDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/device/generate-and-show-dynamic-qr-code',
+            $body,
+            [],
+            ''
+        );
+        return $response;
+    }
+}
+
+class TingeeUserGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
 
     /**
      * POST /v1/user/verify-referral-code
@@ -665,7 +690,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<OpenApiVerifyReferralCodeResponseDto>
      * @throws TingeeHttpException
      */
-    public function userVerifyReferralCode(string $referralCode): TingeeApiResponse
+    public function verifyReferralCode(string $referralCode): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -679,6 +704,12 @@ class TingeeV1Methods
         /** @var TingeeApiResponse<OpenApiVerifyReferralCodeResponseDto> $response */
         return $response;
     }
+}
+
+class TingeeShopGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
 
     /**
      * POST /v1/shop/create-or-update
@@ -686,7 +717,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<OpenApiCreateOrUpdateShopOutputDto>
      * @throws TingeeHttpException
      */
-    public function shopCreateOrUpdate(OpenApiCreateOrUpdateShopDto $body): TingeeApiResponse
+    public function createOrUpdate(OpenApiCreateOrUpdateShopDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -705,7 +736,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<PagedResultDto<OpenApiGetShopPagedOuputDto>>
      * @throws TingeeHttpException
      */
-    public function shopGetPaging(OpenApiGetShopPagedInputDto $body): TingeeApiResponse
+    public function getPaging(OpenApiGetShopPagedInputDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -717,6 +748,12 @@ class TingeeV1Methods
         /** @var TingeeApiResponse<PagedResultDto<OpenApiGetShopPagedOuputDto>> $response */
         return $response;
     }
+}
+
+class TingeeDeepLinkGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
 
     /**
      * POST /v1/deep-link/generate
@@ -724,7 +761,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<String>
      * @throws TingeeHttpException
      */
-    public function deepLinkGenerate(OpenApiDeepLinkDto $body): TingeeApiResponse
+    public function generate(OpenApiDeepLinkDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -733,9 +770,15 @@ class TingeeV1Methods
             [],
             ''
         );
-        /** @var TingeeApiResponse<string> $response */
+        /** @var TingeeApiResponse<String> $response */
         return $response;
     }
+}
+
+class TingeeAccountNumberGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
 
     /**
      * POST /v1/account-number/get-all-ddl
@@ -743,7 +786,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<array>
      * @throws TingeeHttpException
      */
-    public function accountNumberGetAllDdl(OpenApiAccountNumberDDLPagedInputDto $body): TingeeApiResponse
+    public function getAllDdl(OpenApiAccountNumberDDLPagedInputDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -755,6 +798,12 @@ class TingeeV1Methods
         /** @var TingeeApiResponse<array> $response */
         return $response;
     }
+}
+
+class TingeeTransactionGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
 
     /**
      * POST /v1/transaction/get-paging
@@ -762,7 +811,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<PagedResultDto<OpenApiTransactionPagedOuputDto>>
      * @throws TingeeHttpException
      */
-    public function transactionGetPaging(OpenApiTransactionPagedInputDto $body): TingeeApiResponse
+    public function getPaging(OpenApiTransactionPagedInputDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -774,6 +823,12 @@ class TingeeV1Methods
         /** @var TingeeApiResponse<PagedResultDto<OpenApiTransactionPagedOuputDto>> $response */
         return $response;
     }
+}
+
+class TingeeMerchantGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
 
     /**
      * POST /v1/merchant/get-paging-config
@@ -781,7 +836,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<PagedResultDto<MerchantBankConfigPagedOutputDto>>
      * @throws TingeeHttpException
      */
-    public function merchantGetPagingConfig(OpenApiMerchantBankConfigPagedInputDto $body): TingeeApiResponse
+    public function getPagingConfig(OpenApiMerchantBankConfigPagedInputDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -800,7 +855,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<Number>
      * @throws TingeeHttpException
      */
-    public function merchantCreateOrUpdateConfig(OpenApiBankCreateOrUpdateConfigDto $body): TingeeApiResponse
+    public function createOrUpdateConfig(OpenApiBankCreateOrUpdateConfigDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -809,7 +864,7 @@ class TingeeV1Methods
             [],
             ''
         );
-        /** @var TingeeApiResponse<int|float> $response */
+        /** @var TingeeApiResponse<Number> $response */
         return $response;
     }
 
@@ -819,7 +874,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<Number>
      * @throws TingeeHttpException
      */
-    public function merchantDeleteConfig(OpenApiDeleteConfigDto $body): TingeeApiResponse
+    public function deleteConfig(OpenApiDeleteConfigDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -828,7 +883,7 @@ class TingeeV1Methods
             [],
             ''
         );
-        /** @var TingeeApiResponse<int|float> $response */
+        /** @var TingeeApiResponse<Number> $response */
         return $response;
     }
 
@@ -838,7 +893,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<OpenApiCreateBankVAOutputDto>
      * @throws TingeeHttpException
      */
-    public function merchantConfigAccountBusiness(OpenApiConfigAccountBusinessDto $body): TingeeApiResponse
+    public function configAccountBusiness(OpenApiConfigAccountBusinessDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -857,7 +912,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<mixed>
      * @throws TingeeHttpException
      */
-    public function merchantDeleteConfigAccountBusiness(OpenApiDeleteConfigBusinessDto $body): TingeeApiResponse
+    public function deleteConfigAccountBusiness(OpenApiDeleteConfigBusinessDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -875,7 +930,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<Number>
      * @throws TingeeHttpException
      */
-    public function merchantCreate(OpenApiCreateMerchantDto $body): TingeeApiResponse
+    public function create(OpenApiCreateMerchantDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -884,7 +939,7 @@ class TingeeV1Methods
             [],
             ''
         );
-        /** @var TingeeApiResponse<int|float> $response */
+        /** @var TingeeApiResponse<Number> $response */
         return $response;
     }
 
@@ -894,7 +949,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<PagedResultDto<MerchantDto>>
      * @throws TingeeHttpException
      */
-    public function merchantGetPaging(OpenApiGetPagingMerchantsDto $body): TingeeApiResponse
+    public function getPaging(OpenApiGetPagingMerchantsDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -913,7 +968,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<EmptyDto>
      * @throws TingeeHttpException
      */
-    public function merchantDelete(float $merchantId): TingeeApiResponse
+    public function delete(float $merchantId): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'DELETE',
@@ -927,6 +982,12 @@ class TingeeV1Methods
         /** @var TingeeApiResponse<EmptyDto> $response */
         return $response;
     }
+}
+
+class TingeeDirectDebitGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
 
     /**
      * POST /v1/direct-debit/register
@@ -934,7 +995,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<String>
      * @throws TingeeHttpException
      */
-    public function directDebitRegister(OpenApiRegisterDto $body): TingeeApiResponse
+    public function register(OpenApiRegisterDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -943,7 +1004,7 @@ class TingeeV1Methods
             [],
             ''
         );
-        /** @var TingeeApiResponse<string> $response */
+        /** @var TingeeApiResponse<String> $response */
         return $response;
     }
 
@@ -953,7 +1014,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<PaymentBillResponseDto>
      * @throws TingeeHttpException
      */
-    public function directDebitPaymentBill(OpenApiPaymentBillDto $body): TingeeApiResponse
+    public function paymentBill(OpenApiPaymentBillDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -972,7 +1033,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<DeleteSubscriptionOutputDto>
      * @throws TingeeHttpException
      */
-    public function directDebitDeleteSubscription(OpenApiDeleteSubscriptionDto $body): TingeeApiResponse
+    public function deleteSubscription(OpenApiDeleteSubscriptionDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'DELETE',
@@ -991,7 +1052,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<RefundOutputDto>
      * @throws TingeeHttpException
      */
-    public function directDebitRefund(OpenApiRefundInputDto $body): TingeeApiResponse
+    public function refund(OpenApiRefundInputDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
@@ -1010,7 +1071,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<String>
      * @throws TingeeHttpException
      */
-    public function directDebitEditConfirmPaymentMethod(OpenApiEditConfirmBeforePaymentMethodDto $body): TingeeApiResponse
+    public function editConfirmPaymentMethod(OpenApiEditConfirmBeforePaymentMethodDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'PUT',
@@ -1019,7 +1080,7 @@ class TingeeV1Methods
             [],
             ''
         );
-        /** @var TingeeApiResponse<string> $response */
+        /** @var TingeeApiResponse<String> $response */
         return $response;
     }
 
@@ -1029,7 +1090,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<OpenApiSubscriptionStatusResponseDto>
      * @throws TingeeHttpException
      */
-    public function directDebitGetSubscriptionStatus(string $requestId, string $subscriptionId, string $tokenRef): TingeeApiResponse
+    public function getSubscriptionStatus(?string $requestId = null, string $subscriptionId, string $tokenRef): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'GET',
@@ -1052,7 +1113,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<OpenApiPaymentTransactionStatusResponseDto>
      * @throws TingeeHttpException
      */
-    public function directDebitGetTransactionStatus(string $transactionId, string $tokenRef, string $subscriptionId): TingeeApiResponse
+    public function getTransactionStatus(string $transactionId, string $tokenRef, string $subscriptionId): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'GET',
@@ -1075,7 +1136,7 @@ class TingeeV1Methods
      * @return TingeeApiResponse<PagedResultDto<OpenApiPaymentTransactionsPagedOutputDto>>
      * @throws TingeeHttpException
      */
-    public function directDebitGetPagingTransactions(string $subscriptionId, string $tokenRef, ?string $startTime = null, ?string $endTime = null, ?float $skipCount = null, ?float $maxResultCount = null): TingeeApiResponse
+    public function getPagingTransactions(string $subscriptionId, string $tokenRef, ?string $startTime = null, ?string $endTime = null, ?int $skipCount = null, ?int $maxResultCount = null): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'GET',
@@ -1100,11 +1161,26 @@ trait TingeeClientGenerated
 {
     protected TingeeHttpClient $httpClient;
 
-    /** @var TingeeV1Methods */
-    public TingeeV1Methods $v1;
+    public TingeeBankGroup $bank;
+    public TingeeDeviceGroup $device;
+    public TingeeUserGroup $user;
+    public TingeeShopGroup $shop;
+    public TingeeDeepLinkGroup $deepLink;
+    public TingeeAccountNumberGroup $accountNumber;
+    public TingeeTransactionGroup $transaction;
+    public TingeeMerchantGroup $merchant;
+    public TingeeDirectDebitGroup $directDebit;
 
-    protected function initVersionNamespaces(): void
+    public function initGroups(): void
     {
-        $this->v1 = new TingeeV1Methods($this->httpClient);
+        $this->bank = new TingeeBankGroup($this->httpClient);
+        $this->device = new TingeeDeviceGroup($this->httpClient);
+        $this->user = new TingeeUserGroup($this->httpClient);
+        $this->shop = new TingeeShopGroup($this->httpClient);
+        $this->deepLink = new TingeeDeepLinkGroup($this->httpClient);
+        $this->accountNumber = new TingeeAccountNumberGroup($this->httpClient);
+        $this->transaction = new TingeeTransactionGroup($this->httpClient);
+        $this->merchant = new TingeeMerchantGroup($this->httpClient);
+        $this->directDebit = new TingeeDirectDebitGroup($this->httpClient);
     }
 }

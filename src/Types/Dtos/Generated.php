@@ -11,7 +11,6 @@ class OpenApiOuputDto implements \JsonSerializable
     public string $code = '';
     public string $message = '';
     public $data = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -24,11 +23,10 @@ class OpenApiOuputDto implements \JsonSerializable
 
 class GenerateVietQROuputDto implements \JsonSerializable
 {
-    public string $qrCode = '';
-    public string $qrCodeImage = '';
-    public string $qrAccount = '';
-    public string $referenceLabelCode = '';
-
+    public ?string $qrCode = null;
+    public ?string $qrCodeImage = null;
+    public ?string $qrAccount = null;
+    public ?string $referenceLabelCode = null;
     public function jsonSerialize(): array
     {
         return [
@@ -42,11 +40,16 @@ class GenerateVietQROuputDto implements \JsonSerializable
 
 class OpenApiGenerateVietQRInputDto implements \JsonSerializable
 {
-    public string $bankBin = '';
+    public ?string $bankBin = null;
     public ?string $bankName = null;
-    public string $accountNumber = '';
-    public float $amount = 0.0;
-    public string $content = '';
+    public string $accountNumber;
+    public ?int $amount = null;
+    public ?string $content = null;
+    /** Required fields constructor. */
+    public function __construct(string $accountNumber)
+    {
+        $this->accountNumber = $accountNumber;
+    }
 
     public function jsonSerialize(): array
     {
@@ -62,10 +65,9 @@ class OpenApiGenerateVietQRInputDto implements \JsonSerializable
 
 class GenerateDynamicQROuputDto implements \JsonSerializable
 {
-    public string $qrCode = '';
-    public string $qrAccount = '';
-    public string $billId = '';
-
+    public ?string $qrCode = null;
+    public ?string $qrAccount = null;
+    public ?string $billId = null;
     public function jsonSerialize(): array
     {
         return [
@@ -78,14 +80,23 @@ class GenerateDynamicQROuputDto implements \JsonSerializable
 
 class GenerateDynamicQRInputDto implements \JsonSerializable
 {
-    public float $merchantId = 0.0;
-    public string $vaAccountNumber = '';
-    public string $qrCodeType = '';
-    public string $bankBin = '';
+    public ?int $merchantId = null;
+    public string $vaAccountNumber;
+    public string $qrCodeType;
+    public ?string $bankBin = null;
     public ?string $bankName = null;
-    public float $amount = 0.0;
-    public string $purpose = '';
+    public int $amount;
+    public ?string $purpose = null;
+    public int $expireInMinute;
     public ?string $extraInfo = null;
+    /** Required fields constructor. */
+    public function __construct(string $vaAccountNumber, string $qrCodeType, int $amount, int $expireInMinute)
+    {
+        $this->vaAccountNumber = $vaAccountNumber;
+        $this->qrCodeType = $qrCodeType;
+        $this->amount = $amount;
+        $this->expireInMinute = $expireInMinute;
+    }
 
     public function jsonSerialize(): array
     {
@@ -97,6 +108,7 @@ class GenerateDynamicQRInputDto implements \JsonSerializable
             'bankName' => $this->bankName,
             'amount' => $this->amount,
             'purpose' => $this->purpose,
+            'expireInMinute' => $this->expireInMinute,
             'extraInfo' => $this->extraInfo,
         ];
     }
@@ -104,7 +116,6 @@ class GenerateDynamicQRInputDto implements \JsonSerializable
 
 class EmptyDto implements \JsonSerializable
 {
-
 
     public function jsonSerialize(): array
     {
@@ -116,9 +127,15 @@ class EmptyDto implements \JsonSerializable
 
 class OpenApiDeleteDynamicQRInputDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $qrAccount = '';
-    public string $billId = '';
+    public ?int $merchantId = null;
+    public string $qrAccount;
+    public string $billId;
+    /** Required fields constructor. */
+    public function __construct(string $qrAccount, string $billId)
+    {
+        $this->qrAccount = $qrAccount;
+        $this->billId = $billId;
+    }
 
     public function jsonSerialize(): array
     {
@@ -145,7 +162,6 @@ class OpenApiBillInfoDto implements \JsonSerializable
     public float $expireInMinute = 0.0;
     public ?string $extraInfo = null;
     public string $status = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -169,20 +185,19 @@ class OpenApiBillInfoDto implements \JsonSerializable
 class OpenApiTransactionPagedOuputDto implements \JsonSerializable
 {
     public string $transactionId = '';
-    public float $merchantId = 0.0;
-    public float $shopId = 0.0;
+    public int $merchantId = 0;
+    public int $shopId = 0;
     public ?string $bankBin = null;
     public ?string $cashFlowSource = null;
     public string $code = '';
-    public float $amount = 0.0;
+    public int $amount = 0;
     public ?string $type = null;
     public ?string $content = null;
     public ?string $currency = null;
     public string $accountNumber = '';
     public ?string $vaAccountNumber = null;
     public ?string $transactionDate = null;
-    public string $billId = '';
-
+    public ?string $billId = null;
     public function jsonSerialize(): array
     {
         return [
@@ -209,7 +224,6 @@ class OpenApiGetStatusDynamicQROutputDto implements \JsonSerializable
     public ?OpenApiBillInfoDto $billInfo = null;
     /** @var OpenApiTransactionPagedOuputDto[]|null */
     public array $transactionInfos = [];
-
     public function jsonSerialize(): array
     {
         return [
@@ -221,9 +235,15 @@ class OpenApiGetStatusDynamicQROutputDto implements \JsonSerializable
 
 class OpenApiGetStatusDynamicQRInputDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $qrAccount = '';
-    public string $billId = '';
+    public ?int $merchantId = null;
+    public string $qrAccount;
+    public string $billId;
+    /** Required fields constructor. */
+    public function __construct(string $qrAccount, string $billId)
+    {
+        $this->qrAccount = $qrAccount;
+        $this->billId = $billId;
+    }
 
     public function jsonSerialize(): array
     {
@@ -243,7 +263,6 @@ class Bank implements \JsonSerializable
     public ?string $bin = null;
     public ?string $urlLogo = null;
     public $termsAndConditions = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -262,7 +281,7 @@ class Bank implements \JsonSerializable
  */
 class PagedResultDto implements \JsonSerializable
 {
-    public /* ?float */ $totalCount = null;
+    public ?int $totalCount = null;
     /** @var array<T> */
     public array $items = [];
 
@@ -278,15 +297,14 @@ class PagedResultDto implements \JsonSerializable
 class OpenApiGetVAPagedOuputDto implements \JsonSerializable
 {
     public string $bankName = '';
-    public string $bankBin = '';
+    public ?string $bankBin = null;
     public string $accountType = '';
     public ?string $accountName = null;
     public string $accountNumber = '';
     public ?string $vaAccountNumber = null;
-    public float $shopId = 0.0;
+    public int $shopId = 0;
     public string $status = '';
-    public string $creationTime = '';
-
+    public ?string $creationTime = null;
     public function jsonSerialize(): array
     {
         return [
@@ -307,17 +325,26 @@ class OpenApiGetVAPagedInputDto implements \JsonSerializable
 {
     public ?string $filter = null;
     public ?string $sorting = null;
-    public float $skipCount = 0.0;
-    public float $maxResultCount = 0.0;
+    public int $skipCount;
+    public int $maxResultCount;
     public ?string $startTime = null;
     public ?string $endTime = null;
-    public float $merchantId = 0.0;
-    public ?float $shopId = null;
-    public string $accountType = '';
-    public ?float $agentId = null;
-    public string $dataAccess = '';
-    public string $bankBin = '';
-    public string $bankName = '';
+    public int $merchantId;
+    public ?int $shopId = null;
+    public string $accountType;
+    public ?int $agentId = null;
+    public string $dataAccess;
+    public ?string $bankBin = null;
+    public ?string $bankName = null;
+    /** Required fields constructor. */
+    public function __construct(int $skipCount, int $maxResultCount, int $merchantId, string $accountType, string $dataAccess)
+    {
+        $this->skipCount = $skipCount;
+        $this->maxResultCount = $maxResultCount;
+        $this->merchantId = $merchantId;
+        $this->accountType = $accountType;
+        $this->dataAccess = $dataAccess;
+    }
 
     public function jsonSerialize(): array
     {
@@ -343,11 +370,10 @@ class OpenApiGenerateVietQROuputDto implements \JsonSerializable
 {
     public string $bankBin = '';
     public string $accountNumber = '';
-    public string $amount = '';
-    public string $purpose = '';
+    public ?string $amount = null;
+    public ?string $purpose = null;
     public string $vaPrefix = '';
     public string $vaSuffix = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -364,14 +390,13 @@ class OpenApiGenerateVietQROuputDto implements \JsonSerializable
 class BankCreateVAOuputDto implements \JsonSerializable
 {
     public string $bankName = '';
-    public float $merchantAccountNumberId = 0.0;
-    public float $shopId = 0.0;
+    public int $merchantAccountNumberId = 0;
+    public ?int $shopId = null;
     public string $status = '';
     public ?string $confirmId = null;
     public ?string $vaAccountNumber = null;
     public ?string $deepLink = null;
-    public string $otpMethod = '';
-
+    public ?string $otpMethod = null;
     public function jsonSerialize(): array
     {
         return [
@@ -391,18 +416,18 @@ class OpenApiCreateVAInpuDto implements \JsonSerializable
 {
     public ?string $name = null;
     public ?string $cashFlowSource = null;
-    public string $accountType = '';
-    public string $accountNumber = '';
-    public string $accountName = '';
-    public string $identity = '';
-    public string $mobile = '';
-    public ?float $masterMerchantId = null;
-    public ?float $shopId = null;
+    public string $accountType;
+    public string $accountNumber;
+    public string $accountName;
+    public string $identity;
+    public string $mobile;
+    public ?int $masterMerchantId = null;
+    public ?int $shopId = null;
     public ?string $vaPrefix = null;
     public ?string $vaSuffix = null;
     public ?string $merchantName = null;
     public ?string $merchantAddress = null;
-    public ?float $serviceId = null;
+    public ?int $serviceId = null;
     public ?bool $isCreateNonOtp = null;
     public ?string $code = null;
     public ?string $taxCode = null;
@@ -412,16 +437,28 @@ class OpenApiCreateVAInpuDto implements \JsonSerializable
     public ?string $softposMid = null;
     public ?string $authorizationCode = null;
     public ?string $sessionLogin = null;
-    public bool $isNotifyAccountNumber = false;
-    public string $appType = '';
-    public string $linkType = '';
+    public ?bool $isNotifyAccountNumber = null;
+    public string $appType;
+    public ?string $linkType = null;
     public ?string $vaAccountNumber = null;
     public ?string $acbUserId = null;
-    public string $bankBin = '';
+    public ?string $bankBin = null;
     public ?string $bankName = null;
-    public ?float $merchantId = null;
-    public string $redirectUrl = '';
-    public string $webhookUrl = '';
+    public ?int $merchantId = null;
+    public string $redirectUrl;
+    public string $webhookUrl;
+    /** Required fields constructor. */
+    public function __construct(string $accountType, string $accountNumber, string $accountName, string $identity, string $mobile, string $appType, string $redirectUrl, string $webhookUrl)
+    {
+        $this->accountType = $accountType;
+        $this->accountNumber = $accountNumber;
+        $this->accountName = $accountName;
+        $this->identity = $identity;
+        $this->mobile = $mobile;
+        $this->appType = $appType;
+        $this->redirectUrl = $redirectUrl;
+        $this->webhookUrl = $webhookUrl;
+    }
 
     public function jsonSerialize(): array
     {
@@ -469,7 +506,6 @@ class OpenApiConfirmVAOuputDto implements \JsonSerializable
     public string $bankName = '';
     public string $accountNumber = '';
     public string $vaAccountNumber = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -483,11 +519,19 @@ class OpenApiConfirmVAOuputDto implements \JsonSerializable
 
 class OpenApiBankConfirmVAInputDto implements \JsonSerializable
 {
-    public float $merchantId = 0.0;
-    public string $confirmId = '';
-    public string $otpNumber = '';
-    public string $bankName = '';
-    public string $bankBin = '';
+    public ?int $merchantId = null;
+    public string $confirmId;
+    public string $otpNumber;
+    public string $bankName;
+    public string $bankBin;
+    /** Required fields constructor. */
+    public function __construct(string $confirmId, string $otpNumber, string $bankName, string $bankBin)
+    {
+        $this->confirmId = $confirmId;
+        $this->otpNumber = $otpNumber;
+        $this->bankName = $bankName;
+        $this->bankBin = $bankBin;
+    }
 
     public function jsonSerialize(): array
     {
@@ -504,7 +548,6 @@ class OpenApiBankConfirmVAInputDto implements \JsonSerializable
 class BankDeleteVAOutputDto implements \JsonSerializable
 {
     public ?string $confirmId = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -515,10 +558,15 @@ class BankDeleteVAOutputDto implements \JsonSerializable
 
 class OpenApiRegisterNotifyDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $vaAccountNumber = '';
-    public string $bankBin = '';
+    public ?int $merchantId = null;
+    public string $vaAccountNumber;
+    public ?string $bankBin = null;
     public ?string $bankName = null;
+    /** Required fields constructor. */
+    public function __construct(string $vaAccountNumber)
+    {
+        $this->vaAccountNumber = $vaAccountNumber;
+    }
 
     public function jsonSerialize(): array
     {
@@ -533,10 +581,15 @@ class OpenApiRegisterNotifyDto implements \JsonSerializable
 
 class OpenApiRefundDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $transactionCode = '';
-    public string $bankBin = '';
+    public ?int $merchantId = null;
+    public string $transactionCode;
+    public ?string $bankBin = null;
     public ?string $bankName = null;
+    /** Required fields constructor. */
+    public function __construct(string $transactionCode)
+    {
+        $this->transactionCode = $transactionCode;
+    }
 
     public function jsonSerialize(): array
     {
@@ -551,8 +604,13 @@ class OpenApiRefundDto implements \JsonSerializable
 
 class OpenApiReadSecurityCodeDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $uuid = '';
+    public ?int $merchantId = null;
+    public string $uuid;
+    /** Required fields constructor. */
+    public function __construct(string $uuid)
+    {
+        $this->uuid = $uuid;
+    }
 
     public function jsonSerialize(): array
     {
@@ -565,9 +623,15 @@ class OpenApiReadSecurityCodeDto implements \JsonSerializable
 
 class OpenApiReadPartnerSecurityCodeDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $uuid = '';
-    public string $securityCode = '';
+    public ?int $merchantId = null;
+    public string $uuid;
+    public string $securityCode;
+    /** Required fields constructor. */
+    public function __construct(string $uuid, string $securityCode)
+    {
+        $this->uuid = $uuid;
+        $this->securityCode = $securityCode;
+    }
 
     public function jsonSerialize(): array
     {
@@ -583,7 +647,6 @@ class SendNotifyTingeeBoxDto implements \JsonSerializable
 {
     public string $type = '';
     public string $uuid = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -595,13 +658,20 @@ class SendNotifyTingeeBoxDto implements \JsonSerializable
 
 class OpenApiAddDeviceToShop implements \JsonSerializable
 {
-    public string $uuid = '';
-    public string $securityCode = '';
-    public string $appType = '';
+    public string $uuid;
+    public string $securityCode;
+    public string $appType;
     public ?float $masterMerchantId = null;
-    public ?float $merchantId = null;
-    public array $vaAccountNumbers = [];
+    public ?int $merchantId = null;
+    public ?array $vaAccountNumbers = null;
     public ?array $shopIds = null;
+    /** Required fields constructor. */
+    public function __construct(string $uuid, string $securityCode, string $appType)
+    {
+        $this->uuid = $uuid;
+        $this->securityCode = $securityCode;
+        $this->appType = $appType;
+    }
 
     public function jsonSerialize(): array
     {
@@ -620,11 +690,10 @@ class OpenApiAddDeviceToShop implements \JsonSerializable
 class OpenApiShopLinkToDeviceDto implements \JsonSerializable
 {
     public string $shopName = '';
-    public float $shopId = 0.0;
+    public int $shopId = 0;
     public bool $isLinkToDevice = false;
     public string $fullAddress = '';
-    public string $vaAccountNumber = '';
-
+    public ?string $vaAccountNumber = null;
     public function jsonSerialize(): array
     {
         return [
@@ -639,12 +708,20 @@ class OpenApiShopLinkToDeviceDto implements \JsonSerializable
 
 class OpenApiUpdateShopDeviceLinkDto implements \JsonSerializable
 {
-    public string $uuid = '';
-    public string $type = '';
-    public string $appType = '';
+    public string $uuid;
+    public string $type;
+    public string $appType;
     /** @var OpenApiShopLinkToDeviceDto[]|null */
-    public array $shopsLinkToDeviceDtos = [];
-    public ?float $merchantId = null;
+    public array $shopsLinkToDeviceDtos;
+    public ?int $merchantId = null;
+    /** Required fields constructor. */
+    public function __construct(string $uuid, string $type, string $appType, array $shopsLinkToDeviceDtos)
+    {
+        $this->uuid = $uuid;
+        $this->type = $type;
+        $this->appType = $appType;
+        $this->shopsLinkToDeviceDtos = $shopsLinkToDeviceDtos;
+    }
 
     public function jsonSerialize(): array
     {
@@ -660,14 +737,22 @@ class OpenApiUpdateShopDeviceLinkDto implements \JsonSerializable
 
 class BIDVOpenApiReadAmountDto implements \JsonSerializable
 {
-    public string $uuid = '';
-    public string $transactionId = '';
-    public float $amount = 0.0;
-    public string $bankBin = '';
-    public string $firstDisplayText = '';
-    public string $secondDisplayText = '';
-    public string $thirdDisplayText = '';
-    public bool $playSound = false;
+    public string $uuid;
+    public string $transactionId;
+    public int $amount;
+    public string $bankBin;
+    public ?string $firstDisplayText = null;
+    public ?string $secondDisplayText = null;
+    public ?string $thirdDisplayText = null;
+    public ?bool $playSound = null;
+    /** Required fields constructor. */
+    public function __construct(string $uuid, string $transactionId, int $amount, string $bankBin)
+    {
+        $this->uuid = $uuid;
+        $this->transactionId = $transactionId;
+        $this->amount = $amount;
+        $this->bankBin = $bankBin;
+    }
 
     public function jsonSerialize(): array
     {
@@ -686,15 +771,23 @@ class BIDVOpenApiReadAmountDto implements \JsonSerializable
 
 class OpenApiReadAmountDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $uuid = '';
-    public string $transactionId = '';
-    public float $amount = 0.0;
-    public string $bankBin = '';
-    public string $firstDisplayText = '';
-    public string $secondDisplayText = '';
-    public string $thirdDisplayText = '';
-    public bool $playSound = false;
+    public ?int $merchantId = null;
+    public string $uuid;
+    public string $transactionId;
+    public int $amount;
+    public string $bankBin;
+    public ?string $firstDisplayText = null;
+    public ?string $secondDisplayText = null;
+    public ?string $thirdDisplayText = null;
+    public ?bool $playSound = null;
+    /** Required fields constructor. */
+    public function __construct(string $uuid, string $transactionId, int $amount, string $bankBin)
+    {
+        $this->uuid = $uuid;
+        $this->transactionId = $transactionId;
+        $this->amount = $amount;
+        $this->bankBin = $bankBin;
+    }
 
     public function jsonSerialize(): array
     {
@@ -714,20 +807,27 @@ class OpenApiReadAmountDto implements \JsonSerializable
 
 class OpenApiShowQRCodeDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $uuid = '';
-    public string $vaAccountNumber = '';
-    public float $amount = 0.0;
-    public string $qrCode = '';
-    public string $bankBin = '';
+    public ?int $merchantId = null;
+    public string $uuid;
+    public ?string $vaAccountNumber = null;
+    public int $amount;
+    public string $qrCode;
+    public ?string $bankBin = null;
     public ?string $bankName = null;
     public ?string $deviceType = null;
-    public string $firstText = '';
-    public string $secondText = '';
-    public string $thirdText = '';
-    public float $showTime = 0.0;
-    public bool $isStaticQr = false;
-    public bool $playSound = false;
+    public ?string $firstText = null;
+    public ?string $secondText = null;
+    public ?string $thirdText = null;
+    public ?int $showTime = null;
+    public ?bool $isStaticQr = null;
+    public ?bool $playSound = null;
+    /** Required fields constructor. */
+    public function __construct(string $uuid, int $amount, string $qrCode)
+    {
+        $this->uuid = $uuid;
+        $this->amount = $amount;
+        $this->qrCode = $qrCode;
+    }
 
     public function jsonSerialize(): array
     {
@@ -752,10 +852,9 @@ class OpenApiShowQRCodeDto implements \JsonSerializable
 
 class OpenApiGetDevicesLinkToShopOrVA implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $vaAccountNumber = '';
-    public ?float $shopId = null;
-
+    public ?int $merchantId = null;
+    public ?string $vaAccountNumber = null;
+    public ?int $shopId = null;
     public function jsonSerialize(): array
     {
         return [
@@ -769,7 +868,6 @@ class OpenApiGetDevicesLinkToShopOrVA implements \JsonSerializable
 class DeviceInfoDto implements \JsonSerializable
 {
 
-
     public function jsonSerialize(): array
     {
         return [
@@ -781,8 +879,7 @@ class DeviceInfoDto implements \JsonSerializable
 class ShopInfoDto implements \JsonSerializable
 {
     public string $name = '';
-    public float $id = 0.0;
-
+    public int $id = 0;
     public function jsonSerialize(): array
     {
         return [
@@ -794,7 +891,7 @@ class ShopInfoDto implements \JsonSerializable
 
 class DeviceDto implements \JsonSerializable
 {
-    public ?float $id = null;
+    public ?int $id = null;
     public string $creationTime = '';
     public ?float $creatorUserId = null;
     public string $lastModificationTime = '';
@@ -815,7 +912,7 @@ class DeviceDto implements \JsonSerializable
     public ?string $useDate = null;
     public ?string $securityCode = null;
     /** @var BankNameEnum[]|null */
-    public array $selectedBankNames = [];
+    public ?array $selectedBankNames = null;
     public ?string $userReferralAncestorIds = null;
     public ?float $userReferralLevel = null;
     public ?string $deviceDistributorAncestorIds = null;
@@ -825,8 +922,7 @@ class DeviceDto implements \JsonSerializable
     /** @var ShopInfoDto[]|null */
     public ?array $shopDtos = null;
     public ?string $agentName = null;
-    public ?float $agentId = null;
-
+    public ?int $agentId = null;
     public function jsonSerialize(): array
     {
         return [
@@ -868,10 +964,17 @@ class OpenApiGetPagingDeviceInputDto implements \JsonSerializable
 {
     public ?string $filter = null;
     public ?string $sorting = null;
-    public float $skipCount = 0.0;
-    public float $maxResultCount = 0.0;
-    public float $merchantId = 0.0;
+    public int $skipCount;
+    public int $maxResultCount;
+    public int $merchantId;
     public ?string $type = null;
+    /** Required fields constructor. */
+    public function __construct(int $skipCount, int $maxResultCount, int $merchantId)
+    {
+        $this->skipCount = $skipCount;
+        $this->maxResultCount = $maxResultCount;
+        $this->merchantId = $merchantId;
+    }
 
     public function jsonSerialize(): array
     {
@@ -886,14 +989,55 @@ class OpenApiGetPagingDeviceInputDto implements \JsonSerializable
     }
 }
 
-class String implements \JsonSerializable
+class OpenApiGenerateAndShowDynamicQrCodeDto implements \JsonSerializable
 {
-
+    public ?int $merchantId = null;
+    public string $vaAccountNumber;
+    public string $qrCodeType;
+    public ?string $bankBin = null;
+    public ?string $bankName = null;
+    public int $amount;
+    public ?string $purpose = null;
+    public int $expireInMinute;
+    public ?string $extraInfo = null;
+    public string $uuid;
+    public ?string $deviceType = null;
+    public ?string $firstText = null;
+    public ?string $secondText = null;
+    public ?string $thirdText = null;
+    public ?int $showTime = null;
+    public ?bool $playSound = null;
+    public ?bool $readAmountAfterPay = null;
+    /** Required fields constructor. */
+    public function __construct(string $vaAccountNumber, string $qrCodeType, int $amount, int $expireInMinute, string $uuid)
+    {
+        $this->vaAccountNumber = $vaAccountNumber;
+        $this->qrCodeType = $qrCodeType;
+        $this->amount = $amount;
+        $this->expireInMinute = $expireInMinute;
+        $this->uuid = $uuid;
+    }
 
     public function jsonSerialize(): array
     {
         return [
-
+            'merchantId' => $this->merchantId,
+            'vaAccountNumber' => $this->vaAccountNumber,
+            'qrCodeType' => $this->qrCodeType,
+            'bankBin' => $this->bankBin,
+            'bankName' => $this->bankName,
+            'amount' => $this->amount,
+            'purpose' => $this->purpose,
+            'expireInMinute' => $this->expireInMinute,
+            'extraInfo' => $this->extraInfo,
+            'uuid' => $this->uuid,
+            'deviceType' => $this->deviceType,
+            'firstText' => $this->firstText,
+            'secondText' => $this->secondText,
+            'thirdText' => $this->thirdText,
+            'showTime' => $this->showTime,
+            'playSound' => $this->playSound,
+            'readAmountAfterPay' => $this->readAmountAfterPay,
         ];
     }
 }
@@ -903,7 +1047,6 @@ class OpenApiVerifyReferralCodeResponseDto implements \JsonSerializable
     public bool $isValid = false;
     public ?bool $canConnectAllBanks = null;
     public ?array $bankBins = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -916,8 +1059,7 @@ class OpenApiVerifyReferralCodeResponseDto implements \JsonSerializable
 
 class OpenApiCreateOrUpdateShopOutputDto implements \JsonSerializable
 {
-    public float $shopId = 0.0;
-
+    public int $shopId = 0;
     public function jsonSerialize(): array
     {
         return [
@@ -929,7 +1071,6 @@ class OpenApiCreateOrUpdateShopOutputDto implements \JsonSerializable
 class SendNotifyTelegramDto implements \JsonSerializable
 {
     public float $chatId = 0.0;
-
     public function jsonSerialize(): array
     {
         return [
@@ -941,7 +1082,6 @@ class SendNotifyTelegramDto implements \JsonSerializable
 class SendNotifyLarkDto implements \JsonSerializable
 {
     public string $urlWebhook = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -954,7 +1094,6 @@ class SendNotifyZaloDto implements \JsonSerializable
 {
     public string $type = '';
     public string $name = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -974,7 +1113,6 @@ class SendNotifyPlatformDto implements \JsonSerializable
     public array $zaloDtos = [];
     /** @var SendNotifyTingeeBoxDto[]|null */
     public array $tingeeBoxDtos = [];
-
     public function jsonSerialize(): array
     {
         return [
@@ -988,22 +1126,29 @@ class SendNotifyPlatformDto implements \JsonSerializable
 
 class OpenApiCreateOrUpdateShopDto implements \JsonSerializable
 {
-    public ?float $id = null;
-    public string $name = '';
+    public ?int $id = null;
+    public string $name;
     public ?string $email = null;
-    public string $phoneNumber = '';
+    public string $phoneNumber;
     public ?string $provinceId = null;
     public ?string $districtId = null;
     public ?string $communeId = null;
     public ?string $address = null;
     public ?string $fullAddress = null;
     public ?SendNotifyPlatformDto $sendNotifyPlatformDto = null;
-    public bool $isActive = false;
+    public bool $isActive;
     public ?string $status = null;
     public ?string $userReferralAncestorIds = null;
-    public ?float $userReferralLevel = null;
+    public ?int $userReferralLevel = null;
     public ?string $deviceDistributorAncestorMap = null;
-    public ?float $merchantId = null;
+    public ?int $merchantId = null;
+    /** Required fields constructor. */
+    public function __construct(string $name, string $phoneNumber, bool $isActive)
+    {
+        $this->name = $name;
+        $this->phoneNumber = $phoneNumber;
+        $this->isActive = $isActive;
+    }
 
     public function jsonSerialize(): array
     {
@@ -1030,11 +1175,10 @@ class OpenApiCreateOrUpdateShopDto implements \JsonSerializable
 
 class OpenApiGetShopPagedOuputDto implements \JsonSerializable
 {
-    public float $id = 0.0;
+    public int $id = 0;
     public bool $isActive = false;
-    public float $name = 0.0;
+    public string $name = '';
     public ?string $address = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1050,9 +1194,15 @@ class OpenApiGetShopPagedInputDto implements \JsonSerializable
 {
     public ?string $filter = null;
     public ?string $sorting = null;
-    public float $skipCount = 0.0;
-    public float $maxResultCount = 0.0;
-    public ?float $merchantId = null;
+    public int $skipCount;
+    public int $maxResultCount;
+    public ?int $merchantId = null;
+    /** Required fields constructor. */
+    public function __construct(int $skipCount, int $maxResultCount)
+    {
+        $this->skipCount = $skipCount;
+        $this->maxResultCount = $maxResultCount;
+    }
 
     public function jsonSerialize(): array
     {
@@ -1072,7 +1222,6 @@ class GoogleModuleConfigDto implements \JsonSerializable
     public ?float $position = null;
     public ?string $placeId = null;
     public ?string $title = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1090,7 +1239,6 @@ class HotlineModuleConfigDto implements \JsonSerializable
     public ?float $position = null;
     public ?string $phoneNumber = null;
     public ?string $title = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1108,7 +1256,6 @@ class EmailModuleConfigDto implements \JsonSerializable
     public ?float $position = null;
     public ?string $email = null;
     public ?string $title = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1126,7 +1273,6 @@ class ZaloModuleConfigDto implements \JsonSerializable
     public ?float $position = null;
     public ?string $zaloId = null;
     public ?string $title = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1144,7 +1290,6 @@ class MessengerModuleConfigDto implements \JsonSerializable
     public ?float $position = null;
     public ?string $pageId = null;
     public ?string $title = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1163,7 +1308,6 @@ class PaymentModuleConfigDto implements \JsonSerializable
     public ?array $accountNumberIds = null;
     public ?string $title = null;
     public ?string $description = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1183,7 +1327,6 @@ class InvoiceModuleConfigDto implements \JsonSerializable
     public ?string $title = null;
     public ?string $description = null;
     public ?string $webhook = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1205,7 +1348,6 @@ class ShopNfcModuleItemDto implements \JsonSerializable
     public ?MessengerModuleConfigDto $messengerConfig = null;
     public ?PaymentModuleConfigDto $paymentConfig = null;
     public ?InvoiceModuleConfigDto $invoiceConfig = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1222,7 +1364,7 @@ class ShopNfcModuleItemDto implements \JsonSerializable
 
 class OpenApiShopNFCConfigDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
+    public ?int $merchantId = null;
     public float $shopId = 0.0;
     public string $displayName = '';
     public string $color = '';
@@ -1233,7 +1375,6 @@ class OpenApiShopNFCConfigDto implements \JsonSerializable
     public string $avatar = '';
     public bool $isActive = false;
     public ?ShopNfcModuleItemDto $modules = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1257,8 +1398,7 @@ class OpenApiLinkOrUnlinkNfcShopDto implements \JsonSerializable
     public string $nfcId = '';
     public float $shopId = 0.0;
     public bool $isLink = false;
-    public ?float $merchantId = null;
-
+    public ?int $merchantId = null;
     public function jsonSerialize(): array
     {
         return [
@@ -1272,18 +1412,31 @@ class OpenApiLinkOrUnlinkNfcShopDto implements \JsonSerializable
 
 class OpenApiDeepLinkDto implements \JsonSerializable
 {
-    public ?float $merchantId = null;
-    public string $type = '';
-    public string $qrCode = '';
-    public string $redirectUrl = '';
-    public string $callbackUrl = '';
-    public string $bankBin = '';
-    public string $destinationBankBin = '';
-    public string $accountName = '';
-    public string $accountNumber = '';
-    public float $amount = 0.0;
-    public string $content = '';
-    public string $billNumber = '';
+    public ?int $merchantId = null;
+    public string $type;
+    public string $qrCode;
+    public string $redirectUrl;
+    public string $callbackUrl;
+    public string $bankBin;
+    public string $destinationBankBin;
+    public string $accountName;
+    public string $accountNumber;
+    public ?int $amount = null;
+    public ?string $content = null;
+    public string $billNumber;
+    /** Required fields constructor. */
+    public function __construct(string $type, string $qrCode, string $redirectUrl, string $callbackUrl, string $bankBin, string $destinationBankBin, string $accountName, string $accountNumber, string $billNumber)
+    {
+        $this->type = $type;
+        $this->qrCode = $qrCode;
+        $this->redirectUrl = $redirectUrl;
+        $this->callbackUrl = $callbackUrl;
+        $this->bankBin = $bankBin;
+        $this->destinationBankBin = $destinationBankBin;
+        $this->accountName = $accountName;
+        $this->accountNumber = $accountNumber;
+        $this->billNumber = $billNumber;
+    }
 
     public function jsonSerialize(): array
     {
@@ -1316,7 +1469,6 @@ class OCBInfoDto implements \JsonSerializable
     public ?string $merchantAddress = null;
     public ?string $mobilePhone = null;
     public ?string $email = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1337,7 +1489,6 @@ class OCBInfoDto implements \JsonSerializable
 class TPBInfoDto implements \JsonSerializable
 {
     public ?string $accountName = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1356,7 +1507,6 @@ class BIDVInfoDto implements \JsonSerializable
     public ?string $identity = null;
     public ?string $mobile = null;
     public ?string $email = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1381,7 +1531,6 @@ class MBBInfoDto implements \JsonSerializable
     public ?string $identity = null;
     public ?string $mobile = null;
     public ?string $email = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1406,7 +1555,6 @@ class ACBInfoDto implements \JsonSerializable
     public ?string $mobile = null;
     public ?string $email = null;
     public ?string $acbUserId = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1434,7 +1582,6 @@ class VPBInfoDto implements \JsonSerializable
     public ?string $softposDeveloperId = null;
     public ?string $softposTid = null;
     public ?string $softposMid = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1457,7 +1604,6 @@ class ShinhanInfoDto implements \JsonSerializable
     public ?string $vaPrefix = null;
     public ?string $accountNumber = null;
     public ?string $merchantName = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1474,7 +1620,6 @@ class PGBInfoDto implements \JsonSerializable
     public ?string $accountNumber = null;
     public ?string $identity = null;
     public ?string $mobile = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1497,7 +1642,6 @@ class VIBInfoDto implements \JsonSerializable
     public ?string $email = null;
     public ?string $contractId = null;
     public ?string $custId = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1522,7 +1666,6 @@ class CTGInfoDto implements \JsonSerializable
     public ?string $accountName = null;
     public ?string $identity = null;
     public ?string $mobile = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1545,7 +1688,6 @@ class STBInfoDto implements \JsonSerializable
     public ?string $mobile = null;
     public ?string $merchantId = null;
     public ?string $storeId = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1568,7 +1710,6 @@ class AgribankInfoDto implements \JsonSerializable
     public ?string $mobile = null;
     public ?string $taxCode = null;
     public ?string $agribankVaId = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1587,7 +1728,6 @@ class VCBBaasDto implements \JsonSerializable
     public ?string $requestId = null;
     public ?string $redirectUrl = null;
     public ?string $webhookUrl = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1604,7 +1744,6 @@ class VCBInfoDto implements \JsonSerializable
     public ?string $accountNumber = null;
     public ?string $mobile = null;
     public ?VCBBaasDto $baasDto = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1623,7 +1762,6 @@ class COBInfoDto implements \JsonSerializable
     public ?string $identity = null;
     public ?string $mobile = null;
     public ?string $merchantName = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1652,7 +1790,6 @@ class BankInfoDto implements \JsonSerializable
     public ?AgribankInfoDto $agribankInfoDto = null;
     public ?VCBInfoDto $vcbInfoDto = null;
     public ?COBInfoDto $cobInfoDto = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1676,18 +1813,17 @@ class BankInfoDto implements \JsonSerializable
 
 class V2AccountNumberDDLDto implements \JsonSerializable
 {
-    public float $id = 0.0;
+    public int $id = 0;
     public string $name = '';
-    public float $merchantId = 0.0;
+    public int $merchantId = 0;
     public string $bankBin = '';
     public string $bankName = '';
     public string $accountNumber = '';
     public ?string $vaAccountNumber = null;
     public ?string $realVANumber = null;
     public ?BankInfoDto $bankInfoDto = null;
-    public float $shopId = 0.0;
+    public int $shopId = 0;
     public string $shopName = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -1710,16 +1846,22 @@ class OpenApiAccountNumberDDLPagedInputDto implements \JsonSerializable
 {
     public ?string $filter = null;
     public ?string $sorting = null;
-    public float $skipCount = 0.0;
-    public float $maxResultCount = 0.0;
-    public ?float $merchantId = null;
+    public int $skipCount;
+    public int $maxResultCount;
+    public ?int $merchantId = null;
     public ?array $merchantAccountNumberIds = null;
     public ?array $shopIds = null;
     public ?array $realVANumbers = null;
     public ?bool $isGetMerchantCashAccountsNumber = null;
-    public array $bankBins = [];
+    public ?array $bankBins = null;
     /** @var BankNameEnum[]|null */
     public ?array $bankNames = null;
+    /** Required fields constructor. */
+    public function __construct(int $skipCount, int $maxResultCount)
+    {
+        $this->skipCount = $skipCount;
+        $this->maxResultCount = $maxResultCount;
+    }
 
     public function jsonSerialize(): array
     {
@@ -1743,15 +1885,21 @@ class OpenApiTransactionPagedInputDto implements \JsonSerializable
 {
     public ?string $filter = null;
     public ?string $sorting = null;
-    public float $skipCount = 0.0;
-    public float $maxResultCount = 0.0;
-    public float $merchantId = 0.0;
-    public array $shopIds = [];
-    public array $vaAccountNumbers = [];
+    public int $skipCount;
+    public int $maxResultCount;
+    public ?int $merchantId = null;
+    public ?array $shopIds = null;
+    public ?array $vaAccountNumbers = null;
     public ?string $bankBin = null;
-    public string $billId = '';
+    public ?string $billId = null;
     public ?string $startTime = null;
     public ?string $endTime = null;
+    /** Required fields constructor. */
+    public function __construct(int $skipCount, int $maxResultCount)
+    {
+        $this->skipCount = $skipCount;
+        $this->maxResultCount = $maxResultCount;
+    }
 
     public function jsonSerialize(): array
     {
@@ -1773,18 +1921,17 @@ class OpenApiTransactionPagedInputDto implements \JsonSerializable
 
 class MerchantBankConfigPagedOutputDto implements \JsonSerializable
 {
-    public float $id = 0.0;
+    public int $id = 0;
     public string $creationTime = '';
     public ?float $creatorUserId = null;
     public string $lastModificationTime = '';
     public ?float $lastModifierUserId = null;
     public ?float $deleterUserId = null;
-    public float $merchantId = 0.0;
+    public int $merchantId = 0;
     public string $accountType = '';
     public $configDto = null;
-    public string $bankBin = '';
+    public ?string $bankBin = null;
     public ?string $bankName = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1807,12 +1954,18 @@ class OpenApiMerchantBankConfigPagedInputDto implements \JsonSerializable
 {
     public ?string $filter = null;
     public ?string $sorting = null;
-    public float $skipCount = 0.0;
-    public float $maxResultCount = 0.0;
-    public string $accountType = '';
-    public float $merchantId = 0.0;
-    public string $bankBin = '';
+    public int $skipCount;
+    public int $maxResultCount;
+    public ?string $accountType = null;
+    public ?int $merchantId = null;
+    public ?string $bankBin = null;
     public ?string $bankName = null;
+    /** Required fields constructor. */
+    public function __construct(int $skipCount, int $maxResultCount)
+    {
+        $this->skipCount = $skipCount;
+        $this->maxResultCount = $maxResultCount;
+    }
 
     public function jsonSerialize(): array
     {
@@ -1829,25 +1982,12 @@ class OpenApiMerchantBankConfigPagedInputDto implements \JsonSerializable
     }
 }
 
-class Number implements \JsonSerializable
-{
-
-
-    public function jsonSerialize(): array
-    {
-        return [
-
-        ];
-    }
-}
-
 class BIDVConfigDto implements \JsonSerializable
 {
     public string $vaPrefix = '';
     public string $bankPartnerId = '';
     public string $accountNumber = '';
     public string $accountName = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -1864,7 +2004,6 @@ class CTGConfigDto implements \JsonSerializable
     public string $accountNumber = '';
     public string $accountName = '';
     public string $vaPrefix = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -1882,7 +2021,6 @@ class ACBConfigBusinessDto implements \JsonSerializable
     public string $vaPrefix = '';
     public string $mobile = '';
     public string $acbUserId = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -1900,13 +2038,18 @@ class OpenApiBankCreateOrUpdateConfigDto implements \JsonSerializable
     public ?BIDVConfigDto $bidvConfigDto = null;
     public ?CTGConfigDto $ctgConfigDto = null;
     public ?ACBConfigBusinessDto $acbConfigDto = null;
-    public string $accountType = '';
-    public float $id = 0.0;
+    public string $accountType;
+    public ?int $id = null;
     public ?string $otpNumber = null;
     public ?string $confirmId = null;
-    public string $bankBin = '';
+    public ?string $bankBin = null;
     public ?string $bankName = null;
-    public ?float $merchantId = null;
+    public ?int $merchantId = null;
+    /** Required fields constructor. */
+    public function __construct(string $accountType)
+    {
+        $this->accountType = $accountType;
+    }
 
     public function jsonSerialize(): array
     {
@@ -1929,8 +2072,13 @@ class OpenApiDeleteConfigDto implements \JsonSerializable
 {
     public ?string $otpNumber = null;
     public ?string $confirmId = null;
-    public float $id = 0.0;
-    public ?float $merchantId = null;
+    public float $id;
+    public ?int $merchantId = null;
+    /** Required fields constructor. */
+    public function __construct(float $id)
+    {
+        $this->id = $id;
+    }
 
     public function jsonSerialize(): array
     {
@@ -1946,7 +2094,6 @@ class OpenApiDeleteConfigDto implements \JsonSerializable
 class OpenApiCreateBankVAOutputDto implements \JsonSerializable
 {
     public ?string $confirmId = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -1958,13 +2105,21 @@ class OpenApiCreateBankVAOutputDto implements \JsonSerializable
 class OpenApiConfigAccountBusinessDto implements \JsonSerializable
 {
     public ?string $bankName = null;
-    public string $accountNumber = '';
-    public string $accountName = '';
-    public string $mobile = '';
+    public string $accountNumber;
+    public string $accountName;
+    public string $mobile;
     public ?string $vaPrefix = null;
-    public float $merchantId = 0.0;
-    public string $acbUserId = '';
-    public string $bankBin = '';
+    public ?int $merchantId = null;
+    public string $acbUserId;
+    public ?string $bankBin = null;
+    /** Required fields constructor. */
+    public function __construct(string $accountNumber, string $accountName, string $mobile, string $acbUserId)
+    {
+        $this->accountNumber = $accountNumber;
+        $this->accountName = $accountName;
+        $this->mobile = $mobile;
+        $this->acbUserId = $acbUserId;
+    }
 
     public function jsonSerialize(): array
     {
@@ -1983,11 +2138,17 @@ class OpenApiConfigAccountBusinessDto implements \JsonSerializable
 
 class OpenApiDeleteConfigBusinessDto implements \JsonSerializable
 {
-    public string $accountType = '';
-    public ?ACBConfigBusinessDto $configRemove = null;
-    public ?float $merchantId = null;
-    public string $bankBin = '';
+    public string $accountType;
+    public ACBConfigBusinessDto $configRemove;
+    public ?int $merchantId = null;
+    public ?string $bankBin = null;
     public ?string $bankName = null;
+    /** Required fields constructor. */
+    public function __construct(string $accountType, ACBConfigBusinessDto $configRemove)
+    {
+        $this->accountType = $accountType;
+        $this->configRemove = $configRemove;
+    }
 
     public function jsonSerialize(): array
     {
@@ -2006,7 +2167,6 @@ class EventUrlItemDto implements \JsonSerializable
     public string $url = '';
     public string $type = '';
     public ?array $ids = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -2019,11 +2179,11 @@ class EventUrlItemDto implements \JsonSerializable
 
 class OpenApiCreateMerchantDto implements \JsonSerializable
 {
-    public ?float $id = null;
+    public ?int $id = null;
     public ?string $code = null;
-    public string $name = '';
+    public string $name;
     public ?string $email = null;
-    public string $phoneNumber = '';
+    public string $phoneNumber;
     public ?string $website = null;
     public ?array $businessSectorIds = null;
     public ?string $provinceId = null;
@@ -2041,10 +2201,18 @@ class OpenApiCreateMerchantDto implements \JsonSerializable
     public ?float $userReferralLevel = null;
     public ?string $deviceDistributorAncestorMap = null;
     public ?bool $isMasterMerchant = null;
-    public string $password = '';
-    public string $appType = '';
+    public string $password;
+    public string $appType;
     public ?bool $isMultipleRole = null;
     public ?float $userReferrerId = null;
+    /** Required fields constructor. */
+    public function __construct(string $name, string $phoneNumber, string $password, string $appType)
+    {
+        $this->name = $name;
+        $this->phoneNumber = $phoneNumber;
+        $this->password = $password;
+        $this->appType = $appType;
+    }
 
     public function jsonSerialize(): array
     {
@@ -2082,7 +2250,6 @@ class FileUploadDto implements \JsonSerializable
 {
     public string $fileLogId = '';
     public string $path = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2103,7 +2270,6 @@ class OCBConfigDto implements \JsonSerializable
     public ?string $vaPrefix = null;
     public ?string $vaPrefixForDynamicQR = null;
     public ?array $accountNumbers = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -2126,7 +2292,6 @@ class MBBConfigDto implements \JsonSerializable
     public string $accountName = '';
     public string $identity = '';
     public string $mobile = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2147,7 +2312,6 @@ class ShinhanConfigDto implements \JsonSerializable
     public ?FileUploadDto $pathPrivateKey = null;
     public string $accountNumber = '';
     public string $accountName = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2172,8 +2336,7 @@ class VIBConfigDto implements \JsonSerializable
     public string $clientId = '';
     public string $clientSecret = '';
     public string $accountNumber = '';
-    public float $vaCharactersNumber = 0.0;
-
+    public int $vaCharactersNumber = 0;
     public function jsonSerialize(): array
     {
         return [
@@ -2196,7 +2359,6 @@ class ACBConfigDto implements \JsonSerializable
     public ?array $businessAccounts = null;
     /** @var ACBConfigBusinessDto[]|null */
     public ?array $businessHouseholdAccounts = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -2212,7 +2374,6 @@ class VPBConfigBusinessDto implements \JsonSerializable
     public string $accountName = '';
     public string $merchantId = '';
     public string $terminalId = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2230,7 +2391,6 @@ class VPBConfigDto implements \JsonSerializable
     public ?array $businessAccounts = null;
     /** @var VPBConfigBusinessDto[]|null */
     public ?array $businessHouseholdAccounts = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -2246,7 +2406,6 @@ class VCBConfigBusinessDto implements \JsonSerializable
     public string $accountName = '';
     public string $merchantId = '';
     public string $terminalId = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2264,7 +2423,6 @@ class VCBConfigDto implements \JsonSerializable
     public ?array $businessAccounts = null;
     /** @var VCBConfigBusinessDto[]|null */
     public ?array $businessHouseholdAccounts = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -2291,7 +2449,6 @@ class BankConfigDto implements \JsonSerializable
     public ?ACBConfigDto $acbConfigDto = null;
     public ?VPBConfigDto $vpbConfigDto = null;
     public ?VCBConfigDto $vcbConfigDto = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -2311,7 +2468,6 @@ class BankConfigDto implements \JsonSerializable
 class BaoKimConfigDto implements \JsonSerializable
 {
     public string $mid = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2323,7 +2479,6 @@ class BaoKimConfigDto implements \JsonSerializable
 class BNPLConfigDto implements \JsonSerializable
 {
     public ?BaoKimConfigDto $baokimConfigDto = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -2340,7 +2495,6 @@ class OnePayConfigDto implements \JsonSerializable
     public string $accessCode = '';
     public string $hashCode = '';
     public string $callbackUrl = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2357,7 +2511,6 @@ class OnePayConfigDto implements \JsonSerializable
 class DirectDebitConfigDto implements \JsonSerializable
 {
     public ?OnePayConfigDto $onePayConfigDto = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -2370,7 +2523,6 @@ class MerchantPackageInfo implements \JsonSerializable
 {
     public ?string $packageName = null;
     public ?string $expirationDate = null;
-
     public function jsonSerialize(): array
     {
         return [
@@ -2382,7 +2534,7 @@ class MerchantPackageInfo implements \JsonSerializable
 
 class MerchantDto implements \JsonSerializable
 {
-    public float $id = 0.0;
+    public int $id = 0;
     public string $creationTime = '';
     public ?float $creatorUserId = null;
     public string $lastModificationTime = '';
@@ -2417,7 +2569,7 @@ class MerchantDto implements \JsonSerializable
     public ?bool $isMasterMerchant = null;
     /** @var MerchantPackageInfo[]|null */
     public ?array $merchantPackages = null;
-
+    public ?string $masterMerchantNames = null;
     public function jsonSerialize(): array
     {
         return [
@@ -2454,6 +2606,7 @@ class MerchantDto implements \JsonSerializable
             'deviceDistributorAncestorMap' => $this->deviceDistributorAncestorMap,
             'isMasterMerchant' => $this->isMasterMerchant,
             'merchantPackages' => $this->merchantPackages,
+            'masterMerchantNames' => $this->masterMerchantNames,
         ];
     }
 }
@@ -2462,8 +2615,14 @@ class OpenApiGetPagingMerchantsDto implements \JsonSerializable
 {
     public ?string $filter = null;
     public ?string $sorting = null;
-    public float $skipCount = 0.0;
-    public float $maxResultCount = 0.0;
+    public int $skipCount;
+    public int $maxResultCount;
+    /** Required fields constructor. */
+    public function __construct(int $skipCount, int $maxResultCount)
+    {
+        $this->skipCount = $skipCount;
+        $this->maxResultCount = $maxResultCount;
+    }
 
     public function jsonSerialize(): array
     {
@@ -2478,11 +2637,18 @@ class OpenApiGetPagingMerchantsDto implements \JsonSerializable
 
 class OpenApiRegisterDto implements \JsonSerializable
 {
-    public string $requestId = '';
-    public string $bankBin = '';
-    public string $accountName = '';
-    public string $phone = '';
-    public string $returnUrl = '';
+    public string $requestId;
+    public ?string $bankBin = null;
+    public ?string $accountName = null;
+    public string $phone;
+    public string $returnUrl;
+    /** Required fields constructor. */
+    public function __construct(string $requestId, string $phone, string $returnUrl)
+    {
+        $this->requestId = $requestId;
+        $this->phone = $phone;
+        $this->returnUrl = $returnUrl;
+    }
 
     public function jsonSerialize(): array
     {
@@ -2500,11 +2666,10 @@ class PaymentBillResponseDto implements \JsonSerializable
 {
     public string $code = '';
     public string $status = '';
-    public string $transactionCode = '';
-    public bool $isSentConfirmEmail = false;
-    public bool $isSentConfirmZalo = false;
-    public string $returnUrl = '';
-
+    public ?string $transactionCode = null;
+    public ?bool $isSentConfirmEmail = null;
+    public ?bool $isSentConfirmZalo = null;
+    public ?string $returnUrl = null;
     public function jsonSerialize(): array
     {
         return [
@@ -2520,20 +2685,30 @@ class PaymentBillResponseDto implements \JsonSerializable
 
 class OpenApiPaymentBillDto implements \JsonSerializable
 {
-    public string $requestId = '';
-    public string $clientId = '';
-    public string $subscriptionId = '';
-    public string $amount = '';
-    public string $description = '';
-    public string $expirationTime = '';
-    public string $signature = '';
-    public string $token = '';
+    public string $requestId;
+    public ?string $clientId = null;
+    public string $subscriptionId;
+    public string $amount;
+    public string $description;
+    public ?string $expirationTime = null;
+    public ?string $signature = null;
+    public ?string $token = null;
     public $additionalData = null;
-    public string $tokenRef = '';
-    public string $partnerCode = '';
-    public string $accountNumber = '';
-    public string $serviceProviderName = '';
-    public string $returnUrl = '';
+    public ?string $tokenRef = null;
+    public string $partnerCode;
+    public ?string $accountNumber = null;
+    public string $serviceProviderName;
+    public ?string $returnUrl = null;
+    /** Required fields constructor. */
+    public function __construct(string $requestId, string $subscriptionId, string $amount, string $description, string $partnerCode, string $serviceProviderName)
+    {
+        $this->requestId = $requestId;
+        $this->subscriptionId = $subscriptionId;
+        $this->amount = $amount;
+        $this->description = $description;
+        $this->partnerCode = $partnerCode;
+        $this->serviceProviderName = $serviceProviderName;
+    }
 
     public function jsonSerialize(): array
     {
@@ -2558,9 +2733,8 @@ class OpenApiPaymentBillDto implements \JsonSerializable
 
 class DeleteSubscriptionOutputDto implements \JsonSerializable
 {
-    public string $confirmUrl = '';
+    public ?string $confirmUrl = null;
     public string $code = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2572,10 +2746,18 @@ class DeleteSubscriptionOutputDto implements \JsonSerializable
 
 class OpenApiDeleteSubscriptionDto implements \JsonSerializable
 {
-    public string $requestId = '';
-    public string $returnUrl = '';
-    public string $subscriptionId = '';
-    public string $tokenRef = '';
+    public string $requestId;
+    public string $returnUrl;
+    public string $subscriptionId;
+    public string $tokenRef;
+    /** Required fields constructor. */
+    public function __construct(string $requestId, string $returnUrl, string $subscriptionId, string $tokenRef)
+    {
+        $this->requestId = $requestId;
+        $this->returnUrl = $returnUrl;
+        $this->subscriptionId = $subscriptionId;
+        $this->tokenRef = $tokenRef;
+    }
 
     public function jsonSerialize(): array
     {
@@ -2590,10 +2772,9 @@ class OpenApiDeleteSubscriptionDto implements \JsonSerializable
 
 class RefundOutputDto implements \JsonSerializable
 {
-    public float $refundAmount = 0.0;
+    public int $refundAmount = 0;
     public string $transactionId = '';
     public string $status = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2606,10 +2787,18 @@ class RefundOutputDto implements \JsonSerializable
 
 class OpenApiRefundInputDto implements \JsonSerializable
 {
-    public string $subscriptionId = '';
-    public string $tokenRef = '';
-    public string $transactionId = '';
-    public float $amount = 0.0;
+    public string $subscriptionId;
+    public string $tokenRef;
+    public string $transactionId;
+    public int $amount;
+    /** Required fields constructor. */
+    public function __construct(string $subscriptionId, string $tokenRef, string $transactionId, int $amount)
+    {
+        $this->subscriptionId = $subscriptionId;
+        $this->tokenRef = $tokenRef;
+        $this->transactionId = $transactionId;
+        $this->amount = $amount;
+    }
 
     public function jsonSerialize(): array
     {
@@ -2624,9 +2813,16 @@ class OpenApiRefundInputDto implements \JsonSerializable
 
 class OpenApiEditConfirmBeforePaymentMethodDto implements \JsonSerializable
 {
-    public string $requestId = '';
-    public string $returnUrl = '';
-    public string $subscriptionId = '';
+    public string $requestId;
+    public string $returnUrl;
+    public string $subscriptionId;
+    /** Required fields constructor. */
+    public function __construct(string $requestId, string $returnUrl, string $subscriptionId)
+    {
+        $this->requestId = $requestId;
+        $this->returnUrl = $returnUrl;
+        $this->subscriptionId = $subscriptionId;
+    }
 
     public function jsonSerialize(): array
     {
@@ -2655,7 +2851,6 @@ class OpenApiSubscriptionStatusResponseDto implements \JsonSerializable
     public string $status = '';
     public string $subscriptionId = '';
     public string $bankBin = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2683,8 +2878,7 @@ class CustomerInfoDto implements \JsonSerializable
     public string $onepayAccountId = '';
     public string $name = '';
     public string $phone = '';
-    public string $email = '';
-
+    public ?string $email = null;
     public function jsonSerialize(): array
     {
         return [
@@ -2698,20 +2892,19 @@ class CustomerInfoDto implements \JsonSerializable
 
 class OpenApiPaymentTransactionStatusResponseDto implements \JsonSerializable
 {
-    public string $transactionId = '';
-    public string $subscriptionId = '';
+    public ?string $transactionId = null;
+    public ?string $subscriptionId = null;
     public string $tokenRef = '';
     public string $bankBin = '';
     public ?CustomerInfoDto $customer = null;
-    public string $accountNumber = '';
-    public string $accountName = '';
-    public string $code = '';
-    public float $amount = 0.0;
-    public string $currency = '';
-    public string $content = '';
-    public string $transactionDate = '';
+    public ?string $accountNumber = null;
+    public ?string $accountName = null;
+    public ?string $code = null;
+    public ?float $amount = null;
+    public ?string $currency = null;
+    public ?string $content = null;
+    public ?string $transactionDate = null;
     public string $status = '';
-
     public function jsonSerialize(): array
     {
         return [
@@ -2746,7 +2939,6 @@ class OpenApiPaymentTransactionsPagedOutputDto implements \JsonSerializable
     public string $tokenRef = '';
     public string $status = '';
     public $additionalData = null;
-
     public function jsonSerialize(): array
     {
         return [
