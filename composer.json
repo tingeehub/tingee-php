@@ -17,7 +17,7 @@
     "email": "developer@heno.vn",
     "chat": "https://t.me/tingeesupport",
     "docs": "https://developers.tingee.vn",
-    "source": "https://tingee.vn"
+    "source": "https://github.com/tingeehub/tingee-php"
   },
   "require": {
     "php": ">=8.0",
