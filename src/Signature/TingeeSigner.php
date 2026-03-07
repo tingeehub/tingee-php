@@ -2,6 +2,7 @@
 
 namespace Tingee\Sdk\Signature;
 
+use Tingee\Sdk\Types\TingeeWebhookBody;
 use InvalidArgumentException;
 
 /**
@@ -28,7 +29,7 @@ class WebhookVerifyResult
 class TingeeSigner
 {
     /** Required fields that every Tingee webhook body must contain */
-    private const REQUIRED_BODY_FIELDS = ['clientId', 'transactionCode', 'amount', 'bank', 'transactionDate'];
+    private const REQUIRED_BODY_FIELDS = ['clientId', 'transactionCode', 'amount', 'bank', 'accountNumber', 'transactionDate'];
 
     /**
      * Generate HMAC-SHA512 signature for a Tingee API request.
@@ -47,31 +48,25 @@ class TingeeSigner
     public static function formatTimestamp(\DateTimeInterface $date = null): string
     {
         $date = $date ?? new \DateTime();
-        // PHP milliseconds via getTimestamp + microtime workaround
         $ms   = str_pad((int) round((microtime(true) - floor(microtime(true))) * 1000), 3, '0', STR_PAD_LEFT);
         return $date->format('YmdHis') . $ms;
     }
 
     /**
-     * Verify the HMAC-SHA512 signature of an incoming Tingee webhook callback.
-     *
-     * @param string $secretToken    Secret token from your merchant configuration
-     * @param string $signature      Value of the x-signature header
-     * @param string $timestamp      Value of the x-request-timestamp header (yyyyMMddHHmmssSSS)
-     * @param array  $body           Decoded JSON body of the webhook request
+     * Verify webhook signature using a typed TingeeWebhookBody.
+     * Recommended when using Laravel/Symfony with Request binding.
      *
      * @example
      * ```php
+     * $body   = TingeeWebhookBody::fromArray($request->all());
      * $result = TingeeSigner::verifyWebhookSignature(
      *     secretToken: $_ENV['TINGEE_SECRET_TOKEN'],
-     *     signature:   $_SERVER['HTTP_X_SIGNATURE'],
-     *     timestamp:   $_SERVER['HTTP_X_REQUEST_TIMESTAMP'],
-     *     body:        json_decode(file_get_contents('php://input'), true),
+     *     signature:   $request->header('x-signature'),
+     *     timestamp:   $request->header('x-request-timestamp'),
+     *     body:        $body,
      * );
      * if (!$result->isValid()) {
-     *     http_response_code(401);
-     *     echo json_encode(['code' => $result->code, 'message' => $result->message]);
-     *     exit;
+     *     return response()->json($result, 401);
      * }
      * ```
      */
@@ -79,8 +74,11 @@ class TingeeSigner
         string $secretToken,
         string $signature,
         string $timestamp,
-        array  $body
+        TingeeWebhookBody|array $body
     ): WebhookVerifyResult {
+        // Normalise to array for validation and signing
+        $arr = $body instanceof TingeeWebhookBody ? $body->toArray() : $body;
+
         if (!$signature) {
             return new WebhookVerifyResult('MISSING_SIGNATURE', 'x-signature header is required');
         }
@@ -90,17 +88,17 @@ class TingeeSigner
         if (!preg_match('/^\d{17}$/', $timestamp)) {
             return new WebhookVerifyResult('INVALID_TIMESTAMP', 'x-request-timestamp must be in yyyyMMddHHmmssSSS format (17 digits)');
         }
-        if (empty($body) || !is_array($body)) {
+        if (empty($arr) || !is_array($arr)) {
             return new WebhookVerifyResult('MISSING_BODY', 'body is required and must be an object');
         }
 
         foreach (self::REQUIRED_BODY_FIELDS as $field) {
-            if (empty($body[$field]) && $body[$field] !== 0) {
+            if (empty($arr[$field]) && $arr[$field] !== 0) {
                 return new WebhookVerifyResult('MISSING_BODY_FIELD', "body.{$field} is required");
             }
         }
 
-        $expected = self::generateSignature($secretToken, $timestamp, $body);
+        $expected = self::generateSignature($secretToken, $timestamp, $arr);
 
         // Timing-safe comparison
         if (!hash_equals($expected, strtolower($signature))) {
