@@ -22,6 +22,23 @@ abstract class BankNameEnum
     const MSB      = 'MSB';
 }
 
+abstract class BankBinEnum
+{
+    const OCB      = '970448';
+    const BIDV     = '970418';
+    const MBB      = '970422';
+    const ACB      = '970416';
+    const VPB      = '970432';
+    const PGB      = '970430';
+    const VIB      = '970441';
+    const STB      = '970403';
+    const CTG      = '970415';
+    const VCB      = '970436';
+    const AGRIBANK = '970405';
+    const SHINHAN  = '970424';
+    const COB      = '970446';
+}
+
 abstract class BankAccountTypeEnum
 {
     const PersonalAccount          = 'personal-account';

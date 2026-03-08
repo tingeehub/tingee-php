@@ -2,7 +2,7 @@
 
 namespace Tingee\Sdk\Signature;
 
-use Tingee\Sdk\Types\TingeeWebhookBody;
+
 use InvalidArgumentException;
 
 /**
@@ -74,10 +74,18 @@ class TingeeSigner
         string $secretToken,
         string $signature,
         string $timestamp,
-        TingeeWebhookBody|array $body
+        array|string $body
     ): WebhookVerifyResult {
         // Normalise to array for validation and signing
-        $arr = $body instanceof TingeeWebhookBody ? $body->toArray() : $body;
+        if (is_string($body)) {
+            $decoded = json_decode($body, true);
+            if ($decoded === null) {
+                return new WebhookVerifyResult('INVALID_BODY', 'body string is not valid JSON');
+            }
+            $arr = $decoded;
+        } else {
+            $arr = $body;
+        }
 
         if (!$signature) {
             return new WebhookVerifyResult('MISSING_SIGNATURE', 'x-signature header is required');

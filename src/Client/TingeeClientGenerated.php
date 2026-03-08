@@ -7,6 +7,8 @@ namespace Tingee\Sdk\Client;
 use Tingee\Sdk\Http\TingeeHttpClient;
 use Tingee\Sdk\Http\TingeeHttpException;
 use Tingee\Sdk\Types\TingeeApiResponse;
+use Tingee\Sdk\Types\BankNameEnum;
+use Tingee\Sdk\Types\BankBinEnum;
 use Tingee\Sdk\Types\Dtos\OpenApiOuputDto;
 use Tingee\Sdk\Types\Dtos\GenerateVietQROuputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGenerateVietQRInputDto;

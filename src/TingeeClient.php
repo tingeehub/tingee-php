@@ -24,7 +24,7 @@ class TingeeClient
         $this->httpClient = new TingeeHttpClient($baseUrl ?? $resolvedUrl, $secretKey, $clientId, $timeout);
         $this->initGroups();
     }
-    public function verifyWebhookSignature(string $signature, string $timestamp, array $body): WebhookVerifyResult
+    public function verifyWebhookSignature(string $signature, string $timestamp, array|string $body): WebhookVerifyResult
     {
         return TingeeSigner::verifyWebhookSignature($this->secretKey, $signature, $timestamp, $body);
     }

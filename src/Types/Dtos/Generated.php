@@ -5,6 +5,7 @@
 namespace Tingee\Sdk\Types\Dtos;
 
 use Tingee\Sdk\Types\BankNameEnum;
+use Tingee\Sdk\Types\BankBinEnum;
 
 class OpenApiOuputDto implements \JsonSerializable
 {
@@ -40,6 +41,7 @@ class GenerateVietQROuputDto implements \JsonSerializable
 
 class OpenApiGenerateVietQRInputDto implements \JsonSerializable
 {
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     public string $accountNumber;
@@ -83,19 +85,18 @@ class GenerateDynamicQRInputDto implements \JsonSerializable
     public ?int $merchantId = null;
     public string $vaAccountNumber;
     public string $qrCodeType;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
-    public int $amount;
+    public ?int $amount = null;
     public ?string $purpose = null;
-    public int $expireInMinute;
+    public ?int $expireInMinute = null;
     public ?string $extraInfo = null;
     /** Required fields constructor. */
-    public function __construct(string $vaAccountNumber, string $qrCodeType, int $amount, int $expireInMinute)
+    public function __construct(string $vaAccountNumber, string $qrCodeType)
     {
         $this->vaAccountNumber = $vaAccountNumber;
         $this->qrCodeType = $qrCodeType;
-        $this->amount = $amount;
-        $this->expireInMinute = $expireInMinute;
     }
 
     public function jsonSerialize(): array
@@ -151,6 +152,7 @@ class OpenApiBillInfoDto implements \JsonSerializable
 {
     public string $billId = '';
     public string $qrCodeType = '';
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin = '';
     public string $accountNumber = '';
     public string $vaAccountNumber = '';
@@ -187,6 +189,7 @@ class OpenApiTransactionPagedOuputDto implements \JsonSerializable
     public string $transactionId = '';
     public int $merchantId = 0;
     public int $shopId = 0;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $cashFlowSource = null;
     public string $code = '';
@@ -297,6 +300,7 @@ class PagedResultDto implements \JsonSerializable
 class OpenApiGetVAPagedOuputDto implements \JsonSerializable
 {
     public string $bankName = '';
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public string $accountType = '';
     public ?string $accountName = null;
@@ -334,6 +338,7 @@ class OpenApiGetVAPagedInputDto implements \JsonSerializable
     public string $accountType;
     public ?int $agentId = null;
     public string $dataAccess;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     /** Required fields constructor. */
@@ -368,6 +373,7 @@ class OpenApiGetVAPagedInputDto implements \JsonSerializable
 
 class OpenApiGenerateVietQROuputDto implements \JsonSerializable
 {
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin = '';
     public string $accountNumber = '';
     public ?string $amount = null;
@@ -417,10 +423,10 @@ class OpenApiCreateVAInpuDto implements \JsonSerializable
     public ?string $name = null;
     public ?string $cashFlowSource = null;
     public string $accountType;
-    public string $accountNumber;
-    public string $accountName;
-    public string $identity;
-    public string $mobile;
+    public ?string $accountNumber = null;
+    public ?string $accountName = null;
+    public ?string $identity = null;
+    public ?string $mobile = null;
     public ?int $masterMerchantId = null;
     public ?int $shopId = null;
     public ?string $vaPrefix = null;
@@ -442,22 +448,17 @@ class OpenApiCreateVAInpuDto implements \JsonSerializable
     public ?string $linkType = null;
     public ?string $vaAccountNumber = null;
     public ?string $acbUserId = null;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     public ?int $merchantId = null;
-    public string $redirectUrl;
-    public string $webhookUrl;
+    public ?string $redirectUrl = null;
+    public ?string $webhookUrl = null;
     /** Required fields constructor. */
-    public function __construct(string $accountType, string $accountNumber, string $accountName, string $identity, string $mobile, string $appType, string $redirectUrl, string $webhookUrl)
+    public function __construct(string $accountType, string $appType)
     {
         $this->accountType = $accountType;
-        $this->accountNumber = $accountNumber;
-        $this->accountName = $accountName;
-        $this->identity = $identity;
-        $this->mobile = $mobile;
         $this->appType = $appType;
-        $this->redirectUrl = $redirectUrl;
-        $this->webhookUrl = $webhookUrl;
     }
 
     public function jsonSerialize(): array
@@ -523,6 +524,7 @@ class OpenApiBankConfirmVAInputDto implements \JsonSerializable
     public string $confirmId;
     public string $otpNumber;
     public string $bankName;
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin;
     /** Required fields constructor. */
     public function __construct(string $confirmId, string $otpNumber, string $bankName, string $bankBin)
@@ -560,6 +562,7 @@ class OpenApiRegisterNotifyDto implements \JsonSerializable
 {
     public ?int $merchantId = null;
     public string $vaAccountNumber;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     /** Required fields constructor. */
@@ -583,6 +586,7 @@ class OpenApiRefundDto implements \JsonSerializable
 {
     public ?int $merchantId = null;
     public string $transactionCode;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     /** Required fields constructor. */
@@ -740,6 +744,7 @@ class BIDVOpenApiReadAmountDto implements \JsonSerializable
     public string $uuid;
     public string $transactionId;
     public int $amount;
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin;
     public ?string $firstDisplayText = null;
     public ?string $secondDisplayText = null;
@@ -775,6 +780,7 @@ class OpenApiReadAmountDto implements \JsonSerializable
     public string $uuid;
     public string $transactionId;
     public int $amount;
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin;
     public ?string $firstDisplayText = null;
     public ?string $secondDisplayText = null;
@@ -812,6 +818,7 @@ class OpenApiShowQRCodeDto implements \JsonSerializable
     public ?string $vaAccountNumber = null;
     public int $amount;
     public string $qrCode;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     public ?string $deviceType = null;
@@ -994,11 +1001,12 @@ class OpenApiGenerateAndShowDynamicQrCodeDto implements \JsonSerializable
     public ?int $merchantId = null;
     public string $vaAccountNumber;
     public string $qrCodeType;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
-    public int $amount;
+    public ?int $amount = null;
     public ?string $purpose = null;
-    public int $expireInMinute;
+    public ?int $expireInMinute = null;
     public ?string $extraInfo = null;
     public string $uuid;
     public ?string $deviceType = null;
@@ -1009,12 +1017,10 @@ class OpenApiGenerateAndShowDynamicQrCodeDto implements \JsonSerializable
     public ?bool $playSound = null;
     public ?bool $readAmountAfterPay = null;
     /** Required fields constructor. */
-    public function __construct(string $vaAccountNumber, string $qrCodeType, int $amount, int $expireInMinute, string $uuid)
+    public function __construct(string $vaAccountNumber, string $qrCodeType, string $uuid)
     {
         $this->vaAccountNumber = $vaAccountNumber;
         $this->qrCodeType = $qrCodeType;
-        $this->amount = $amount;
-        $this->expireInMinute = $expireInMinute;
         $this->uuid = $uuid;
     }
 
@@ -1129,7 +1135,7 @@ class OpenApiCreateOrUpdateShopDto implements \JsonSerializable
     public ?int $id = null;
     public string $name;
     public ?string $email = null;
-    public string $phoneNumber;
+    public ?string $phoneNumber = null;
     public ?string $provinceId = null;
     public ?string $districtId = null;
     public ?string $communeId = null;
@@ -1143,10 +1149,9 @@ class OpenApiCreateOrUpdateShopDto implements \JsonSerializable
     public ?string $deviceDistributorAncestorMap = null;
     public ?int $merchantId = null;
     /** Required fields constructor. */
-    public function __construct(string $name, string $phoneNumber, bool $isActive)
+    public function __construct(string $name, bool $isActive)
     {
         $this->name = $name;
-        $this->phoneNumber = $phoneNumber;
         $this->isActive = $isActive;
     }
 
@@ -1417,6 +1422,7 @@ class OpenApiDeepLinkDto implements \JsonSerializable
     public string $qrCode;
     public string $redirectUrl;
     public string $callbackUrl;
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin;
     public string $destinationBankBin;
     public string $accountName;
@@ -1816,6 +1822,7 @@ class V2AccountNumberDDLDto implements \JsonSerializable
     public int $id = 0;
     public string $name = '';
     public int $merchantId = 0;
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin = '';
     public string $bankName = '';
     public string $accountNumber = '';
@@ -1890,6 +1897,7 @@ class OpenApiTransactionPagedInputDto implements \JsonSerializable
     public ?int $merchantId = null;
     public ?array $shopIds = null;
     public ?array $vaAccountNumbers = null;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $billId = null;
     public ?string $startTime = null;
@@ -1930,6 +1938,7 @@ class MerchantBankConfigPagedOutputDto implements \JsonSerializable
     public int $merchantId = 0;
     public string $accountType = '';
     public $configDto = null;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     public function jsonSerialize(): array
@@ -1958,6 +1967,7 @@ class OpenApiMerchantBankConfigPagedInputDto implements \JsonSerializable
     public int $maxResultCount;
     public ?string $accountType = null;
     public ?int $merchantId = null;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     /** Required fields constructor. */
@@ -2042,6 +2052,7 @@ class OpenApiBankCreateOrUpdateConfigDto implements \JsonSerializable
     public ?int $id = null;
     public ?string $otpNumber = null;
     public ?string $confirmId = null;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     public ?int $merchantId = null;
@@ -2105,19 +2116,17 @@ class OpenApiCreateBankVAOutputDto implements \JsonSerializable
 class OpenApiConfigAccountBusinessDto implements \JsonSerializable
 {
     public ?string $bankName = null;
-    public string $accountNumber;
-    public string $accountName;
-    public string $mobile;
+    public ?string $accountNumber = null;
+    public ?string $accountName = null;
+    public ?string $mobile = null;
     public ?string $vaPrefix = null;
     public ?int $merchantId = null;
     public string $acbUserId;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     /** Required fields constructor. */
-    public function __construct(string $accountNumber, string $accountName, string $mobile, string $acbUserId)
+    public function __construct(string $acbUserId)
     {
-        $this->accountNumber = $accountNumber;
-        $this->accountName = $accountName;
-        $this->mobile = $mobile;
         $this->acbUserId = $acbUserId;
     }
 
@@ -2141,6 +2150,7 @@ class OpenApiDeleteConfigBusinessDto implements \JsonSerializable
     public string $accountType;
     public ACBConfigBusinessDto $configRemove;
     public ?int $merchantId = null;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
     /** Required fields constructor. */
@@ -2638,6 +2648,7 @@ class OpenApiGetPagingMerchantsDto implements \JsonSerializable
 class OpenApiRegisterDto implements \JsonSerializable
 {
     public string $requestId;
+    /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $accountName = null;
     public string $phone;
@@ -2850,6 +2861,7 @@ class OpenApiSubscriptionStatusResponseDto implements \JsonSerializable
     public string $tokenRef = '';
     public string $status = '';
     public string $subscriptionId = '';
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin = '';
     public function jsonSerialize(): array
     {
@@ -2895,6 +2907,7 @@ class OpenApiPaymentTransactionStatusResponseDto implements \JsonSerializable
     public ?string $transactionId = null;
     public ?string $subscriptionId = null;
     public string $tokenRef = '';
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin = '';
     public ?CustomerInfoDto $customer = null;
     public ?string $accountNumber = null;
@@ -2930,6 +2943,7 @@ class OpenApiPaymentTransactionsPagedOutputDto implements \JsonSerializable
     public string $transactionId = '';
     public string $code = '';
     public string $bankName = '';
+    /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin = '';
     public string $amount = '';
     public string $content = '';
