@@ -213,7 +213,7 @@ class TingeeBankGroup
     /**
      * GET /v1/bank/get-banks
      *
-     * @return TingeeApiResponse<Bank>
+     * @return TingeeApiResponse<array>
      * @throws TingeeHttpException
      */
     public function getBanks(): TingeeApiResponse
@@ -223,9 +223,9 @@ class TingeeBankGroup
             '/v1/bank/get-banks',
             null,
             [],
-            Bank::class
+            ''
         );
-        /** @var TingeeApiResponse<Bank> $response */
+        /** @var TingeeApiResponse<array> $response */
         return $response;
     }
 
