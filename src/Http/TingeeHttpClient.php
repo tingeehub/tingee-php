@@ -4,6 +4,7 @@ namespace Tingee\Sdk\Http;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use ReflectionClass;
+use Tingee\Sdk\SdkVersion;
 use Tingee\Sdk\Signature\SignatureUtils;
 use Tingee\Sdk\Types\TingeeApiResponse;
 
@@ -38,6 +39,7 @@ class TingeeHttpClient
             'X-CLIENT-ID' => $this->clientId,
             'X-REQUEST-TIMESTAMP' => $timestamp,
             'X-SIGNATURE' => $signature,
+            'X-SDK-VERSION' => 'tingee-sdk/php/' . SdkVersion::VERSION,
         ];
 
         $options = [
