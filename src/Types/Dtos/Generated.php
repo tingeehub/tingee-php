@@ -585,16 +585,10 @@ class OpenApiRegisterNotifyDto implements \JsonSerializable
 class OpenApiRefundDto implements \JsonSerializable
 {
     public ?int $merchantId = null;
-    public string $transactionCode;
+    public string $transactionCode = '';
     /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
-    /** Required fields constructor. */
-    public function __construct(string $transactionCode)
-    {
-        $this->transactionCode = $transactionCode;
-    }
-
     public function jsonSerialize(): array
     {
         return [

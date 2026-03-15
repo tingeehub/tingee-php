@@ -406,25 +406,6 @@ class TingeeBankGroup
         /** @var TingeeApiResponse<BankDeleteVAOutputDto> $response */
         return $response;
     }
-
-    /**
-     * POST /v1/bank/refund
-     *
-     * @return TingeeApiResponse<EmptyDto>
-     * @throws TingeeHttpException
-     */
-    public function refund(OpenApiRefundDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/bank/refund',
-            $body,
-            [],
-            EmptyDto::class
-        );
-        /** @var TingeeApiResponse<EmptyDto> $response */
-        return $response;
-    }
 }
 
 class TingeeDeviceGroup
