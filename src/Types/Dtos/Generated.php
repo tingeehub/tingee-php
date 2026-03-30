@@ -395,10 +395,10 @@ class OpenApiGenerateVietQROuputDto implements \JsonSerializable
 
 class BankCreateVAOuputDto implements \JsonSerializable
 {
-    public string $bankName = '';
-    public int $merchantAccountNumberId = 0;
+    public ?string $bankName = null;
+    public ?int $merchantAccountNumberId = null;
     public ?int $shopId = null;
-    public string $status = '';
+    public ?string $status = null;
     public ?string $confirmId = null;
     public ?string $vaAccountNumber = null;
     public ?string $deepLink = null;
@@ -503,10 +503,10 @@ class OpenApiCreateVAInpuDto implements \JsonSerializable
 
 class OpenApiConfirmVAOuputDto implements \JsonSerializable
 {
-    public string $accountType = '';
-    public string $bankName = '';
-    public string $accountNumber = '';
-    public string $vaAccountNumber = '';
+    public ?string $accountType = null;
+    public ?string $bankName = null;
+    public ?string $accountNumber = null;
+    public ?string $vaAccountNumber = null;
     public function jsonSerialize(): array
     {
         return [
@@ -622,15 +622,8 @@ class OpenApiReadSecurityCodeDto implements \JsonSerializable
 class OpenApiReadPartnerSecurityCodeDto implements \JsonSerializable
 {
     public ?int $merchantId = null;
-    public string $uuid;
-    public string $securityCode;
-    /** Required fields constructor. */
-    public function __construct(string $uuid, string $securityCode)
-    {
-        $this->uuid = $uuid;
-        $this->securityCode = $securityCode;
-    }
-
+    public string $uuid = '';
+    public string $securityCode = '';
     public function jsonSerialize(): array
     {
         return [
@@ -643,8 +636,8 @@ class OpenApiReadPartnerSecurityCodeDto implements \JsonSerializable
 
 class SendNotifyTingeeBoxDto implements \JsonSerializable
 {
-    public string $type = '';
-    public string $uuid = '';
+    public ?string $type = null;
+    public ?string $uuid = null;
     public function jsonSerialize(): array
     {
         return [
@@ -735,24 +728,16 @@ class OpenApiUpdateShopDeviceLinkDto implements \JsonSerializable
 
 class BIDVOpenApiReadAmountDto implements \JsonSerializable
 {
-    public string $uuid;
-    public string $transactionId;
-    public int $amount;
+    public string $uuid = '';
+    public string $transactionId = '';
+    public int $amount = 0;
     /** Bank BIN. Use BankBinEnum constants. */
-    public string $bankBin;
+    public string $bankBin = '';
+    public ?string $bankName = null;
     public ?string $firstDisplayText = null;
     public ?string $secondDisplayText = null;
     public ?string $thirdDisplayText = null;
     public ?bool $playSound = null;
-    /** Required fields constructor. */
-    public function __construct(string $uuid, string $transactionId, int $amount, string $bankBin)
-    {
-        $this->uuid = $uuid;
-        $this->transactionId = $transactionId;
-        $this->amount = $amount;
-        $this->bankBin = $bankBin;
-    }
-
     public function jsonSerialize(): array
     {
         return [
@@ -760,6 +745,7 @@ class BIDVOpenApiReadAmountDto implements \JsonSerializable
             'transactionId' => $this->transactionId,
             'amount' => $this->amount,
             'bankBin' => $this->bankBin,
+            'bankName' => $this->bankName,
             'firstDisplayText' => $this->firstDisplayText,
             'secondDisplayText' => $this->secondDisplayText,
             'thirdDisplayText' => $this->thirdDisplayText,
@@ -776,6 +762,7 @@ class OpenApiReadAmountDto implements \JsonSerializable
     public int $amount;
     /** Bank BIN. Use BankBinEnum constants. */
     public string $bankBin;
+    public ?string $bankName = null;
     public ?string $firstDisplayText = null;
     public ?string $secondDisplayText = null;
     public ?string $thirdDisplayText = null;
@@ -797,6 +784,7 @@ class OpenApiReadAmountDto implements \JsonSerializable
             'transactionId' => $this->transactionId,
             'amount' => $this->amount,
             'bankBin' => $this->bankBin,
+            'bankName' => $this->bankName,
             'firstDisplayText' => $this->firstDisplayText,
             'secondDisplayText' => $this->secondDisplayText,
             'thirdDisplayText' => $this->thirdDisplayText,
@@ -808,13 +796,13 @@ class OpenApiReadAmountDto implements \JsonSerializable
 class OpenApiShowQRCodeDto implements \JsonSerializable
 {
     public ?int $merchantId = null;
-    public string $uuid;
     public ?string $vaAccountNumber = null;
     public int $amount;
     public string $qrCode;
     /** Bank BIN. Use BankBinEnum constants. */
     public ?string $bankBin = null;
     public ?string $bankName = null;
+    public string $uuid;
     public ?string $deviceType = null;
     public ?string $firstText = null;
     public ?string $secondText = null;
@@ -823,23 +811,23 @@ class OpenApiShowQRCodeDto implements \JsonSerializable
     public ?bool $isStaticQr = null;
     public ?bool $playSound = null;
     /** Required fields constructor. */
-    public function __construct(string $uuid, int $amount, string $qrCode)
+    public function __construct(int $amount, string $qrCode, string $uuid)
     {
-        $this->uuid = $uuid;
         $this->amount = $amount;
         $this->qrCode = $qrCode;
+        $this->uuid = $uuid;
     }
 
     public function jsonSerialize(): array
     {
         return [
             'merchantId' => $this->merchantId,
-            'uuid' => $this->uuid,
             'vaAccountNumber' => $this->vaAccountNumber,
             'amount' => $this->amount,
             'qrCode' => $this->qrCode,
             'bankBin' => $this->bankBin,
             'bankName' => $this->bankName,
+            'uuid' => $this->uuid,
             'deviceType' => $this->deviceType,
             'firstText' => $this->firstText,
             'secondText' => $this->secondText,
@@ -919,6 +907,7 @@ class DeviceDto implements \JsonSerializable
     public ?string $deviceDistributorAncestorIds = null;
     public ?float $deviceDistributorLevel = null;
     public float $masterMerchantId = 0.0;
+    public ?string $expirationDate = null;
     public ?string $merchantName = null;
     /** @var ShopInfoDto[]|null */
     public ?array $shopDtos = null;
@@ -953,6 +942,7 @@ class DeviceDto implements \JsonSerializable
             'deviceDistributorAncestorIds' => $this->deviceDistributorAncestorIds,
             'deviceDistributorLevel' => $this->deviceDistributorLevel,
             'masterMerchantId' => $this->masterMerchantId,
+            'expirationDate' => $this->expirationDate,
             'merchantName' => $this->merchantName,
             'shopDtos' => $this->shopDtos,
             'agentName' => $this->agentName,
@@ -1059,7 +1049,7 @@ class OpenApiVerifyReferralCodeResponseDto implements \JsonSerializable
 
 class OpenApiCreateOrUpdateShopOutputDto implements \JsonSerializable
 {
-    public int $shopId = 0;
+    public ?int $shopId = null;
     public function jsonSerialize(): array
     {
         return [
@@ -1174,9 +1164,9 @@ class OpenApiCreateOrUpdateShopDto implements \JsonSerializable
 
 class OpenApiGetShopPagedOuputDto implements \JsonSerializable
 {
-    public int $id = 0;
-    public bool $isActive = false;
-    public string $name = '';
+    public ?int $id = null;
+    public ?bool $isActive = null;
+    public ?string $name = null;
     public ?string $address = null;
     public function jsonSerialize(): array
     {
@@ -1774,6 +1764,19 @@ class COBInfoDto implements \JsonSerializable
     }
 }
 
+class MSBInfoDto implements \JsonSerializable
+{
+    public ?string $mobile = null;
+    public ?string $vaPrefix = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'mobile' => $this->mobile,
+            'vaPrefix' => $this->vaPrefix,
+        ];
+    }
+}
+
 class BankInfoDto implements \JsonSerializable
 {
     public ?OCBInfoDto $ocbInfoDto = null;
@@ -1790,6 +1793,7 @@ class BankInfoDto implements \JsonSerializable
     public ?AgribankInfoDto $agribankInfoDto = null;
     public ?VCBInfoDto $vcbInfoDto = null;
     public ?COBInfoDto $cobInfoDto = null;
+    public ?MSBInfoDto $msbInfoDto = null;
     public function jsonSerialize(): array
     {
         return [
@@ -1807,6 +1811,7 @@ class BankInfoDto implements \JsonSerializable
             'agribankInfoDto' => $this->agribankInfoDto,
             'vcbInfoDto' => $this->vcbInfoDto,
             'cobInfoDto' => $this->cobInfoDto,
+            'msbInfoDto' => $this->msbInfoDto,
         ];
     }
 }
@@ -1847,8 +1852,8 @@ class OpenApiAccountNumberDDLPagedInputDto implements \JsonSerializable
 {
     public ?string $filter = null;
     public ?string $sorting = null;
-    public int $skipCount;
-    public int $maxResultCount;
+    public int $skipCount = 0;
+    public int $maxResultCount = 0;
     public ?int $merchantId = null;
     public ?array $merchantAccountNumberIds = null;
     public ?array $shopIds = null;
@@ -1857,13 +1862,6 @@ class OpenApiAccountNumberDDLPagedInputDto implements \JsonSerializable
     public ?array $bankBins = null;
     /** @var BankNameEnum[]|null */
     public ?array $bankNames = null;
-    /** Required fields constructor. */
-    public function __construct(int $skipCount, int $maxResultCount)
-    {
-        $this->skipCount = $skipCount;
-        $this->maxResultCount = $maxResultCount;
-    }
-
     public function jsonSerialize(): array
     {
         return [
@@ -1917,6 +1915,333 @@ class OpenApiTransactionPagedInputDto implements \JsonSerializable
             'billId' => $this->billId,
             'startTime' => $this->startTime,
             'endTime' => $this->endTime,
+        ];
+    }
+}
+
+class OpenApiRegisterDto implements \JsonSerializable
+{
+    public string $requestId;
+    /** Bank BIN. Use BankBinEnum constants. */
+    public ?string $bankBin = null;
+    public ?string $accountName = null;
+    public string $phone;
+    public string $returnUrl;
+    /** Required fields constructor. */
+    public function __construct(string $requestId, string $phone, string $returnUrl)
+    {
+        $this->requestId = $requestId;
+        $this->phone = $phone;
+        $this->returnUrl = $returnUrl;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'requestId' => $this->requestId,
+            'bankBin' => $this->bankBin,
+            'accountName' => $this->accountName,
+            'phone' => $this->phone,
+            'returnUrl' => $this->returnUrl,
+        ];
+    }
+}
+
+class PaymentBillResponseDto implements \JsonSerializable
+{
+    public ?string $code = null;
+    public ?string $status = null;
+    public ?string $transactionCode = null;
+    public ?bool $isSentConfirmEmail = null;
+    public ?bool $isSentConfirmZalo = null;
+    public ?string $returnUrl = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'code' => $this->code,
+            'status' => $this->status,
+            'transactionCode' => $this->transactionCode,
+            'isSentConfirmEmail' => $this->isSentConfirmEmail,
+            'isSentConfirmZalo' => $this->isSentConfirmZalo,
+            'returnUrl' => $this->returnUrl,
+        ];
+    }
+}
+
+class OpenApiPaymentBillDto implements \JsonSerializable
+{
+    public string $requestId;
+    public ?string $clientId = null;
+    public string $subscriptionId;
+    public string $amount;
+    public string $description;
+    public ?string $expirationTime = null;
+    public ?string $signature = null;
+    public ?string $token = null;
+    public $additionalData = null;
+    public ?string $tokenRef = null;
+    public string $partnerCode;
+    public ?string $accountNumber = null;
+    public string $serviceProviderName;
+    public ?string $returnUrl = null;
+    /** Required fields constructor. */
+    public function __construct(string $requestId, string $subscriptionId, string $amount, string $description, string $partnerCode, string $serviceProviderName)
+    {
+        $this->requestId = $requestId;
+        $this->subscriptionId = $subscriptionId;
+        $this->amount = $amount;
+        $this->description = $description;
+        $this->partnerCode = $partnerCode;
+        $this->serviceProviderName = $serviceProviderName;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'requestId' => $this->requestId,
+            'clientId' => $this->clientId,
+            'subscriptionId' => $this->subscriptionId,
+            'amount' => $this->amount,
+            'description' => $this->description,
+            'expirationTime' => $this->expirationTime,
+            'signature' => $this->signature,
+            'token' => $this->token,
+            'additionalData' => $this->additionalData,
+            'tokenRef' => $this->tokenRef,
+            'partnerCode' => $this->partnerCode,
+            'accountNumber' => $this->accountNumber,
+            'serviceProviderName' => $this->serviceProviderName,
+            'returnUrl' => $this->returnUrl,
+        ];
+    }
+}
+
+class DeleteSubscriptionOutputDto implements \JsonSerializable
+{
+    public ?string $confirmUrl = null;
+    public ?string $code = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'confirmUrl' => $this->confirmUrl,
+            'code' => $this->code,
+        ];
+    }
+}
+
+class OpenApiDeleteSubscriptionDto implements \JsonSerializable
+{
+    public string $requestId;
+    public string $returnUrl;
+    public string $subscriptionId;
+    public string $tokenRef;
+    /** Required fields constructor. */
+    public function __construct(string $requestId, string $returnUrl, string $subscriptionId, string $tokenRef)
+    {
+        $this->requestId = $requestId;
+        $this->returnUrl = $returnUrl;
+        $this->subscriptionId = $subscriptionId;
+        $this->tokenRef = $tokenRef;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'requestId' => $this->requestId,
+            'returnUrl' => $this->returnUrl,
+            'subscriptionId' => $this->subscriptionId,
+            'tokenRef' => $this->tokenRef,
+        ];
+    }
+}
+
+class RefundOutputDto implements \JsonSerializable
+{
+    public ?int $refundAmount = null;
+    public ?string $transactionId = null;
+    public ?string $status = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'refundAmount' => $this->refundAmount,
+            'transactionId' => $this->transactionId,
+            'status' => $this->status,
+        ];
+    }
+}
+
+class OpenApiRefundInputDto implements \JsonSerializable
+{
+    public string $subscriptionId;
+    public string $tokenRef;
+    public string $transactionId;
+    public int $amount;
+    /** Required fields constructor. */
+    public function __construct(string $subscriptionId, string $tokenRef, string $transactionId, int $amount)
+    {
+        $this->subscriptionId = $subscriptionId;
+        $this->tokenRef = $tokenRef;
+        $this->transactionId = $transactionId;
+        $this->amount = $amount;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'subscriptionId' => $this->subscriptionId,
+            'tokenRef' => $this->tokenRef,
+            'transactionId' => $this->transactionId,
+            'amount' => $this->amount,
+        ];
+    }
+}
+
+class OpenApiEditConfirmBeforePaymentMethodDto implements \JsonSerializable
+{
+    public string $requestId;
+    public string $returnUrl;
+    public string $subscriptionId;
+    /** Required fields constructor. */
+    public function __construct(string $requestId, string $returnUrl, string $subscriptionId)
+    {
+        $this->requestId = $requestId;
+        $this->returnUrl = $returnUrl;
+        $this->subscriptionId = $subscriptionId;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'requestId' => $this->requestId,
+            'returnUrl' => $this->returnUrl,
+            'subscriptionId' => $this->subscriptionId,
+        ];
+    }
+}
+
+class OpenApiSubscriptionStatusResponseDto implements \JsonSerializable
+{
+    public string $lastModificationTime = '';
+    public ?float $lastModifierUserId = null;
+    public ?string $email = null;
+    public string $bankName = '';
+    public ?string $accountName = null;
+    public string $accountNumber = '';
+    public string $phone = '';
+    public bool $confirmPaymentByEmail = false;
+    public ?string $confirmEmail = null;
+    public bool $confirmPaymentByZalo = false;
+    public string $confirmPhoneNumber = '';
+    public ?string $tokenRef = null;
+    public string $status = '';
+    public ?string $subscriptionId = null;
+    /** Bank BIN. Use BankBinEnum constants. */
+    public ?string $bankBin = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'lastModificationTime' => $this->lastModificationTime,
+            'lastModifierUserId' => $this->lastModifierUserId,
+            'email' => $this->email,
+            'bankName' => $this->bankName,
+            'accountName' => $this->accountName,
+            'accountNumber' => $this->accountNumber,
+            'phone' => $this->phone,
+            'confirmPaymentByEmail' => $this->confirmPaymentByEmail,
+            'confirmEmail' => $this->confirmEmail,
+            'confirmPaymentByZalo' => $this->confirmPaymentByZalo,
+            'confirmPhoneNumber' => $this->confirmPhoneNumber,
+            'tokenRef' => $this->tokenRef,
+            'status' => $this->status,
+            'subscriptionId' => $this->subscriptionId,
+            'bankBin' => $this->bankBin,
+        ];
+    }
+}
+
+class CustomerInfoDto implements \JsonSerializable
+{
+    public string $onepayAccountId = '';
+    public string $name = '';
+    public string $phone = '';
+    public ?string $email = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'onepayAccountId' => $this->onepayAccountId,
+            'name' => $this->name,
+            'phone' => $this->phone,
+            'email' => $this->email,
+        ];
+    }
+}
+
+class OpenApiPaymentTransactionStatusResponseDto implements \JsonSerializable
+{
+    public ?string $transactionId = null;
+    public ?string $subscriptionId = null;
+    public string $tokenRef = '';
+    /** Bank BIN. Use BankBinEnum constants. */
+    public string $bankBin = '';
+    public ?CustomerInfoDto $customer = null;
+    public ?string $accountNumber = null;
+    public ?string $accountName = null;
+    public ?string $code = null;
+    public ?float $amount = null;
+    public ?string $currency = null;
+    public ?string $content = null;
+    public ?string $transactionDate = null;
+    public string $status = '';
+    public function jsonSerialize(): array
+    {
+        return [
+            'transactionId' => $this->transactionId,
+            'subscriptionId' => $this->subscriptionId,
+            'tokenRef' => $this->tokenRef,
+            'bankBin' => $this->bankBin,
+            'customer' => $this->customer,
+            'accountNumber' => $this->accountNumber,
+            'accountName' => $this->accountName,
+            'code' => $this->code,
+            'amount' => $this->amount,
+            'currency' => $this->currency,
+            'content' => $this->content,
+            'transactionDate' => $this->transactionDate,
+            'status' => $this->status,
+        ];
+    }
+}
+
+class OpenApiPaymentTransactionsPagedOutputDto implements \JsonSerializable
+{
+    public string $transactionId = '';
+    public string $code = '';
+    public string $bankName = '';
+    /** Bank BIN. Use BankBinEnum constants. */
+    public string $bankBin = '';
+    public string $amount = '';
+    public string $content = '';
+    public string $accountNumber = '';
+    public string $transactionDate = '';
+    public string $subscriptionId = '';
+    public string $tokenRef = '';
+    public string $status = '';
+    public $additionalData = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'transactionId' => $this->transactionId,
+            'code' => $this->code,
+            'bankName' => $this->bankName,
+            'bankBin' => $this->bankBin,
+            'amount' => $this->amount,
+            'content' => $this->content,
+            'accountNumber' => $this->accountNumber,
+            'transactionDate' => $this->transactionDate,
+            'subscriptionId' => $this->subscriptionId,
+            'tokenRef' => $this->tokenRef,
+            'status' => $this->status,
+            'additionalData' => $this->additionalData,
         ];
     }
 }
@@ -2003,6 +2328,46 @@ class BIDVConfigDto implements \JsonSerializable
     }
 }
 
+class FileUploadDto implements \JsonSerializable
+{
+    public string $fileLogId = '';
+    public string $path = '';
+    public function jsonSerialize(): array
+    {
+        return [
+            'fileLogId' => $this->fileLogId,
+            'path' => $this->path,
+        ];
+    }
+}
+
+class VIBConfigDto implements \JsonSerializable
+{
+    public string $vaPrefix = '';
+    public ?FileUploadDto $pathPublicKey = null;
+    public ?FileUploadDto $pathPrivateKey = null;
+    public string $basicAuthToken = '';
+    public string $cif = '';
+    public string $clientId = '';
+    public string $clientSecret = '';
+    public string $accountNumber = '';
+    public int $vaCharactersNumber = 0;
+    public function jsonSerialize(): array
+    {
+        return [
+            'vaPrefix' => $this->vaPrefix,
+            'pathPublicKey' => $this->pathPublicKey,
+            'pathPrivateKey' => $this->pathPrivateKey,
+            'basicAuthToken' => $this->basicAuthToken,
+            'cif' => $this->cif,
+            'clientId' => $this->clientId,
+            'clientSecret' => $this->clientSecret,
+            'accountNumber' => $this->accountNumber,
+            'vaCharactersNumber' => $this->vaCharactersNumber,
+        ];
+    }
+}
+
 class CTGConfigDto implements \JsonSerializable
 {
     public string $accountNumber = '';
@@ -2037,11 +2402,54 @@ class ACBConfigBusinessDto implements \JsonSerializable
     }
 }
 
+class VCBConfigBusinessDto implements \JsonSerializable
+{
+    public string $accountNumber = '';
+    public string $accountName = '';
+    public string $merchantId = '';
+    public string $terminalId = '';
+    public function jsonSerialize(): array
+    {
+        return [
+            'accountNumber' => $this->accountNumber,
+            'accountName' => $this->accountName,
+            'merchantId' => $this->merchantId,
+            'terminalId' => $this->terminalId,
+        ];
+    }
+}
+
+class MSBConfigBusinessDto implements \JsonSerializable
+{
+    public string $accountNumber = '';
+    public string $vaPrefix = '';
+    public string $mobile = '';
+    public string $merchantId = '';
+    public string $terminalId = '';
+    public string $accessCode = '';
+    public string $referralCode = '';
+    public function jsonSerialize(): array
+    {
+        return [
+            'accountNumber' => $this->accountNumber,
+            'vaPrefix' => $this->vaPrefix,
+            'mobile' => $this->mobile,
+            'merchantId' => $this->merchantId,
+            'terminalId' => $this->terminalId,
+            'accessCode' => $this->accessCode,
+            'referralCode' => $this->referralCode,
+        ];
+    }
+}
+
 class OpenApiBankCreateOrUpdateConfigDto implements \JsonSerializable
 {
     public ?BIDVConfigDto $bidvConfigDto = null;
+    public ?VIBConfigDto $vibConfigDto = null;
     public ?CTGConfigDto $ctgConfigDto = null;
     public ?ACBConfigBusinessDto $acbConfigDto = null;
+    public ?VCBConfigBusinessDto $vcbConfigDto = null;
+    public ?MSBConfigBusinessDto $msbConfigDto = null;
     public string $accountType;
     public ?int $id = null;
     public ?string $otpNumber = null;
@@ -2060,8 +2468,11 @@ class OpenApiBankCreateOrUpdateConfigDto implements \JsonSerializable
     {
         return [
             'bidvConfigDto' => $this->bidvConfigDto,
+            'vibConfigDto' => $this->vibConfigDto,
             'ctgConfigDto' => $this->ctgConfigDto,
             'acbConfigDto' => $this->acbConfigDto,
+            'vcbConfigDto' => $this->vcbConfigDto,
+            'msbConfigDto' => $this->msbConfigDto,
             'accountType' => $this->accountType,
             'id' => $this->id,
             'otpNumber' => $this->otpNumber,
@@ -2205,6 +2616,7 @@ class OpenApiCreateMerchantDto implements \JsonSerializable
     public ?float $userReferralLevel = null;
     public ?string $deviceDistributorAncestorMap = null;
     public ?bool $isMasterMerchant = null;
+    public ?string $baasType = null;
     public string $password;
     public string $appType;
     public ?bool $isMultipleRole = null;
@@ -2242,23 +2654,11 @@ class OpenApiCreateMerchantDto implements \JsonSerializable
             'userReferralLevel' => $this->userReferralLevel,
             'deviceDistributorAncestorMap' => $this->deviceDistributorAncestorMap,
             'isMasterMerchant' => $this->isMasterMerchant,
+            'baasType' => $this->baasType,
             'password' => $this->password,
             'appType' => $this->appType,
             'isMultipleRole' => $this->isMultipleRole,
             'userReferrerId' => $this->userReferrerId,
-        ];
-    }
-}
-
-class FileUploadDto implements \JsonSerializable
-{
-    public string $fileLogId = '';
-    public string $path = '';
-    public function jsonSerialize(): array
-    {
-        return [
-            'fileLogId' => $this->fileLogId,
-            'path' => $this->path,
         ];
     }
 }
@@ -2330,33 +2730,6 @@ class ShinhanConfigDto implements \JsonSerializable
     }
 }
 
-class VIBConfigDto implements \JsonSerializable
-{
-    public string $vaPrefix = '';
-    public ?FileUploadDto $pathPublicKey = null;
-    public ?FileUploadDto $pathPrivateKey = null;
-    public string $basicAuthToken = '';
-    public string $cif = '';
-    public string $clientId = '';
-    public string $clientSecret = '';
-    public string $accountNumber = '';
-    public int $vaCharactersNumber = 0;
-    public function jsonSerialize(): array
-    {
-        return [
-            'vaPrefix' => $this->vaPrefix,
-            'pathPublicKey' => $this->pathPublicKey,
-            'pathPrivateKey' => $this->pathPrivateKey,
-            'basicAuthToken' => $this->basicAuthToken,
-            'cif' => $this->cif,
-            'clientId' => $this->clientId,
-            'clientSecret' => $this->clientSecret,
-            'accountNumber' => $this->accountNumber,
-            'vaCharactersNumber' => $this->vaCharactersNumber,
-        ];
-    }
-}
-
 class ACBConfigDto implements \JsonSerializable
 {
     /** @var ACBConfigBusinessDto[]|null */
@@ -2400,23 +2773,6 @@ class VPBConfigDto implements \JsonSerializable
         return [
             'businessAccounts' => $this->businessAccounts,
             'businessHouseholdAccounts' => $this->businessHouseholdAccounts,
-        ];
-    }
-}
-
-class VCBConfigBusinessDto implements \JsonSerializable
-{
-    public string $accountNumber = '';
-    public string $accountName = '';
-    public string $merchantId = '';
-    public string $terminalId = '';
-    public function jsonSerialize(): array
-    {
-        return [
-            'accountNumber' => $this->accountNumber,
-            'accountName' => $this->accountName,
-            'merchantId' => $this->merchantId,
-            'terminalId' => $this->terminalId,
         ];
     }
 }
@@ -2571,6 +2927,7 @@ class MerchantDto implements \JsonSerializable
     public ?float $userReferralLevel = null;
     public ?string $deviceDistributorAncestorMap = null;
     public ?bool $isMasterMerchant = null;
+    public ?string $baasType = null;
     /** @var MerchantPackageInfo[]|null */
     public ?array $merchantPackages = null;
     public ?string $masterMerchantNames = null;
@@ -2609,6 +2966,7 @@ class MerchantDto implements \JsonSerializable
             'userReferralLevel' => $this->userReferralLevel,
             'deviceDistributorAncestorMap' => $this->deviceDistributorAncestorMap,
             'isMasterMerchant' => $this->isMasterMerchant,
+            'baasType' => $this->baasType,
             'merchantPackages' => $this->merchantPackages,
             'masterMerchantNames' => $this->masterMerchantNames,
         ];
@@ -2639,329 +2997,402 @@ class OpenApiGetPagingMerchantsDto implements \JsonSerializable
     }
 }
 
-class OpenApiRegisterDto implements \JsonSerializable
+class GetPagingEInvoiceAccountOutputDto implements \JsonSerializable
 {
-    public string $requestId;
-    /** Bank BIN. Use BankBinEnum constants. */
-    public ?string $bankBin = null;
-    public ?string $accountName = null;
-    public string $phone;
-    public string $returnUrl;
+    public int $id = 0;
+    public string $creationTime = '';
+    public float $merchantId = 0.0;
+    public string $provider = '';
+    public string $taxCode = '';
+    public string $username = '';
+    public string $password = '';
+    public ?bool $isDefault = null;
+    public ?bool $isActive = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'creationTime' => $this->creationTime,
+            'merchantId' => $this->merchantId,
+            'provider' => $this->provider,
+            'taxCode' => $this->taxCode,
+            'username' => $this->username,
+            'password' => $this->password,
+            'isDefault' => $this->isDefault,
+            'isActive' => $this->isActive,
+        ];
+    }
+}
+
+class GetPagingEInvoiceAccountInputDto implements \JsonSerializable
+{
+    public ?string $filter = null;
+    public ?string $sorting = null;
+    public int $skipCount;
+    public int $maxResultCount;
+    public ?string $provider = null;
+    public ?bool $isDefault = null;
+    public ?bool $isActive = null;
+    public ?int $merchantId = null;
     /** Required fields constructor. */
-    public function __construct(string $requestId, string $phone, string $returnUrl)
+    public function __construct(int $skipCount, int $maxResultCount)
     {
-        $this->requestId = $requestId;
-        $this->phone = $phone;
-        $this->returnUrl = $returnUrl;
+        $this->skipCount = $skipCount;
+        $this->maxResultCount = $maxResultCount;
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'requestId' => $this->requestId,
-            'bankBin' => $this->bankBin,
-            'accountName' => $this->accountName,
-            'phone' => $this->phone,
-            'returnUrl' => $this->returnUrl,
+            'filter' => $this->filter,
+            'sorting' => $this->sorting,
+            'skipCount' => $this->skipCount,
+            'maxResultCount' => $this->maxResultCount,
+            'provider' => $this->provider,
+            'isDefault' => $this->isDefault,
+            'isActive' => $this->isActive,
+            'merchantId' => $this->merchantId,
         ];
     }
 }
 
-class PaymentBillResponseDto implements \JsonSerializable
+class EInvoiceAccountOutputDto implements \JsonSerializable
 {
-    public string $code = '';
-    public string $status = '';
-    public ?string $transactionCode = null;
-    public ?bool $isSentConfirmEmail = null;
-    public ?bool $isSentConfirmZalo = null;
-    public ?string $returnUrl = null;
+    public int $id = 0;
+    public string $creationTime = '';
+    public float $merchantId = 0.0;
+    public string $provider = '';
+    public string $taxCode = '';
+    public string $username = '';
+    public ?bool $isDefault = null;
+    public ?bool $isActive = null;
     public function jsonSerialize(): array
     {
         return [
-            'code' => $this->code,
-            'status' => $this->status,
-            'transactionCode' => $this->transactionCode,
-            'isSentConfirmEmail' => $this->isSentConfirmEmail,
-            'isSentConfirmZalo' => $this->isSentConfirmZalo,
-            'returnUrl' => $this->returnUrl,
+            'id' => $this->id,
+            'creationTime' => $this->creationTime,
+            'merchantId' => $this->merchantId,
+            'provider' => $this->provider,
+            'taxCode' => $this->taxCode,
+            'username' => $this->username,
+            'isDefault' => $this->isDefault,
+            'isActive' => $this->isActive,
         ];
     }
 }
 
-class OpenApiPaymentBillDto implements \JsonSerializable
+class CreateOrUpdateEInvoiceAccountDto implements \JsonSerializable
 {
-    public string $requestId;
-    public ?string $clientId = null;
-    public string $subscriptionId;
-    public string $amount;
-    public string $description;
-    public ?string $expirationTime = null;
-    public ?string $signature = null;
-    public ?string $token = null;
-    public $additionalData = null;
-    public ?string $tokenRef = null;
-    public string $partnerCode;
-    public ?string $accountNumber = null;
-    public string $serviceProviderName;
-    public ?string $returnUrl = null;
+    public string $provider;
+    public string $taxCode;
+    public string $username;
+    public string $password;
+    public ?bool $isDefault = null;
+    public ?bool $isActive = null;
+    public ?int $id = null;
+    public ?int $merchantId = null;
     /** Required fields constructor. */
-    public function __construct(string $requestId, string $subscriptionId, string $amount, string $description, string $partnerCode, string $serviceProviderName)
+    public function __construct(string $provider, string $taxCode, string $username, string $password)
     {
-        $this->requestId = $requestId;
-        $this->subscriptionId = $subscriptionId;
-        $this->amount = $amount;
-        $this->description = $description;
-        $this->partnerCode = $partnerCode;
-        $this->serviceProviderName = $serviceProviderName;
+        $this->provider = $provider;
+        $this->taxCode = $taxCode;
+        $this->username = $username;
+        $this->password = $password;
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'requestId' => $this->requestId,
-            'clientId' => $this->clientId,
-            'subscriptionId' => $this->subscriptionId,
-            'amount' => $this->amount,
-            'description' => $this->description,
-            'expirationTime' => $this->expirationTime,
-            'signature' => $this->signature,
-            'token' => $this->token,
-            'additionalData' => $this->additionalData,
-            'tokenRef' => $this->tokenRef,
-            'partnerCode' => $this->partnerCode,
-            'accountNumber' => $this->accountNumber,
-            'serviceProviderName' => $this->serviceProviderName,
-            'returnUrl' => $this->returnUrl,
+            'provider' => $this->provider,
+            'taxCode' => $this->taxCode,
+            'username' => $this->username,
+            'password' => $this->password,
+            'isDefault' => $this->isDefault,
+            'isActive' => $this->isActive,
+            'id' => $this->id,
+            'merchantId' => $this->merchantId,
         ];
     }
 }
 
-class DeleteSubscriptionOutputDto implements \JsonSerializable
+class DeleteEInvoiceAccountDto implements \JsonSerializable
 {
-    public ?string $confirmUrl = null;
-    public string $code = '';
-    public function jsonSerialize(): array
-    {
-        return [
-            'confirmUrl' => $this->confirmUrl,
-            'code' => $this->code,
-        ];
-    }
-}
-
-class OpenApiDeleteSubscriptionDto implements \JsonSerializable
-{
-    public string $requestId;
-    public string $returnUrl;
-    public string $subscriptionId;
-    public string $tokenRef;
+    public int $id;
+    public ?int $merchantId = null;
     /** Required fields constructor. */
-    public function __construct(string $requestId, string $returnUrl, string $subscriptionId, string $tokenRef)
+    public function __construct(int $id)
     {
-        $this->requestId = $requestId;
-        $this->returnUrl = $returnUrl;
-        $this->subscriptionId = $subscriptionId;
-        $this->tokenRef = $tokenRef;
+        $this->id = $id;
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'requestId' => $this->requestId,
-            'returnUrl' => $this->returnUrl,
-            'subscriptionId' => $this->subscriptionId,
-            'tokenRef' => $this->tokenRef,
+            'id' => $this->id,
+            'merchantId' => $this->merchantId,
         ];
     }
 }
 
-class RefundOutputDto implements \JsonSerializable
+class EInvoiceProviderDto implements \JsonSerializable
 {
-    public int $refundAmount = 0;
-    public string $transactionId = '';
-    public string $status = '';
-    public function jsonSerialize(): array
-    {
-        return [
-            'refundAmount' => $this->refundAmount,
-            'transactionId' => $this->transactionId,
-            'status' => $this->status,
-        ];
-    }
-}
-
-class OpenApiRefundInputDto implements \JsonSerializable
-{
-    public string $subscriptionId;
-    public string $tokenRef;
-    public string $transactionId;
-    public int $amount;
-    /** Required fields constructor. */
-    public function __construct(string $subscriptionId, string $tokenRef, string $transactionId, int $amount)
-    {
-        $this->subscriptionId = $subscriptionId;
-        $this->tokenRef = $tokenRef;
-        $this->transactionId = $transactionId;
-        $this->amount = $amount;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'subscriptionId' => $this->subscriptionId,
-            'tokenRef' => $this->tokenRef,
-            'transactionId' => $this->transactionId,
-            'amount' => $this->amount,
-        ];
-    }
-}
-
-class OpenApiEditConfirmBeforePaymentMethodDto implements \JsonSerializable
-{
-    public string $requestId;
-    public string $returnUrl;
-    public string $subscriptionId;
-    /** Required fields constructor. */
-    public function __construct(string $requestId, string $returnUrl, string $subscriptionId)
-    {
-        $this->requestId = $requestId;
-        $this->returnUrl = $returnUrl;
-        $this->subscriptionId = $subscriptionId;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'requestId' => $this->requestId,
-            'returnUrl' => $this->returnUrl,
-            'subscriptionId' => $this->subscriptionId,
-        ];
-    }
-}
-
-class OpenApiSubscriptionStatusResponseDto implements \JsonSerializable
-{
-    public string $lastModificationTime = '';
-    public ?float $lastModifierUserId = null;
-    public ?string $email = null;
-    public string $bankName = '';
-    public ?string $accountName = null;
-    public string $accountNumber = '';
-    public string $phone = '';
-    public bool $confirmPaymentByEmail = false;
-    public ?string $confirmEmail = null;
-    public bool $confirmPaymentByZalo = false;
-    public string $confirmPhoneNumber = '';
-    public string $tokenRef = '';
-    public string $status = '';
-    public string $subscriptionId = '';
-    /** Bank BIN. Use BankBinEnum constants. */
-    public string $bankBin = '';
-    public function jsonSerialize(): array
-    {
-        return [
-            'lastModificationTime' => $this->lastModificationTime,
-            'lastModifierUserId' => $this->lastModifierUserId,
-            'email' => $this->email,
-            'bankName' => $this->bankName,
-            'accountName' => $this->accountName,
-            'accountNumber' => $this->accountNumber,
-            'phone' => $this->phone,
-            'confirmPaymentByEmail' => $this->confirmPaymentByEmail,
-            'confirmEmail' => $this->confirmEmail,
-            'confirmPaymentByZalo' => $this->confirmPaymentByZalo,
-            'confirmPhoneNumber' => $this->confirmPhoneNumber,
-            'tokenRef' => $this->tokenRef,
-            'status' => $this->status,
-            'subscriptionId' => $this->subscriptionId,
-            'bankBin' => $this->bankBin,
-        ];
-    }
-}
-
-class CustomerInfoDto implements \JsonSerializable
-{
-    public string $onepayAccountId = '';
-    public string $name = '';
-    public string $phone = '';
-    public ?string $email = null;
-    public function jsonSerialize(): array
-    {
-        return [
-            'onepayAccountId' => $this->onepayAccountId,
-            'name' => $this->name,
-            'phone' => $this->phone,
-            'email' => $this->email,
-        ];
-    }
-}
-
-class OpenApiPaymentTransactionStatusResponseDto implements \JsonSerializable
-{
-    public ?string $transactionId = null;
-    public ?string $subscriptionId = null;
-    public string $tokenRef = '';
-    /** Bank BIN. Use BankBinEnum constants. */
-    public string $bankBin = '';
-    public ?CustomerInfoDto $customer = null;
-    public ?string $accountNumber = null;
-    public ?string $accountName = null;
     public ?string $code = null;
-    public ?float $amount = null;
-    public ?string $currency = null;
-    public ?string $content = null;
-    public ?string $transactionDate = null;
-    public string $status = '';
+    public ?string $name = null;
     public function jsonSerialize(): array
     {
         return [
-            'transactionId' => $this->transactionId,
-            'subscriptionId' => $this->subscriptionId,
-            'tokenRef' => $this->tokenRef,
-            'bankBin' => $this->bankBin,
-            'customer' => $this->customer,
-            'accountNumber' => $this->accountNumber,
-            'accountName' => $this->accountName,
             'code' => $this->code,
-            'amount' => $this->amount,
-            'currency' => $this->currency,
-            'content' => $this->content,
-            'transactionDate' => $this->transactionDate,
-            'status' => $this->status,
+            'name' => $this->name,
         ];
     }
 }
 
-class OpenApiPaymentTransactionsPagedOutputDto implements \JsonSerializable
+class DownloadInvoiceOutputDto implements \JsonSerializable
 {
-    public string $transactionId = '';
-    public string $code = '';
-    public string $bankName = '';
-    /** Bank BIN. Use BankBinEnum constants. */
-    public string $bankBin = '';
-    public string $amount = '';
-    public string $content = '';
-    public string $accountNumber = '';
-    public string $transactionDate = '';
-    public string $subscriptionId = '';
-    public string $tokenRef = '';
-    public string $status = '';
-    public $additionalData = null;
+    public string $invoiceCode = '';
+    public string $pdfBase64 = '';
     public function jsonSerialize(): array
     {
         return [
-            'transactionId' => $this->transactionId,
-            'code' => $this->code,
-            'bankName' => $this->bankName,
-            'bankBin' => $this->bankBin,
-            'amount' => $this->amount,
-            'content' => $this->content,
-            'accountNumber' => $this->accountNumber,
-            'transactionDate' => $this->transactionDate,
-            'subscriptionId' => $this->subscriptionId,
-            'tokenRef' => $this->tokenRef,
-            'status' => $this->status,
-            'additionalData' => $this->additionalData,
+            'invoiceCode' => $this->invoiceCode,
+            'pdfBase64' => $this->pdfBase64,
+        ];
+    }
+}
+
+class InvoiceItemDto implements \JsonSerializable
+{
+    public ?string $itemCode = null;
+    public string $itemName = '';
+    public ?string $unitName = null;
+    public int $quantity = 0;
+    public int $unitPrice = 0;
+    public ?float $discount = null;
+    public ?int $discountAmount = null;
+    public ?int $totalBeforeTax = null;
+    public string $taxRateCode = '';
+    public ?int $taxAmount = null;
+    public ?int $totalAfterTax = null;
+    public ?int $itemType = null;
+    public ?int $adjustmentType = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'itemCode' => $this->itemCode,
+            'itemName' => $this->itemName,
+            'unitName' => $this->unitName,
+            'quantity' => $this->quantity,
+            'unitPrice' => $this->unitPrice,
+            'discount' => $this->discount,
+            'discountAmount' => $this->discountAmount,
+            'totalBeforeTax' => $this->totalBeforeTax,
+            'taxRateCode' => $this->taxRateCode,
+            'taxAmount' => $this->taxAmount,
+            'totalAfterTax' => $this->totalAfterTax,
+            'itemType' => $this->itemType,
+            'adjustmentType' => $this->adjustmentType,
+        ];
+    }
+}
+
+class TaxRateSummaryDto implements \JsonSerializable
+{
+    public string $taxRateCode = '';
+    public ?int $totalTaxableAmount = null;
+    public ?int $taxAmount = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'taxRateCode' => $this->taxRateCode,
+            'totalTaxableAmount' => $this->totalTaxableAmount,
+            'taxAmount' => $this->taxAmount,
+        ];
+    }
+}
+
+class CreateInvoiceDto implements \JsonSerializable
+{
+    public ?int $merchantId = null;
+    public ?string $provider = null;
+    public ?string $taxCode = null;
+    public ?string $invoiceType = null;
+    public string $invoicePattern;
+    public string $invoiceSeries;
+    public string $invoiceCode;
+    public string $invoiceDate;
+    public ?string $buyerTaxCode = null;
+    public ?string $buyerName = null;
+    public ?string $buyerLegalName = null;
+    public ?string $buyerAddress = null;
+    public ?string $buyerPhone = null;
+    public ?string $buyerEmail = null;
+    public ?string $buyerBankAccount = null;
+    public ?string $buyerBankName = null;
+    public ?int $paymentMethod = null;
+    public ?string $paymentMethodName = null;
+    public ?string $currency = null;
+    public ?float $exchangeRate = null;
+    public ?string $amountInWords = null;
+    public ?string $note = null;
+    /** @var InvoiceItemDto[]|null */
+    public array $items;
+    public ?int $totalDiscount = null;
+    public ?int $totalBeforeTax = null;
+    public ?int $totalTax = null;
+    public ?int $totalAfterTax = null;
+    /** @var TaxRateSummaryDto[]|null */
+    public ?array $taxRateSummaries = null;
+    /** Required fields constructor. */
+    public function __construct(string $invoicePattern, string $invoiceSeries, string $invoiceCode, string $invoiceDate, array $items)
+    {
+        $this->invoicePattern = $invoicePattern;
+        $this->invoiceSeries = $invoiceSeries;
+        $this->invoiceCode = $invoiceCode;
+        $this->invoiceDate = $invoiceDate;
+        $this->items = $items;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'merchantId' => $this->merchantId,
+            'provider' => $this->provider,
+            'taxCode' => $this->taxCode,
+            'invoiceType' => $this->invoiceType,
+            'invoicePattern' => $this->invoicePattern,
+            'invoiceSeries' => $this->invoiceSeries,
+            'invoiceCode' => $this->invoiceCode,
+            'invoiceDate' => $this->invoiceDate,
+            'buyerTaxCode' => $this->buyerTaxCode,
+            'buyerName' => $this->buyerName,
+            'buyerLegalName' => $this->buyerLegalName,
+            'buyerAddress' => $this->buyerAddress,
+            'buyerPhone' => $this->buyerPhone,
+            'buyerEmail' => $this->buyerEmail,
+            'buyerBankAccount' => $this->buyerBankAccount,
+            'buyerBankName' => $this->buyerBankName,
+            'paymentMethod' => $this->paymentMethod,
+            'paymentMethodName' => $this->paymentMethodName,
+            'currency' => $this->currency,
+            'exchangeRate' => $this->exchangeRate,
+            'amountInWords' => $this->amountInWords,
+            'note' => $this->note,
+            'items' => $this->items,
+            'totalDiscount' => $this->totalDiscount,
+            'totalBeforeTax' => $this->totalBeforeTax,
+            'totalTax' => $this->totalTax,
+            'totalAfterTax' => $this->totalAfterTax,
+            'taxRateSummaries' => $this->taxRateSummaries,
+        ];
+    }
+}
+
+class TrackingResultDto implements \JsonSerializable
+{
+    public string $invoiceCode = '';
+    public ?string $trackingCode = null;
+    public ?string $invoiceNumber = null;
+    public ?string $reservationCode = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'invoiceCode' => $this->invoiceCode,
+            'trackingCode' => $this->trackingCode,
+            'invoiceNumber' => $this->invoiceNumber,
+            'reservationCode' => $this->reservationCode,
+        ];
+    }
+}
+
+class DownloadInvoiceQueryDto implements \JsonSerializable
+{
+    public ?int $merchantId = null;
+    public ?string $provider = null;
+    public ?string $taxCode = null;
+    public string $invoicePattern;
+    public string $invoiceSeries;
+    public string $invoiceCode;
+    /** Required fields constructor. */
+    public function __construct(string $invoicePattern, string $invoiceSeries, string $invoiceCode)
+    {
+        $this->invoicePattern = $invoicePattern;
+        $this->invoiceSeries = $invoiceSeries;
+        $this->invoiceCode = $invoiceCode;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'merchantId' => $this->merchantId,
+            'provider' => $this->provider,
+            'taxCode' => $this->taxCode,
+            'invoicePattern' => $this->invoicePattern,
+            'invoiceSeries' => $this->invoiceSeries,
+            'invoiceCode' => $this->invoiceCode,
+        ];
+    }
+}
+
+class InvoiceTemplateOutputDto implements \JsonSerializable
+{
+    public string $invoicePattern = '';
+    public string $invoiceSeries = '';
+    public ?int $quota = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'invoicePattern' => $this->invoicePattern,
+            'invoiceSeries' => $this->invoiceSeries,
+            'quota' => $this->quota,
+        ];
+    }
+}
+
+class InvoiceTemplateQueryDto implements \JsonSerializable
+{
+    public ?int $merchantId = null;
+    public ?string $provider = null;
+    public ?string $taxCode = null;
+    public int $invoiceNoToCheck;
+    /** Required fields constructor. */
+    public function __construct(int $invoiceNoToCheck)
+    {
+        $this->invoiceNoToCheck = $invoiceNoToCheck;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'merchantId' => $this->merchantId,
+            'provider' => $this->provider,
+            'taxCode' => $this->taxCode,
+            'invoiceNoToCheck' => $this->invoiceNoToCheck,
+        ];
+    }
+}
+
+class SendInvoiceEmailDto implements \JsonSerializable
+{
+    public ?int $merchantId = null;
+    public ?string $provider = null;
+    public ?string $taxCode = null;
+    public string $invoiceCode;
+    public string $recipientEmail;
+    /** Required fields constructor. */
+    public function __construct(string $invoiceCode, string $recipientEmail)
+    {
+        $this->invoiceCode = $invoiceCode;
+        $this->recipientEmail = $recipientEmail;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'merchantId' => $this->merchantId,
+            'provider' => $this->provider,
+            'taxCode' => $this->taxCode,
+            'invoiceCode' => $this->invoiceCode,
+            'recipientEmail' => $this->recipientEmail,
         ];
     }
 }

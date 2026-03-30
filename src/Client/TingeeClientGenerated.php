@@ -82,40 +82,11 @@ use Tingee\Sdk\Types\Dtos\AgribankInfoDto;
 use Tingee\Sdk\Types\Dtos\VCBBaasDto;
 use Tingee\Sdk\Types\Dtos\VCBInfoDto;
 use Tingee\Sdk\Types\Dtos\COBInfoDto;
+use Tingee\Sdk\Types\Dtos\MSBInfoDto;
 use Tingee\Sdk\Types\Dtos\BankInfoDto;
 use Tingee\Sdk\Types\Dtos\V2AccountNumberDDLDto;
 use Tingee\Sdk\Types\Dtos\OpenApiAccountNumberDDLPagedInputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiTransactionPagedInputDto;
-use Tingee\Sdk\Types\Dtos\MerchantBankConfigPagedOutputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiMerchantBankConfigPagedInputDto;
-use Tingee\Sdk\Types\Dtos\BIDVConfigDto;
-use Tingee\Sdk\Types\Dtos\CTGConfigDto;
-use Tingee\Sdk\Types\Dtos\ACBConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\OpenApiBankCreateOrUpdateConfigDto;
-use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigDto;
-use Tingee\Sdk\Types\Dtos\OpenApiCreateBankVAOutputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiConfigAccountBusinessDto;
-use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\EventUrlItemDto;
-use Tingee\Sdk\Types\Dtos\OpenApiCreateMerchantDto;
-use Tingee\Sdk\Types\Dtos\FileUploadDto;
-use Tingee\Sdk\Types\Dtos\OCBConfigDto;
-use Tingee\Sdk\Types\Dtos\MBBConfigDto;
-use Tingee\Sdk\Types\Dtos\ShinhanConfigDto;
-use Tingee\Sdk\Types\Dtos\VIBConfigDto;
-use Tingee\Sdk\Types\Dtos\ACBConfigDto;
-use Tingee\Sdk\Types\Dtos\VPBConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\VPBConfigDto;
-use Tingee\Sdk\Types\Dtos\VCBConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\VCBConfigDto;
-use Tingee\Sdk\Types\Dtos\BankConfigDto;
-use Tingee\Sdk\Types\Dtos\BaoKimConfigDto;
-use Tingee\Sdk\Types\Dtos\BNPLConfigDto;
-use Tingee\Sdk\Types\Dtos\OnePayConfigDto;
-use Tingee\Sdk\Types\Dtos\DirectDebitConfigDto;
-use Tingee\Sdk\Types\Dtos\MerchantPackageInfo;
-use Tingee\Sdk\Types\Dtos\MerchantDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetPagingMerchantsDto;
 use Tingee\Sdk\Types\Dtos\OpenApiRegisterDto;
 use Tingee\Sdk\Types\Dtos\PaymentBillResponseDto;
 use Tingee\Sdk\Types\Dtos\OpenApiPaymentBillDto;
@@ -128,6 +99,52 @@ use Tingee\Sdk\Types\Dtos\OpenApiSubscriptionStatusResponseDto;
 use Tingee\Sdk\Types\Dtos\CustomerInfoDto;
 use Tingee\Sdk\Types\Dtos\OpenApiPaymentTransactionStatusResponseDto;
 use Tingee\Sdk\Types\Dtos\OpenApiPaymentTransactionsPagedOutputDto;
+use Tingee\Sdk\Types\Dtos\MerchantBankConfigPagedOutputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiMerchantBankConfigPagedInputDto;
+use Tingee\Sdk\Types\Dtos\BIDVConfigDto;
+use Tingee\Sdk\Types\Dtos\FileUploadDto;
+use Tingee\Sdk\Types\Dtos\VIBConfigDto;
+use Tingee\Sdk\Types\Dtos\CTGConfigDto;
+use Tingee\Sdk\Types\Dtos\ACBConfigBusinessDto;
+use Tingee\Sdk\Types\Dtos\VCBConfigBusinessDto;
+use Tingee\Sdk\Types\Dtos\MSBConfigBusinessDto;
+use Tingee\Sdk\Types\Dtos\OpenApiBankCreateOrUpdateConfigDto;
+use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateBankVAOutputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiConfigAccountBusinessDto;
+use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigBusinessDto;
+use Tingee\Sdk\Types\Dtos\EventUrlItemDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateMerchantDto;
+use Tingee\Sdk\Types\Dtos\OCBConfigDto;
+use Tingee\Sdk\Types\Dtos\MBBConfigDto;
+use Tingee\Sdk\Types\Dtos\ShinhanConfigDto;
+use Tingee\Sdk\Types\Dtos\ACBConfigDto;
+use Tingee\Sdk\Types\Dtos\VPBConfigBusinessDto;
+use Tingee\Sdk\Types\Dtos\VPBConfigDto;
+use Tingee\Sdk\Types\Dtos\VCBConfigDto;
+use Tingee\Sdk\Types\Dtos\BankConfigDto;
+use Tingee\Sdk\Types\Dtos\BaoKimConfigDto;
+use Tingee\Sdk\Types\Dtos\BNPLConfigDto;
+use Tingee\Sdk\Types\Dtos\OnePayConfigDto;
+use Tingee\Sdk\Types\Dtos\DirectDebitConfigDto;
+use Tingee\Sdk\Types\Dtos\MerchantPackageInfo;
+use Tingee\Sdk\Types\Dtos\MerchantDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGetPagingMerchantsDto;
+use Tingee\Sdk\Types\Dtos\GetPagingEInvoiceAccountOutputDto;
+use Tingee\Sdk\Types\Dtos\GetPagingEInvoiceAccountInputDto;
+use Tingee\Sdk\Types\Dtos\EInvoiceAccountOutputDto;
+use Tingee\Sdk\Types\Dtos\CreateOrUpdateEInvoiceAccountDto;
+use Tingee\Sdk\Types\Dtos\DeleteEInvoiceAccountDto;
+use Tingee\Sdk\Types\Dtos\EInvoiceProviderDto;
+use Tingee\Sdk\Types\Dtos\DownloadInvoiceOutputDto;
+use Tingee\Sdk\Types\Dtos\InvoiceItemDto;
+use Tingee\Sdk\Types\Dtos\TaxRateSummaryDto;
+use Tingee\Sdk\Types\Dtos\CreateInvoiceDto;
+use Tingee\Sdk\Types\Dtos\TrackingResultDto;
+use Tingee\Sdk\Types\Dtos\DownloadInvoiceQueryDto;
+use Tingee\Sdk\Types\Dtos\InvoiceTemplateOutputDto;
+use Tingee\Sdk\Types\Dtos\InvoiceTemplateQueryDto;
+use Tingee\Sdk\Types\Dtos\SendInvoiceEmailDto;
 
 class TingeeBankGroup
 {
@@ -433,25 +450,6 @@ class TingeeDeviceGroup
     }
 
     /**
-     * POST /v1/device/read-partner-security-code
-     *
-     * @return TingeeApiResponse<EmptyDto>
-     * @throws TingeeHttpException
-     */
-    public function readPartnerSecurityCode(OpenApiReadPartnerSecurityCodeDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/device/read-partner-security-code',
-            $body,
-            [],
-            EmptyDto::class
-        );
-        /** @var TingeeApiResponse<EmptyDto> $response */
-        return $response;
-    }
-
-    /**
      * POST /v1/device/add-device-to-shop
      *
      * @return TingeeApiResponse<array>
@@ -481,25 +479,6 @@ class TingeeDeviceGroup
         $response = $this->httpClient->request(
             'POST',
             '/v1/device/update-shop-device-link-status',
-            $body,
-            [],
-            EmptyDto::class
-        );
-        /** @var TingeeApiResponse<EmptyDto> $response */
-        return $response;
-    }
-
-    /**
-     * POST /v1/device/read-amount
-     *
-     * @return TingeeApiResponse<EmptyDto>
-     * @throws TingeeHttpException
-     */
-    public function readAmount(BIDVOpenApiReadAmountDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/device/read-amount',
             $body,
             [],
             EmptyDto::class
@@ -662,33 +641,6 @@ class TingeeDeviceGroup
     }
 }
 
-class TingeeUserGroup
-{
-    private TingeeHttpClient $httpClient;
-    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
-
-    /**
-     * POST /v1/user/verify-referral-code
-     *
-     * @return TingeeApiResponse<OpenApiVerifyReferralCodeResponseDto>
-     * @throws TingeeHttpException
-     */
-    public function verifyReferralCode(string $referralCode): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/user/verify-referral-code',
-            null,
-            [
-            'referralCode' => $referralCode
-        ],
-            OpenApiVerifyReferralCodeResponseDto::class
-        );
-        /** @var TingeeApiResponse<OpenApiVerifyReferralCodeResponseDto> $response */
-        return $response;
-    }
-}
-
 class TingeeShopGroup
 {
     private TingeeHttpClient $httpClient;
@@ -758,31 +710,6 @@ class TingeeDeepLinkGroup
     }
 }
 
-class TingeeAccountNumberGroup
-{
-    private TingeeHttpClient $httpClient;
-    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
-
-    /**
-     * POST /v1/account-number/get-all-ddl
-     *
-     * @return TingeeApiResponse<array>
-     * @throws TingeeHttpException
-     */
-    public function getAllDdl(OpenApiAccountNumberDDLPagedInputDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/account-number/get-all-ddl',
-            $body,
-            [],
-            ''
-        );
-        /** @var TingeeApiResponse<array> $response */
-        return $response;
-    }
-}
-
 class TingeeTransactionGroup
 {
     private TingeeHttpClient $httpClient;
@@ -804,165 +731,6 @@ class TingeeTransactionGroup
             PagedResultDto::class, OpenApiTransactionPagedOuputDto::class
         );
         /** @var TingeeApiResponse<PagedResultDto<OpenApiTransactionPagedOuputDto>> $response */
-        return $response;
-    }
-}
-
-class TingeeMerchantGroup
-{
-    private TingeeHttpClient $httpClient;
-    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
-
-    /**
-     * POST /v1/merchant/get-paging-config
-     *
-     * @return TingeeApiResponse<PagedResultDto<MerchantBankConfigPagedOutputDto>>
-     * @throws TingeeHttpException
-     */
-    public function getPagingConfig(OpenApiMerchantBankConfigPagedInputDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/merchant/get-paging-config',
-            $body,
-            [],
-            PagedResultDto::class, MerchantBankConfigPagedOutputDto::class
-        );
-        /** @var TingeeApiResponse<PagedResultDto<MerchantBankConfigPagedOutputDto>> $response */
-        return $response;
-    }
-
-    /**
-     * POST /v1/merchant/create-or-update-config
-     *
-     * @return TingeeApiResponse<Number>
-     * @throws TingeeHttpException
-     */
-    public function createOrUpdateConfig(OpenApiBankCreateOrUpdateConfigDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/merchant/create-or-update-config',
-            $body,
-            [],
-            ''
-        );
-        /** @var TingeeApiResponse<Number> $response */
-        return $response;
-    }
-
-    /**
-     * POST /v1/merchant/delete-config
-     *
-     * @return TingeeApiResponse<Number>
-     * @throws TingeeHttpException
-     */
-    public function deleteConfig(OpenApiDeleteConfigDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/merchant/delete-config',
-            $body,
-            [],
-            ''
-        );
-        /** @var TingeeApiResponse<Number> $response */
-        return $response;
-    }
-
-    /**
-     * POST /v1/merchant/config-account-business
-     *
-     * @return TingeeApiResponse<OpenApiCreateBankVAOutputDto>
-     * @throws TingeeHttpException
-     */
-    public function configAccountBusiness(OpenApiConfigAccountBusinessDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/merchant/config-account-business',
-            $body,
-            [],
-            OpenApiCreateBankVAOutputDto::class
-        );
-        /** @var TingeeApiResponse<OpenApiCreateBankVAOutputDto> $response */
-        return $response;
-    }
-
-    /**
-     * POST /v1/merchant/delete-config-account-business
-     *
-     * @return TingeeApiResponse<mixed>
-     * @throws TingeeHttpException
-     */
-    public function deleteConfigAccountBusiness(OpenApiDeleteConfigBusinessDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/merchant/delete-config-account-business',
-            $body,
-            [],
-            ''
-        );
-        return $response;
-    }
-
-    /**
-     * POST /v1/merchant/create
-     *
-     * @return TingeeApiResponse<Number>
-     * @throws TingeeHttpException
-     */
-    public function create(OpenApiCreateMerchantDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/merchant/create',
-            $body,
-            [],
-            ''
-        );
-        /** @var TingeeApiResponse<Number> $response */
-        return $response;
-    }
-
-    /**
-     * POST /v1/merchant/get-paging
-     *
-     * @return TingeeApiResponse<PagedResultDto<MerchantDto>>
-     * @throws TingeeHttpException
-     */
-    public function getPaging(OpenApiGetPagingMerchantsDto $body): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'POST',
-            '/v1/merchant/get-paging',
-            $body,
-            [],
-            PagedResultDto::class, MerchantDto::class
-        );
-        /** @var TingeeApiResponse<PagedResultDto<MerchantDto>> $response */
-        return $response;
-    }
-
-    /**
-     * DELETE /v1/merchant/delete
-     *
-     * @return TingeeApiResponse<EmptyDto>
-     * @throws TingeeHttpException
-     */
-    public function delete(float $merchantId): TingeeApiResponse
-    {
-        $response = $this->httpClient->request(
-            'DELETE',
-            '/v1/merchant/delete',
-            null,
-            [
-            'merchantId' => $merchantId
-        ],
-            EmptyDto::class
-        );
-        /** @var TingeeApiResponse<EmptyDto> $response */
         return $response;
     }
 }
@@ -1140,30 +908,364 @@ class TingeeDirectDebitGroup
     }
 }
 
+class TingeeMerchantGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
+
+    /**
+     * POST /v1/merchant/get-paging-config
+     *
+     * @return TingeeApiResponse<PagedResultDto<MerchantBankConfigPagedOutputDto>>
+     * @throws TingeeHttpException
+     */
+    public function getPagingConfig(OpenApiMerchantBankConfigPagedInputDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/merchant/get-paging-config',
+            $body,
+            [],
+            PagedResultDto::class, MerchantBankConfigPagedOutputDto::class
+        );
+        /** @var TingeeApiResponse<PagedResultDto<MerchantBankConfigPagedOutputDto>> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/merchant/create-or-update-config
+     *
+     * @return TingeeApiResponse<Number>
+     * @throws TingeeHttpException
+     */
+    public function createOrUpdateConfig(OpenApiBankCreateOrUpdateConfigDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/merchant/create-or-update-config',
+            $body,
+            [],
+            ''
+        );
+        /** @var TingeeApiResponse<Number> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/merchant/delete-config
+     *
+     * @return TingeeApiResponse<Number>
+     * @throws TingeeHttpException
+     */
+    public function deleteConfig(OpenApiDeleteConfigDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/merchant/delete-config',
+            $body,
+            [],
+            ''
+        );
+        /** @var TingeeApiResponse<Number> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/merchant/config-account-business
+     *
+     * @return TingeeApiResponse<OpenApiCreateBankVAOutputDto>
+     * @throws TingeeHttpException
+     */
+    public function configAccountBusiness(OpenApiConfigAccountBusinessDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/merchant/config-account-business',
+            $body,
+            [],
+            OpenApiCreateBankVAOutputDto::class
+        );
+        /** @var TingeeApiResponse<OpenApiCreateBankVAOutputDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/merchant/delete-config-account-business
+     *
+     * @return TingeeApiResponse<mixed>
+     * @throws TingeeHttpException
+     */
+    public function deleteConfigAccountBusiness(OpenApiDeleteConfigBusinessDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/merchant/delete-config-account-business',
+            $body,
+            [],
+            ''
+        );
+        return $response;
+    }
+
+    /**
+     * POST /v1/merchant/create
+     *
+     * @return TingeeApiResponse<Number>
+     * @throws TingeeHttpException
+     */
+    public function create(OpenApiCreateMerchantDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/merchant/create',
+            $body,
+            [],
+            ''
+        );
+        /** @var TingeeApiResponse<Number> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/merchant/get-paging
+     *
+     * @return TingeeApiResponse<PagedResultDto<MerchantDto>>
+     * @throws TingeeHttpException
+     */
+    public function getPaging(OpenApiGetPagingMerchantsDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/merchant/get-paging',
+            $body,
+            [],
+            PagedResultDto::class, MerchantDto::class
+        );
+        /** @var TingeeApiResponse<PagedResultDto<MerchantDto>> $response */
+        return $response;
+    }
+
+    /**
+     * DELETE /v1/merchant/delete
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function delete(float $merchantId): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'DELETE',
+            '/v1/merchant/delete',
+            null,
+            [
+            'merchantId' => $merchantId
+        ],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+}
+
+class TingeeEInvoiceGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
+
+    /**
+     * POST /v1/e-invoice/get-paging-account
+     *
+     * @return TingeeApiResponse<PagedResultDto<GetPagingEInvoiceAccountOutputDto>>
+     * @throws TingeeHttpException
+     */
+    public function getPagingAccount(GetPagingEInvoiceAccountInputDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/get-paging-account',
+            $body,
+            [],
+            PagedResultDto::class, GetPagingEInvoiceAccountOutputDto::class
+        );
+        /** @var TingeeApiResponse<PagedResultDto<GetPagingEInvoiceAccountOutputDto>> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/create-or-update-account
+     *
+     * @return TingeeApiResponse<EInvoiceAccountOutputDto>
+     * @throws TingeeHttpException
+     */
+    public function createOrUpdateAccount(CreateOrUpdateEInvoiceAccountDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/create-or-update-account',
+            $body,
+            [],
+            EInvoiceAccountOutputDto::class
+        );
+        /** @var TingeeApiResponse<EInvoiceAccountOutputDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/delete-account
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function deleteAccount(DeleteEInvoiceAccountDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/delete-account',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/get-provider
+     *
+     * @return TingeeApiResponse<array>
+     * @throws TingeeHttpException
+     */
+    public function getProvider(): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/get-provider',
+            null,
+            [],
+            ''
+        );
+        /** @var TingeeApiResponse<array> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/create
+     *
+     * @return TingeeApiResponse<DownloadInvoiceOutputDto>
+     * @throws TingeeHttpException
+     */
+    public function create(CreateInvoiceDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/create',
+            $body,
+            [],
+            DownloadInvoiceOutputDto::class
+        );
+        /** @var TingeeApiResponse<DownloadInvoiceOutputDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/create-and-issue
+     *
+     * @return TingeeApiResponse<TrackingResultDto>
+     * @throws TingeeHttpException
+     */
+    public function createAndIssue(CreateInvoiceDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/create-and-issue',
+            $body,
+            [],
+            TrackingResultDto::class
+        );
+        /** @var TingeeApiResponse<TrackingResultDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/download
+     *
+     * @return TingeeApiResponse<DownloadInvoiceOutputDto>
+     * @throws TingeeHttpException
+     */
+    public function download(DownloadInvoiceQueryDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/download',
+            $body,
+            [],
+            DownloadInvoiceOutputDto::class
+        );
+        /** @var TingeeApiResponse<DownloadInvoiceOutputDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/invoice-templates
+     *
+     * @return TingeeApiResponse<InvoiceTemplateOutputDto>
+     * @throws TingeeHttpException
+     */
+    public function invoiceTemplates(InvoiceTemplateQueryDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/invoice-templates',
+            $body,
+            [],
+            InvoiceTemplateOutputDto::class
+        );
+        /** @var TingeeApiResponse<InvoiceTemplateOutputDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/send-email
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function sendEmail(SendInvoiceEmailDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/send-email',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+}
+
 trait TingeeClientGenerated
 {
     protected TingeeHttpClient $httpClient;
 
     public TingeeBankGroup $bank;
     public TingeeDeviceGroup $device;
-    public TingeeUserGroup $user;
     public TingeeShopGroup $shop;
     public TingeeDeepLinkGroup $deepLink;
-    public TingeeAccountNumberGroup $accountNumber;
     public TingeeTransactionGroup $transaction;
-    public TingeeMerchantGroup $merchant;
     public TingeeDirectDebitGroup $directDebit;
+    public TingeeMerchantGroup $merchant;
+    public TingeeEInvoiceGroup $eInvoice;
 
     public function initGroups(): void
     {
         $this->bank = new TingeeBankGroup($this->httpClient);
         $this->device = new TingeeDeviceGroup($this->httpClient);
-        $this->user = new TingeeUserGroup($this->httpClient);
         $this->shop = new TingeeShopGroup($this->httpClient);
         $this->deepLink = new TingeeDeepLinkGroup($this->httpClient);
-        $this->accountNumber = new TingeeAccountNumberGroup($this->httpClient);
         $this->transaction = new TingeeTransactionGroup($this->httpClient);
-        $this->merchant = new TingeeMerchantGroup($this->httpClient);
         $this->directDebit = new TingeeDirectDebitGroup($this->httpClient);
+        $this->merchant = new TingeeMerchantGroup($this->httpClient);
+        $this->eInvoice = new TingeeEInvoiceGroup($this->httpClient);
     }
 }
