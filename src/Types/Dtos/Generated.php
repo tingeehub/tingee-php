@@ -507,6 +507,7 @@ class OpenApiConfirmVAOuputDto implements \JsonSerializable
     public ?string $bankName = null;
     public ?string $accountNumber = null;
     public ?string $vaAccountNumber = null;
+    public ?int $shopId = null;
     public function jsonSerialize(): array
     {
         return [
@@ -514,6 +515,7 @@ class OpenApiConfirmVAOuputDto implements \JsonSerializable
             'bankName' => $this->bankName,
             'accountNumber' => $this->accountNumber,
             'vaAccountNumber' => $this->vaAccountNumber,
+            'shopId' => $this->shopId,
         ];
     }
 }
