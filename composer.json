@@ -1,6 +1,6 @@
 {
   "name": "tingee/sdk-php",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Tingee Open API SDK for PHP",
   "type": "library",
   "license": "ISC",

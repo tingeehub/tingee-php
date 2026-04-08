@@ -25,6 +25,11 @@ use Tingee\Sdk\Types\Dtos\PagedResultDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGetVAPagedOuputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGetVAPagedInputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGenerateVietQROuputDto;
+use Tingee\Sdk\Types\Dtos\Provider;
+use Tingee\Sdk\Types\Dtos\Consumer;
+use Tingee\Sdk\Types\Dtos\Merchant;
+use Tingee\Sdk\Types\Dtos\AdditionalData;
+use Tingee\Sdk\Types\Dtos\OneQRDto;
 use Tingee\Sdk\Types\Dtos\BankCreateVAOuputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiCreateVAInpuDto;
 use Tingee\Sdk\Types\Dtos\OpenApiConfirmVAOuputDto;
@@ -132,7 +137,6 @@ use Tingee\Sdk\Types\Dtos\MerchantDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGetPagingMerchantsDto;
 use Tingee\Sdk\Types\Dtos\GetPagingEInvoiceAccountOutputDto;
 use Tingee\Sdk\Types\Dtos\GetPagingEInvoiceAccountInputDto;
-use Tingee\Sdk\Types\Dtos\EInvoiceAccountOutputDto;
 use Tingee\Sdk\Types\Dtos\CreateOrUpdateEInvoiceAccountDto;
 use Tingee\Sdk\Types\Dtos\DeleteEInvoiceAccountDto;
 use Tingee\Sdk\Types\Dtos\EInvoiceProviderDto;
@@ -935,7 +939,7 @@ class TingeeMerchantGroup
     /**
      * POST /v1/merchant/create-or-update-config
      *
-     * @return TingeeApiResponse<Number>
+     * @return TingeeApiResponse<int>
      * @throws TingeeHttpException
      */
     public function createOrUpdateConfig(OpenApiBankCreateOrUpdateConfigDto $body): TingeeApiResponse
@@ -945,16 +949,16 @@ class TingeeMerchantGroup
             '/v1/merchant/create-or-update-config',
             $body,
             [],
-            ''
+            int::class
         );
-        /** @var TingeeApiResponse<Number> $response */
+        /** @var TingeeApiResponse<int> $response */
         return $response;
     }
 
     /**
      * POST /v1/merchant/delete-config
      *
-     * @return TingeeApiResponse<Number>
+     * @return TingeeApiResponse<int>
      * @throws TingeeHttpException
      */
     public function deleteConfig(OpenApiDeleteConfigDto $body): TingeeApiResponse
@@ -964,9 +968,9 @@ class TingeeMerchantGroup
             '/v1/merchant/delete-config',
             $body,
             [],
-            ''
+            int::class
         );
-        /** @var TingeeApiResponse<Number> $response */
+        /** @var TingeeApiResponse<int> $response */
         return $response;
     }
 
@@ -1010,7 +1014,7 @@ class TingeeMerchantGroup
     /**
      * POST /v1/merchant/create
      *
-     * @return TingeeApiResponse<Number>
+     * @return TingeeApiResponse<int>
      * @throws TingeeHttpException
      */
     public function create(OpenApiCreateMerchantDto $body): TingeeApiResponse
@@ -1020,9 +1024,9 @@ class TingeeMerchantGroup
             '/v1/merchant/create',
             $body,
             [],
-            ''
+            int::class
         );
-        /** @var TingeeApiResponse<Number> $response */
+        /** @var TingeeApiResponse<int> $response */
         return $response;
     }
 
@@ -1094,7 +1098,7 @@ class TingeeEInvoiceGroup
     /**
      * POST /v1/e-invoice/create-or-update-account
      *
-     * @return TingeeApiResponse<EInvoiceAccountOutputDto>
+     * @return TingeeApiResponse<int>
      * @throws TingeeHttpException
      */
     public function createOrUpdateAccount(CreateOrUpdateEInvoiceAccountDto $body): TingeeApiResponse
@@ -1104,9 +1108,9 @@ class TingeeEInvoiceGroup
             '/v1/e-invoice/create-or-update-account',
             $body,
             [],
-            EInvoiceAccountOutputDto::class
+            int::class
         );
-        /** @var TingeeApiResponse<EInvoiceAccountOutputDto> $response */
+        /** @var TingeeApiResponse<int> $response */
         return $response;
     }
 

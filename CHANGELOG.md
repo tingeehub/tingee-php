@@ -1,5 +1,11 @@
 # Changelog — tingee/sdk-php
 
+## [0.2.2] — 2026-04-08
+
+### Changed
+- Updated OpenAPI spec with latest API definitions
+- Regenerated SDK client and DTO classes
+
 ## [0.2.1] — 2026-03-31
 
 ### Changed

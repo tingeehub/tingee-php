@@ -393,6 +393,83 @@ class OpenApiGenerateVietQROuputDto implements \JsonSerializable
     }
 }
 
+class Provider implements \JsonSerializable
+{
+
+    public function jsonSerialize(): array
+    {
+        return [
+
+        ];
+    }
+}
+
+class Consumer implements \JsonSerializable
+{
+
+    public function jsonSerialize(): array
+    {
+        return [
+
+        ];
+    }
+}
+
+class Merchant implements \JsonSerializable
+{
+
+    public function jsonSerialize(): array
+    {
+        return [
+
+        ];
+    }
+}
+
+class AdditionalData implements \JsonSerializable
+{
+
+    public function jsonSerialize(): array
+    {
+        return [
+
+        ];
+    }
+}
+
+class OneQRDto implements \JsonSerializable
+{
+    public bool $isValid = false;
+    public ?Provider $provider = null;
+    public ?Consumer $consumer = null;
+    public ?Merchant $merchant = null;
+    public ?AdditionalData $additionalData = null;
+    public string $version = '';
+    public string $initMethod = '';
+    public string $category = '';
+    public string $currency = '';
+    public string $nation = '';
+    public string $city = '';
+    public string $crc = '';
+    public function jsonSerialize(): array
+    {
+        return [
+            'isValid' => $this->isValid,
+            'provider' => $this->provider,
+            'consumer' => $this->consumer,
+            'merchant' => $this->merchant,
+            'additionalData' => $this->additionalData,
+            'version' => $this->version,
+            'initMethod' => $this->initMethod,
+            'category' => $this->category,
+            'currency' => $this->currency,
+            'nation' => $this->nation,
+            'city' => $this->city,
+            'crc' => $this->crc,
+        ];
+    }
+}
+
 class BankCreateVAOuputDto implements \JsonSerializable
 {
     public ?string $bankName = null;
@@ -403,6 +480,7 @@ class BankCreateVAOuputDto implements \JsonSerializable
     public ?string $vaAccountNumber = null;
     public ?string $deepLink = null;
     public ?string $otpMethod = null;
+    public ?OneQRDto $qrDto = null;
     public function jsonSerialize(): array
     {
         return [
@@ -414,6 +492,7 @@ class BankCreateVAOuputDto implements \JsonSerializable
             'vaAccountNumber' => $this->vaAccountNumber,
             'deepLink' => $this->deepLink,
             'otpMethod' => $this->otpMethod,
+            'qrDto' => $this->qrDto,
         ];
     }
 }
@@ -883,9 +962,9 @@ class ShopInfoDto implements \JsonSerializable
 class DeviceDto implements \JsonSerializable
 {
     public ?int $id = null;
-    public string $creationTime = '';
+    public ?string $creationTime = null;
     public ?float $creatorUserId = null;
-    public string $lastModificationTime = '';
+    public ?string $lastModificationTime = null;
     public ?float $lastModifierUserId = null;
     public ?float $deleterUserId = null;
     public string $type = '';
@@ -904,6 +983,7 @@ class DeviceDto implements \JsonSerializable
     public ?string $securityCode = null;
     /** @var BankNameEnum[]|null */
     public ?array $selectedBankNames = null;
+    public ?string $serialNumber = null;
     public ?string $userReferralAncestorIds = null;
     public ?float $userReferralLevel = null;
     public ?string $deviceDistributorAncestorIds = null;
@@ -915,6 +995,11 @@ class DeviceDto implements \JsonSerializable
     public ?array $shopDtos = null;
     public ?string $agentName = null;
     public ?int $agentId = null;
+    public ?string $simPhoneNumber = null;
+    public ?string $simSerialNumber = null;
+    public ?string $simProvider = null;
+    public ?string $simPlan = null;
+    public ?string $simExpirationDate = null;
     public function jsonSerialize(): array
     {
         return [
@@ -939,6 +1024,7 @@ class DeviceDto implements \JsonSerializable
             'useDate' => $this->useDate,
             'securityCode' => $this->securityCode,
             'selectedBankNames' => $this->selectedBankNames,
+            'serialNumber' => $this->serialNumber,
             'userReferralAncestorIds' => $this->userReferralAncestorIds,
             'userReferralLevel' => $this->userReferralLevel,
             'deviceDistributorAncestorIds' => $this->deviceDistributorAncestorIds,
@@ -949,6 +1035,11 @@ class DeviceDto implements \JsonSerializable
             'shopDtos' => $this->shopDtos,
             'agentName' => $this->agentName,
             'agentId' => $this->agentId,
+            'simPhoneNumber' => $this->simPhoneNumber,
+            'simSerialNumber' => $this->simSerialNumber,
+            'simProvider' => $this->simProvider,
+            'simPlan' => $this->simPlan,
+            'simExpirationDate' => $this->simExpirationDate,
         ];
     }
 }
@@ -1574,6 +1665,7 @@ class VPBInfoDto implements \JsonSerializable
     public ?string $softposDeveloperId = null;
     public ?string $softposTid = null;
     public ?string $softposMid = null;
+    public ?OneQRDto $qrDto = null;
     public function jsonSerialize(): array
     {
         return [
@@ -1587,6 +1679,7 @@ class VPBInfoDto implements \JsonSerializable
             'softposDeveloperId' => $this->softposDeveloperId,
             'softposTid' => $this->softposTid,
             'softposMid' => $this->softposMid,
+            'qrDto' => $this->qrDto,
         ];
     }
 }
@@ -1736,6 +1829,7 @@ class VCBInfoDto implements \JsonSerializable
     public ?string $accountNumber = null;
     public ?string $mobile = null;
     public ?VCBBaasDto $baasDto = null;
+    public ?OneQRDto $qrDto = null;
     public function jsonSerialize(): array
     {
         return [
@@ -1743,6 +1837,7 @@ class VCBInfoDto implements \JsonSerializable
             'accountNumber' => $this->accountNumber,
             'mobile' => $this->mobile,
             'baasDto' => $this->baasDto,
+            'qrDto' => $this->qrDto,
         ];
     }
 }
@@ -2123,7 +2218,7 @@ class OpenApiEditConfirmBeforePaymentMethodDto implements \JsonSerializable
 
 class OpenApiSubscriptionStatusResponseDto implements \JsonSerializable
 {
-    public string $lastModificationTime = '';
+    public ?string $lastModificationTime = null;
     public ?float $lastModifierUserId = null;
     public ?string $email = null;
     public string $bankName = '';
@@ -2251,9 +2346,9 @@ class OpenApiPaymentTransactionsPagedOutputDto implements \JsonSerializable
 class MerchantBankConfigPagedOutputDto implements \JsonSerializable
 {
     public int $id = 0;
-    public string $creationTime = '';
+    public ?string $creationTime = null;
     public ?float $creatorUserId = null;
-    public string $lastModificationTime = '';
+    public ?string $lastModificationTime = null;
     public ?float $lastModifierUserId = null;
     public ?float $deleterUserId = null;
     public int $merchantId = 0;
@@ -2897,11 +2992,7 @@ class MerchantPackageInfo implements \JsonSerializable
 class MerchantDto implements \JsonSerializable
 {
     public int $id = 0;
-    public string $creationTime = '';
-    public ?float $creatorUserId = null;
-    public string $lastModificationTime = '';
-    public ?float $lastModifierUserId = null;
-    public ?float $deleterUserId = null;
+    public ?string $creationTime = null;
     public ?string $code = null;
     public string $name = '';
     public ?string $email = null;
@@ -2938,10 +3029,6 @@ class MerchantDto implements \JsonSerializable
         return [
             'id' => $this->id,
             'creationTime' => $this->creationTime,
-            'creatorUserId' => $this->creatorUserId,
-            'lastModificationTime' => $this->lastModificationTime,
-            'lastModifierUserId' => $this->lastModifierUserId,
-            'deleterUserId' => $this->deleterUserId,
             'code' => $this->code,
             'name' => $this->name,
             'email' => $this->email,
@@ -3002,7 +3089,7 @@ class OpenApiGetPagingMerchantsDto implements \JsonSerializable
 class GetPagingEInvoiceAccountOutputDto implements \JsonSerializable
 {
     public int $id = 0;
-    public string $creationTime = '';
+    public ?string $creationTime = null;
     public float $merchantId = 0.0;
     public string $provider = '';
     public string $taxCode = '';
@@ -3054,31 +3141,6 @@ class GetPagingEInvoiceAccountInputDto implements \JsonSerializable
             'isDefault' => $this->isDefault,
             'isActive' => $this->isActive,
             'merchantId' => $this->merchantId,
-        ];
-    }
-}
-
-class EInvoiceAccountOutputDto implements \JsonSerializable
-{
-    public int $id = 0;
-    public string $creationTime = '';
-    public float $merchantId = 0.0;
-    public string $provider = '';
-    public string $taxCode = '';
-    public string $username = '';
-    public ?bool $isDefault = null;
-    public ?bool $isActive = null;
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'creationTime' => $this->creationTime,
-            'merchantId' => $this->merchantId,
-            'provider' => $this->provider,
-            'taxCode' => $this->taxCode,
-            'username' => $this->username,
-            'isDefault' => $this->isDefault,
-            'isActive' => $this->isActive,
         ];
     }
 }
@@ -3167,14 +3229,14 @@ class InvoiceItemDto implements \JsonSerializable
     public ?string $itemCode = null;
     public string $itemName = '';
     public ?string $unitName = null;
-    public int $quantity = 0;
-    public int $unitPrice = 0;
-    public ?float $discount = null;
-    public ?int $discountAmount = null;
-    public ?int $totalBeforeTax = null;
+    public string $quantity = '';
+    public string $unitPrice = '';
+    public ?string $discount = null;
+    public ?string $discountAmount = null;
+    public ?string $totalBeforeTax = null;
     public string $taxRateCode = '';
-    public ?int $taxAmount = null;
-    public ?int $totalAfterTax = null;
+    public ?string $taxAmount = null;
+    public ?string $totalAfterTax = null;
     public ?int $itemType = null;
     public ?int $adjustmentType = null;
     public function jsonSerialize(): array
@@ -3200,8 +3262,8 @@ class InvoiceItemDto implements \JsonSerializable
 class TaxRateSummaryDto implements \JsonSerializable
 {
     public string $taxRateCode = '';
-    public ?int $totalTaxableAmount = null;
-    public ?int $taxAmount = null;
+    public ?string $totalTaxableAmount = null;
+    public ?string $taxAmount = null;
     public function jsonSerialize(): array
     {
         return [
@@ -3215,8 +3277,7 @@ class TaxRateSummaryDto implements \JsonSerializable
 class CreateInvoiceDto implements \JsonSerializable
 {
     public ?int $merchantId = null;
-    public ?string $provider = null;
-    public ?string $taxCode = null;
+    public ?int $accountId = null;
     public ?string $invoiceType = null;
     public string $invoicePattern;
     public string $invoiceSeries;
@@ -3233,15 +3294,15 @@ class CreateInvoiceDto implements \JsonSerializable
     public ?int $paymentMethod = null;
     public ?string $paymentMethodName = null;
     public ?string $currency = null;
-    public ?float $exchangeRate = null;
+    public ?string $exchangeRate = null;
     public ?string $amountInWords = null;
     public ?string $note = null;
     /** @var InvoiceItemDto[]|null */
     public array $items;
-    public ?int $totalDiscount = null;
-    public ?int $totalBeforeTax = null;
-    public ?int $totalTax = null;
-    public ?int $totalAfterTax = null;
+    public ?string $totalDiscount = null;
+    public ?string $totalBeforeTax = null;
+    public ?string $totalTax = null;
+    public ?string $totalAfterTax = null;
     /** @var TaxRateSummaryDto[]|null */
     public ?array $taxRateSummaries = null;
     /** Required fields constructor. */
@@ -3258,8 +3319,7 @@ class CreateInvoiceDto implements \JsonSerializable
     {
         return [
             'merchantId' => $this->merchantId,
-            'provider' => $this->provider,
-            'taxCode' => $this->taxCode,
+            'accountId' => $this->accountId,
             'invoiceType' => $this->invoiceType,
             'invoicePattern' => $this->invoicePattern,
             'invoiceSeries' => $this->invoiceSeries,
@@ -3309,16 +3369,11 @@ class TrackingResultDto implements \JsonSerializable
 class DownloadInvoiceQueryDto implements \JsonSerializable
 {
     public ?int $merchantId = null;
-    public ?string $provider = null;
-    public ?string $taxCode = null;
-    public string $invoicePattern;
-    public string $invoiceSeries;
+    public ?int $accountId = null;
     public string $invoiceCode;
     /** Required fields constructor. */
-    public function __construct(string $invoicePattern, string $invoiceSeries, string $invoiceCode)
+    public function __construct(string $invoiceCode)
     {
-        $this->invoicePattern = $invoicePattern;
-        $this->invoiceSeries = $invoiceSeries;
         $this->invoiceCode = $invoiceCode;
     }
 
@@ -3326,10 +3381,7 @@ class DownloadInvoiceQueryDto implements \JsonSerializable
     {
         return [
             'merchantId' => $this->merchantId,
-            'provider' => $this->provider,
-            'taxCode' => $this->taxCode,
-            'invoicePattern' => $this->invoicePattern,
-            'invoiceSeries' => $this->invoiceSeries,
+            'accountId' => $this->accountId,
             'invoiceCode' => $this->invoiceCode,
         ];
     }
@@ -3353,8 +3405,7 @@ class InvoiceTemplateOutputDto implements \JsonSerializable
 class InvoiceTemplateQueryDto implements \JsonSerializable
 {
     public ?int $merchantId = null;
-    public ?string $provider = null;
-    public ?string $taxCode = null;
+    public ?int $accountId = null;
     public int $invoiceNoToCheck;
     /** Required fields constructor. */
     public function __construct(int $invoiceNoToCheck)
@@ -3366,8 +3417,7 @@ class InvoiceTemplateQueryDto implements \JsonSerializable
     {
         return [
             'merchantId' => $this->merchantId,
-            'provider' => $this->provider,
-            'taxCode' => $this->taxCode,
+            'accountId' => $this->accountId,
             'invoiceNoToCheck' => $this->invoiceNoToCheck,
         ];
     }
@@ -3376,8 +3426,7 @@ class InvoiceTemplateQueryDto implements \JsonSerializable
 class SendInvoiceEmailDto implements \JsonSerializable
 {
     public ?int $merchantId = null;
-    public ?string $provider = null;
-    public ?string $taxCode = null;
+    public ?int $accountId = null;
     public string $invoiceCode;
     public string $recipientEmail;
     /** Required fields constructor. */
@@ -3391,8 +3440,7 @@ class SendInvoiceEmailDto implements \JsonSerializable
     {
         return [
             'merchantId' => $this->merchantId,
-            'provider' => $this->provider,
-            'taxCode' => $this->taxCode,
+            'accountId' => $this->accountId,
             'invoiceCode' => $this->invoiceCode,
             'recipientEmail' => $this->recipientEmail,
         ];
