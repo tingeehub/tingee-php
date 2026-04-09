@@ -118,8 +118,9 @@ use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigDto;
 use Tingee\Sdk\Types\Dtos\OpenApiCreateBankVAOutputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiConfigAccountBusinessDto;
 use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\EventUrlItemDto;
+use Tingee\Sdk\Types\Dtos\OpenApiMerchantIdDto;
 use Tingee\Sdk\Types\Dtos\OpenApiCreateMerchantDto;
+use Tingee\Sdk\Types\Dtos\EventUrlItemDto;
 use Tingee\Sdk\Types\Dtos\OCBConfigDto;
 use Tingee\Sdk\Types\Dtos\MBBConfigDto;
 use Tingee\Sdk\Types\Dtos\ShinhanConfigDto;
@@ -1014,7 +1015,7 @@ class TingeeMerchantGroup
     /**
      * POST /v1/merchant/create
      *
-     * @return TingeeApiResponse<int>
+     * @return TingeeApiResponse<OpenApiMerchantIdDto>
      * @throws TingeeHttpException
      */
     public function create(OpenApiCreateMerchantDto $body): TingeeApiResponse
@@ -1024,9 +1025,9 @@ class TingeeMerchantGroup
             '/v1/merchant/create',
             $body,
             [],
-            int::class
+            OpenApiMerchantIdDto::class
         );
-        /** @var TingeeApiResponse<int> $response */
+        /** @var TingeeApiResponse<OpenApiMerchantIdDto> $response */
         return $response;
     }
 

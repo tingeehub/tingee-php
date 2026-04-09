@@ -2674,17 +2674,13 @@ class OpenApiDeleteConfigBusinessDto implements \JsonSerializable
     }
 }
 
-class EventUrlItemDto implements \JsonSerializable
+class OpenApiMerchantIdDto implements \JsonSerializable
 {
-    public string $url = '';
-    public string $type = '';
-    public ?array $ids = null;
+    public int $merchantId = 0;
     public function jsonSerialize(): array
     {
         return [
-            'url' => $this->url,
-            'type' => $this->type,
-            'ids' => $this->ids,
+            'merchantId' => $this->merchantId,
         ];
     }
 }
@@ -2703,21 +2699,10 @@ class OpenApiCreateMerchantDto implements \JsonSerializable
     public ?string $communeId = null;
     public ?string $address = null;
     public ?string $fullAddress = null;
-    public ?string $eventUrl = null;
-    /** @var EventUrlItemDto[]|null */
-    public ?array $eventUrls = null;
-    public ?bool $isLockEvent = null;
-    public ?bool $isOrganizationUnit = null;
     public ?string $referralCode = null;
-    public ?string $userReferralAncestorIds = null;
-    public ?float $userReferralLevel = null;
-    public ?string $deviceDistributorAncestorMap = null;
-    public ?bool $isMasterMerchant = null;
     public ?string $baasType = null;
     public string $password;
     public string $appType;
-    public ?bool $isMultipleRole = null;
-    public ?float $userReferrerId = null;
     /** Required fields constructor. */
     public function __construct(string $name, string $phoneNumber, string $password, string $appType)
     {
@@ -2742,20 +2727,25 @@ class OpenApiCreateMerchantDto implements \JsonSerializable
             'communeId' => $this->communeId,
             'address' => $this->address,
             'fullAddress' => $this->fullAddress,
-            'eventUrl' => $this->eventUrl,
-            'eventUrls' => $this->eventUrls,
-            'isLockEvent' => $this->isLockEvent,
-            'isOrganizationUnit' => $this->isOrganizationUnit,
             'referralCode' => $this->referralCode,
-            'userReferralAncestorIds' => $this->userReferralAncestorIds,
-            'userReferralLevel' => $this->userReferralLevel,
-            'deviceDistributorAncestorMap' => $this->deviceDistributorAncestorMap,
-            'isMasterMerchant' => $this->isMasterMerchant,
             'baasType' => $this->baasType,
             'password' => $this->password,
             'appType' => $this->appType,
-            'isMultipleRole' => $this->isMultipleRole,
-            'userReferrerId' => $this->userReferrerId,
+        ];
+    }
+}
+
+class EventUrlItemDto implements \JsonSerializable
+{
+    public string $url = '';
+    public string $type = '';
+    public ?array $ids = null;
+    public function jsonSerialize(): array
+    {
+        return [
+            'url' => $this->url,
+            'type' => $this->type,
+            'ids' => $this->ids,
         ];
     }
 }
