@@ -36,14 +36,13 @@ use Tingee\Sdk\Types\Dtos\OpenApiConfirmVAOuputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiBankConfirmVAInputDto;
 use Tingee\Sdk\Types\Dtos\BankDeleteVAOutputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiRegisterNotifyDto;
-use Tingee\Sdk\Types\Dtos\OpenApiRefundDto;
 use Tingee\Sdk\Types\Dtos\OpenApiReadSecurityCodeDto;
-use Tingee\Sdk\Types\Dtos\OpenApiReadPartnerSecurityCodeDto;
 use Tingee\Sdk\Types\Dtos\SendNotifyTingeeBoxDto;
 use Tingee\Sdk\Types\Dtos\OpenApiAddDeviceToShop;
 use Tingee\Sdk\Types\Dtos\OpenApiShopLinkToDeviceDto;
 use Tingee\Sdk\Types\Dtos\OpenApiUpdateShopDeviceLinkDto;
-use Tingee\Sdk\Types\Dtos\BIDVOpenApiReadAmountDto;
+use Tingee\Sdk\Types\Dtos\OpenApiPrintReceiptItemDto;
+use Tingee\Sdk\Types\Dtos\OpenApiPrintDataDto;
 use Tingee\Sdk\Types\Dtos\OpenApiReadAmountDto;
 use Tingee\Sdk\Types\Dtos\OpenApiShowQRCodeDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGetDevicesLinkToShopOrVA;
@@ -52,7 +51,9 @@ use Tingee\Sdk\Types\Dtos\ShopInfoDto;
 use Tingee\Sdk\Types\Dtos\DeviceDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGetPagingDeviceInputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGenerateAndShowDynamicQrCodeDto;
-use Tingee\Sdk\Types\Dtos\OpenApiVerifyReferralCodeResponseDto;
+use Tingee\Sdk\Types\Dtos\OpenApiPrintReceiptDto;
+use Tingee\Sdk\Types\Dtos\OpenApiNfcCommandDto;
+use Tingee\Sdk\Types\Dtos\OpenApiResetDeviceDto;
 use Tingee\Sdk\Types\Dtos\OpenApiCreateOrUpdateShopOutputDto;
 use Tingee\Sdk\Types\Dtos\SendNotifyTelegramDto;
 use Tingee\Sdk\Types\Dtos\SendNotifyLarkDto;
@@ -61,36 +62,8 @@ use Tingee\Sdk\Types\Dtos\SendNotifyPlatformDto;
 use Tingee\Sdk\Types\Dtos\OpenApiCreateOrUpdateShopDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGetShopPagedOuputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiGetShopPagedInputDto;
-use Tingee\Sdk\Types\Dtos\GoogleModuleConfigDto;
-use Tingee\Sdk\Types\Dtos\HotlineModuleConfigDto;
-use Tingee\Sdk\Types\Dtos\EmailModuleConfigDto;
-use Tingee\Sdk\Types\Dtos\ZaloModuleConfigDto;
-use Tingee\Sdk\Types\Dtos\MessengerModuleConfigDto;
-use Tingee\Sdk\Types\Dtos\PaymentModuleConfigDto;
-use Tingee\Sdk\Types\Dtos\InvoiceModuleConfigDto;
-use Tingee\Sdk\Types\Dtos\ShopNfcModuleItemDto;
-use Tingee\Sdk\Types\Dtos\OpenApiShopNFCConfigDto;
-use Tingee\Sdk\Types\Dtos\OpenApiLinkOrUnlinkNfcShopDto;
 use Tingee\Sdk\Types\Dtos\OpenApiDeepLinkDto;
-use Tingee\Sdk\Types\Dtos\OCBInfoDto;
-use Tingee\Sdk\Types\Dtos\TPBInfoDto;
-use Tingee\Sdk\Types\Dtos\BIDVInfoDto;
-use Tingee\Sdk\Types\Dtos\MBBInfoDto;
-use Tingee\Sdk\Types\Dtos\ACBInfoDto;
-use Tingee\Sdk\Types\Dtos\VPBInfoDto;
-use Tingee\Sdk\Types\Dtos\ShinhanInfoDto;
-use Tingee\Sdk\Types\Dtos\PGBInfoDto;
-use Tingee\Sdk\Types\Dtos\VIBInfoDto;
-use Tingee\Sdk\Types\Dtos\CTGInfoDto;
-use Tingee\Sdk\Types\Dtos\STBInfoDto;
-use Tingee\Sdk\Types\Dtos\AgribankInfoDto;
-use Tingee\Sdk\Types\Dtos\VCBBaasDto;
-use Tingee\Sdk\Types\Dtos\VCBInfoDto;
-use Tingee\Sdk\Types\Dtos\COBInfoDto;
-use Tingee\Sdk\Types\Dtos\MSBInfoDto;
-use Tingee\Sdk\Types\Dtos\BankInfoDto;
-use Tingee\Sdk\Types\Dtos\V2AccountNumberDDLDto;
-use Tingee\Sdk\Types\Dtos\OpenApiAccountNumberDDLPagedInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiDeepLinkBIDVTESTDto;
 use Tingee\Sdk\Types\Dtos\OpenApiTransactionPagedInputDto;
 use Tingee\Sdk\Types\Dtos\OpenApiRegisterDto;
 use Tingee\Sdk\Types\Dtos\PaymentBillResponseDto;
@@ -146,9 +119,10 @@ use Tingee\Sdk\Types\Dtos\InvoiceItemDto;
 use Tingee\Sdk\Types\Dtos\TaxRateSummaryDto;
 use Tingee\Sdk\Types\Dtos\CreateInvoiceDto;
 use Tingee\Sdk\Types\Dtos\TrackingResultDto;
+use Tingee\Sdk\Types\Dtos\GetInvoiceInfoQueryDto;
 use Tingee\Sdk\Types\Dtos\DownloadInvoiceQueryDto;
 use Tingee\Sdk\Types\Dtos\InvoiceTemplateOutputDto;
-use Tingee\Sdk\Types\Dtos\InvoiceTemplateQueryDto;
+use Tingee\Sdk\Types\Dtos\InvoiceTemplateInputDto;
 use Tingee\Sdk\Types\Dtos\SendInvoiceEmailDto;
 
 class TingeeBankGroup
@@ -644,6 +618,63 @@ class TingeeDeviceGroup
         );
         return $response;
     }
+
+    /**
+     * POST /v1/device/print-receipt
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function printReceipt(OpenApiPrintReceiptDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/device/print-receipt',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/device/nfc-command
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function nfcCommand(OpenApiNfcCommandDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/device/nfc-command',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/device/reset-device
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function resetDevice(OpenApiResetDeviceDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/device/reset-device',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
 }
 
 class TingeeShopGroup
@@ -706,6 +737,25 @@ class TingeeDeepLinkGroup
         $response = $this->httpClient->request(
             'POST',
             '/v1/deep-link/generate',
+            $body,
+            [],
+            ''
+        );
+        /** @var TingeeApiResponse<String> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/deep-link/generate-bidv-test
+     *
+     * @return TingeeApiResponse<String>
+     * @throws TingeeHttpException
+     */
+    public function generateBidvTest(OpenApiDeepLinkBIDVTESTDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/deep-link/generate-bidv-test',
             $body,
             [],
             ''
@@ -1192,6 +1242,25 @@ class TingeeEInvoiceGroup
     }
 
     /**
+     * POST /v1/e-invoice/get-invoice-info
+     *
+     * @return TingeeApiResponse<TrackingResultDto>
+     * @throws TingeeHttpException
+     */
+    public function getInvoiceInfo(GetInvoiceInfoQueryDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/get-invoice-info',
+            $body,
+            [],
+            TrackingResultDto::class
+        );
+        /** @var TingeeApiResponse<TrackingResultDto> $response */
+        return $response;
+    }
+
+    /**
      * POST /v1/e-invoice/download
      *
      * @return TingeeApiResponse<DownloadInvoiceOutputDto>
@@ -1216,7 +1285,7 @@ class TingeeEInvoiceGroup
      * @return TingeeApiResponse<InvoiceTemplateOutputDto>
      * @throws TingeeHttpException
      */
-    public function invoiceTemplates(InvoiceTemplateQueryDto $body): TingeeApiResponse
+    public function invoiceTemplates(InvoiceTemplateInputDto $body): TingeeApiResponse
     {
         $response = $this->httpClient->request(
             'POST',
