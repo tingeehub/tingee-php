@@ -34,12 +34,12 @@ class TingeeHttpClient
         $signature = SignatureUtils::generateSignature($this->secretKey, $timestamp, $body);
 
         $headers = [
-            'Content-Type' => 'application/json',
-            'Accept' => 'application/json',
-            'X-CLIENT-ID' => $this->clientId,
-            'X-REQUEST-TIMESTAMP' => $timestamp,
-            'X-SIGNATURE' => $signature,
-            'X-SDK-VERSION' => 'tingee-sdk/php/' . SdkVersion::VERSION,
+            'content-type' => 'application/json',
+            'accept' => 'application/json',
+            'x-client-id' => $this->clientId,
+            'x-request-timestamp' => $timestamp,
+            'x-signature' => $signature,
+            'x-sdk-version' => 'tingee-sdk/php/' . SdkVersion::VERSION,
         ];
 
         $options = [

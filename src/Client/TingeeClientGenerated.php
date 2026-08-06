@@ -9,121 +9,93 @@ use Tingee\Sdk\Http\TingeeHttpException;
 use Tingee\Sdk\Types\TingeeApiResponse;
 use Tingee\Sdk\Types\BankNameEnum;
 use Tingee\Sdk\Types\BankBinEnum;
-use Tingee\Sdk\Types\Dtos\OpenApiOuputDto;
-use Tingee\Sdk\Types\Dtos\GenerateVietQROuputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGenerateVietQRInputDto;
-use Tingee\Sdk\Types\Dtos\GenerateDynamicQROuputDto;
-use Tingee\Sdk\Types\Dtos\GenerateDynamicQRInputDto;
-use Tingee\Sdk\Types\Dtos\EmptyDto;
-use Tingee\Sdk\Types\Dtos\OpenApiDeleteDynamicQRInputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiBillInfoDto;
-use Tingee\Sdk\Types\Dtos\OpenApiTransactionPagedOuputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetStatusDynamicQROutputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetStatusDynamicQRInputDto;
-use Tingee\Sdk\Types\Dtos\Bank;
-use Tingee\Sdk\Types\Dtos\PagedResultDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetVAPagedOuputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetVAPagedInputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGenerateVietQROuputDto;
-use Tingee\Sdk\Types\Dtos\Provider;
-use Tingee\Sdk\Types\Dtos\Consumer;
-use Tingee\Sdk\Types\Dtos\Merchant;
-use Tingee\Sdk\Types\Dtos\AdditionalData;
-use Tingee\Sdk\Types\Dtos\OneQRDto;
 use Tingee\Sdk\Types\Dtos\BankCreateVAOuputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiCreateVAInpuDto;
-use Tingee\Sdk\Types\Dtos\OpenApiConfirmVAOuputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiBankConfirmVAInputDto;
 use Tingee\Sdk\Types\Dtos\BankDeleteVAOutputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiRegisterNotifyDto;
-use Tingee\Sdk\Types\Dtos\OpenApiReadSecurityCodeDto;
-use Tingee\Sdk\Types\Dtos\SendNotifyTingeeBoxDto;
-use Tingee\Sdk\Types\Dtos\OpenApiAddDeviceToShop;
-use Tingee\Sdk\Types\Dtos\OpenApiShopLinkToDeviceDto;
-use Tingee\Sdk\Types\Dtos\OpenApiUpdateShopDeviceLinkDto;
-use Tingee\Sdk\Types\Dtos\OpenApiPrintReceiptItemDto;
-use Tingee\Sdk\Types\Dtos\OpenApiPrintDataDto;
-use Tingee\Sdk\Types\Dtos\OpenApiReadAmountDto;
-use Tingee\Sdk\Types\Dtos\OpenApiShowQRCodeDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetDevicesLinkToShopOrVA;
-use Tingee\Sdk\Types\Dtos\DeviceInfoDto;
-use Tingee\Sdk\Types\Dtos\ShopInfoDto;
-use Tingee\Sdk\Types\Dtos\DeviceDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetPagingDeviceInputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGenerateAndShowDynamicQrCodeDto;
-use Tingee\Sdk\Types\Dtos\OpenApiPrintReceiptDto;
-use Tingee\Sdk\Types\Dtos\OpenApiNfcCommandDto;
-use Tingee\Sdk\Types\Dtos\OpenApiResetDeviceDto;
-use Tingee\Sdk\Types\Dtos\OpenApiCreateOrUpdateShopOutputDto;
-use Tingee\Sdk\Types\Dtos\SendNotifyTelegramDto;
-use Tingee\Sdk\Types\Dtos\SendNotifyLarkDto;
-use Tingee\Sdk\Types\Dtos\SendNotifyZaloDto;
-use Tingee\Sdk\Types\Dtos\SendNotifyPlatformDto;
-use Tingee\Sdk\Types\Dtos\OpenApiCreateOrUpdateShopDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetShopPagedOuputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetShopPagedInputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiDeepLinkDto;
-use Tingee\Sdk\Types\Dtos\OpenApiDeepLinkBIDVTESTDto;
-use Tingee\Sdk\Types\Dtos\OpenApiTransactionPagedInputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiRegisterDto;
-use Tingee\Sdk\Types\Dtos\PaymentBillResponseDto;
-use Tingee\Sdk\Types\Dtos\OpenApiPaymentBillDto;
-use Tingee\Sdk\Types\Dtos\DeleteSubscriptionOutputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiDeleteSubscriptionDto;
-use Tingee\Sdk\Types\Dtos\RefundOutputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiRefundInputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiEditConfirmBeforePaymentMethodDto;
-use Tingee\Sdk\Types\Dtos\OpenApiSubscriptionStatusResponseDto;
-use Tingee\Sdk\Types\Dtos\CustomerInfoDto;
-use Tingee\Sdk\Types\Dtos\OpenApiPaymentTransactionStatusResponseDto;
-use Tingee\Sdk\Types\Dtos\OpenApiPaymentTransactionsPagedOutputDto;
-use Tingee\Sdk\Types\Dtos\MerchantBankConfigPagedOutputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiMerchantBankConfigPagedInputDto;
-use Tingee\Sdk\Types\Dtos\BIDVConfigDto;
-use Tingee\Sdk\Types\Dtos\FileUploadDto;
-use Tingee\Sdk\Types\Dtos\VIBConfigDto;
-use Tingee\Sdk\Types\Dtos\CTGConfigDto;
-use Tingee\Sdk\Types\Dtos\ACBConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\VCBConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\MSBConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\OpenApiBankCreateOrUpdateConfigDto;
-use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigDto;
-use Tingee\Sdk\Types\Dtos\OpenApiCreateBankVAOutputDto;
-use Tingee\Sdk\Types\Dtos\OpenApiConfigAccountBusinessDto;
-use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\OpenApiMerchantIdDto;
-use Tingee\Sdk\Types\Dtos\OpenApiCreateMerchantDto;
-use Tingee\Sdk\Types\Dtos\EventUrlItemDto;
-use Tingee\Sdk\Types\Dtos\OCBConfigDto;
-use Tingee\Sdk\Types\Dtos\MBBConfigDto;
-use Tingee\Sdk\Types\Dtos\ShinhanConfigDto;
-use Tingee\Sdk\Types\Dtos\ACBConfigDto;
-use Tingee\Sdk\Types\Dtos\VPBConfigBusinessDto;
-use Tingee\Sdk\Types\Dtos\VPBConfigDto;
-use Tingee\Sdk\Types\Dtos\VCBConfigDto;
-use Tingee\Sdk\Types\Dtos\BankConfigDto;
-use Tingee\Sdk\Types\Dtos\BaoKimConfigDto;
-use Tingee\Sdk\Types\Dtos\BNPLConfigDto;
-use Tingee\Sdk\Types\Dtos\OnePayConfigDto;
-use Tingee\Sdk\Types\Dtos\DirectDebitConfigDto;
-use Tingee\Sdk\Types\Dtos\MerchantPackageInfo;
-use Tingee\Sdk\Types\Dtos\MerchantDto;
-use Tingee\Sdk\Types\Dtos\OpenApiGetPagingMerchantsDto;
-use Tingee\Sdk\Types\Dtos\GetPagingEInvoiceAccountOutputDto;
-use Tingee\Sdk\Types\Dtos\GetPagingEInvoiceAccountInputDto;
+use Tingee\Sdk\Types\Dtos\Boolean;
+use Tingee\Sdk\Types\Dtos\ConnectTCTRequestDto;
+use Tingee\Sdk\Types\Dtos\CreateBankLinkSessionInputDto;
+use Tingee\Sdk\Types\Dtos\CreateInvoiceDto;
 use Tingee\Sdk\Types\Dtos\CreateOrUpdateEInvoiceAccountDto;
 use Tingee\Sdk\Types\Dtos\DeleteEInvoiceAccountDto;
-use Tingee\Sdk\Types\Dtos\EInvoiceProviderDto;
+use Tingee\Sdk\Types\Dtos\DeleteSubscriptionOutputDto;
+use Tingee\Sdk\Types\Dtos\DeviceDto;
 use Tingee\Sdk\Types\Dtos\DownloadInvoiceOutputDto;
-use Tingee\Sdk\Types\Dtos\InvoiceItemDto;
-use Tingee\Sdk\Types\Dtos\TaxRateSummaryDto;
-use Tingee\Sdk\Types\Dtos\CreateInvoiceDto;
-use Tingee\Sdk\Types\Dtos\TrackingResultDto;
-use Tingee\Sdk\Types\Dtos\GetInvoiceInfoQueryDto;
 use Tingee\Sdk\Types\Dtos\DownloadInvoiceQueryDto;
-use Tingee\Sdk\Types\Dtos\InvoiceTemplateOutputDto;
+use Tingee\Sdk\Types\Dtos\EmptyDto;
+use Tingee\Sdk\Types\Dtos\GenerateDynamicQRInputDto;
+use Tingee\Sdk\Types\Dtos\GenerateDynamicQROuputDto;
+use Tingee\Sdk\Types\Dtos\GenerateVietQROuputDto;
+use Tingee\Sdk\Types\Dtos\GetIncomeInvoiceDetailRequestDto;
+use Tingee\Sdk\Types\Dtos\GetIncomeInvoicePreviewBase64RequestDto;
+use Tingee\Sdk\Types\Dtos\GetIncomeInvoicesListRequestDto;
+use Tingee\Sdk\Types\Dtos\GetInvoiceInfoQueryDto;
+use Tingee\Sdk\Types\Dtos\GetPagingEInvoiceAccountInputDto;
+use Tingee\Sdk\Types\Dtos\GetPagingEInvoiceAccountOutputDto;
+use Tingee\Sdk\Types\Dtos\InputInvoiceBaseDto;
 use Tingee\Sdk\Types\Dtos\InvoiceTemplateInputDto;
+use Tingee\Sdk\Types\Dtos\InvoiceTemplateOutputDto;
+use Tingee\Sdk\Types\Dtos\MerchantBankConfigPagedOutputDto;
+use Tingee\Sdk\Types\Dtos\MerchantDto;
+use Tingee\Sdk\Types\Dtos\OpenApiAddDeviceToShop;
+use Tingee\Sdk\Types\Dtos\OpenApiBankConfirmVAInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiBankCreateOrUpdateConfigDto;
+use Tingee\Sdk\Types\Dtos\OpenApiConfigAccountBusinessDto;
+use Tingee\Sdk\Types\Dtos\OpenApiConfirmVAOuputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateBankVAOutputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateBatchVaOnOffInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateBatchVaOnOffOutputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateDebitAccountInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateMerchantDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateOrUpdateShopDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateOrUpdateShopOutputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreatePaymentLinkInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiCreateVAInpuDto;
+use Tingee\Sdk\Types\Dtos\OpenApiDeepLinkBIDVTESTDto;
+use Tingee\Sdk\Types\Dtos\OpenApiDeepLinkDto;
+use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigBusinessDto;
+use Tingee\Sdk\Types\Dtos\OpenApiDeleteConfigDto;
+use Tingee\Sdk\Types\Dtos\OpenApiDeleteDynamicQRInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiDeleteSubscriptionDto;
+use Tingee\Sdk\Types\Dtos\OpenApiEditConfirmBeforePaymentMethodDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGenerateAndShowDynamicQrCodeDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGenerateVietQRInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGenerateVietQROuputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGetDevicesLinkToShopOrVA;
+use Tingee\Sdk\Types\Dtos\OpenApiGetPagingDeviceInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGetPagingMerchantsDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGetShopPagedInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGetShopPagedOuputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGetStatusDynamicQRInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGetStatusDynamicQROutputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGetVAPagedInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiGetVAPagedOuputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiMerchantBankConfigPagedInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiMerchantIdDto;
+use Tingee\Sdk\Types\Dtos\OpenApiNfcCommandDto;
+use Tingee\Sdk\Types\Dtos\OpenApiOffVADto;
+use Tingee\Sdk\Types\Dtos\OpenApiOnVADto;
+use Tingee\Sdk\Types\Dtos\OpenApiPaymentBillDto;
+use Tingee\Sdk\Types\Dtos\OpenApiPaymentTransactionStatusResponseDto;
+use Tingee\Sdk\Types\Dtos\OpenApiPaymentTransactionsPagedOutputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiPrintReceiptDto;
+use Tingee\Sdk\Types\Dtos\OpenApiReadAmountDto;
+use Tingee\Sdk\Types\Dtos\OpenApiReadSecurityCodeDto;
+use Tingee\Sdk\Types\Dtos\OpenApiRefundInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiRegisterDto;
+use Tingee\Sdk\Types\Dtos\OpenApiRegisterNotifyDto;
+use Tingee\Sdk\Types\Dtos\OpenApiResetDeviceDto;
+use Tingee\Sdk\Types\Dtos\OpenApiShowQRCodeDto;
+use Tingee\Sdk\Types\Dtos\OpenApiSubscriptionStatusResponseDto;
+use Tingee\Sdk\Types\Dtos\OpenApiTransactionPagedInputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiTransactionPagedOuputDto;
+use Tingee\Sdk\Types\Dtos\OpenApiUpdateShopDeviceLinkDto;
+use Tingee\Sdk\Types\Dtos\PagedResultDto;
+use Tingee\Sdk\Types\Dtos\PaymentBillResponseDto;
+use Tingee\Sdk\Types\Dtos\RefundOutputDto;
 use Tingee\Sdk\Types\Dtos\SendInvoiceEmailDto;
+use Tingee\Sdk\Types\Dtos\SyncIncomeInvoiceRequestDto;
+use Tingee\Sdk\Types\Dtos\TrackingResultDto;
+use Tingee\Sdk\Types\Dtos\UpdateWebhookNotificationDto;
 
 class TingeeBankGroup
 {
@@ -385,6 +357,82 @@ class TingeeBankGroup
     }
 
     /**
+     * POST /v1/bank/on-va
+     *
+     * @return TingeeApiResponse<GenerateDynamicQROuputDto>
+     * @throws TingeeHttpException
+     */
+    public function onVa(OpenApiOnVADto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/bank/on-va',
+            $body,
+            [],
+            GenerateDynamicQROuputDto::class
+        );
+        /** @var TingeeApiResponse<GenerateDynamicQROuputDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/bank/off-va
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function offVa(OpenApiOffVADto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/bank/off-va',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/bank/webhook-notification
+     *
+     * @return TingeeApiResponse<Boolean>
+     * @throws TingeeHttpException
+     */
+    public function webhookNotification(UpdateWebhookNotificationDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/bank/webhook-notification',
+            $body,
+            [],
+            Boolean::class
+        );
+        /** @var TingeeApiResponse<Boolean> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/bank/create-bank-link-session
+     *
+     * @return TingeeApiResponse<String>
+     * @throws TingeeHttpException
+     */
+    public function createBankLinkSession(CreateBankLinkSessionInputDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/bank/create-bank-link-session',
+            $body,
+            [],
+            ''
+        );
+        /** @var TingeeApiResponse<String> $response */
+        return $response;
+    }
+
+    /**
      * POST /v1/bank/confirm-register-notify
      *
      * @return TingeeApiResponse<BankDeleteVAOutputDto>
@@ -400,6 +448,44 @@ class TingeeBankGroup
             BankDeleteVAOutputDto::class
         );
         /** @var TingeeApiResponse<BankDeleteVAOutputDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/bank/create-debit
+     *
+     * @return TingeeApiResponse<BankCreateVAOuputDto>
+     * @throws TingeeHttpException
+     */
+    public function createDebit(OpenApiCreateDebitAccountInputDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/bank/create-debit',
+            $body,
+            [],
+            BankCreateVAOuputDto::class
+        );
+        /** @var TingeeApiResponse<BankCreateVAOuputDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/bank/create-batch-va-on-off
+     *
+     * @return TingeeApiResponse<OpenApiCreateBatchVaOnOffOutputDto[]>
+     * @throws TingeeHttpException
+     */
+    public function createBatchVaOnOff(OpenApiCreateBatchVaOnOffInputDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/bank/create-batch-va-on-off',
+            $body,
+            [],
+            'Tingee\Sdk\Types\Dtos\OpenApiCreateBatchVaOnOffOutputDto[]'
+        );
+        /** @var TingeeApiResponse<OpenApiCreateBatchVaOnOffOutputDto[]> $response */
         return $response;
     }
 }
@@ -1316,6 +1402,145 @@ class TingeeEInvoiceGroup
         /** @var TingeeApiResponse<EmptyDto> $response */
         return $response;
     }
+
+    /**
+     * POST /v1/e-invoice/input/connect
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function inputConnect(ConnectTCTRequestDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/input/connect',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/input/disconnect
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function inputDisconnect(InputInvoiceBaseDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/input/disconnect',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/input/sync
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function inputSync(SyncIncomeInvoiceRequestDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/input/sync',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/input/list
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function inputList(GetIncomeInvoicesListRequestDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/input/list',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/input/detail
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function inputDetail(GetIncomeInvoiceDetailRequestDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/input/detail',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+
+    /**
+     * POST /v1/e-invoice/input/preview-base64
+     *
+     * @return TingeeApiResponse<EmptyDto>
+     * @throws TingeeHttpException
+     */
+    public function inputPreviewBase64(GetIncomeInvoicePreviewBase64RequestDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/e-invoice/input/preview-base64',
+            $body,
+            [],
+            EmptyDto::class
+        );
+        /** @var TingeeApiResponse<EmptyDto> $response */
+        return $response;
+    }
+}
+
+class TingeePaymentGatewayGroup
+{
+    private TingeeHttpClient $httpClient;
+    public function __construct(TingeeHttpClient $httpClient) { $this->httpClient = $httpClient; }
+
+    /**
+     * POST /v1/payment-gateway/create-link
+     *
+     * @return TingeeApiResponse<String>
+     * @throws TingeeHttpException
+     */
+    public function createLink(OpenApiCreatePaymentLinkInputDto $body): TingeeApiResponse
+    {
+        $response = $this->httpClient->request(
+            'POST',
+            '/v1/payment-gateway/create-link',
+            $body,
+            [],
+            ''
+        );
+        /** @var TingeeApiResponse<String> $response */
+        return $response;
+    }
 }
 
 trait TingeeClientGenerated
@@ -1330,6 +1555,7 @@ trait TingeeClientGenerated
     public TingeeDirectDebitGroup $directDebit;
     public TingeeMerchantGroup $merchant;
     public TingeeEInvoiceGroup $eInvoice;
+    public TingeePaymentGatewayGroup $paymentGateway;
 
     public function initGroups(): void
     {
@@ -1341,5 +1567,6 @@ trait TingeeClientGenerated
         $this->directDebit = new TingeeDirectDebitGroup($this->httpClient);
         $this->merchant = new TingeeMerchantGroup($this->httpClient);
         $this->eInvoice = new TingeeEInvoiceGroup($this->httpClient);
+        $this->paymentGateway = new TingeePaymentGatewayGroup($this->httpClient);
     }
 }

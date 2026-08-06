@@ -9,7 +9,10 @@ class SignatureUtils
      */
     public static function generateSignature(string $secretKey, string $timestamp, mixed $body): string
     {
-        // json_encode(null) === "null" — matches JSON.stringify(null) in JavaScript
+        if (empty($body)) {
+            $body = new \stdClass();
+        }
+        
         $jsonBody = json_encode($body, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
         $message = "{$timestamp}:{$jsonBody}";
